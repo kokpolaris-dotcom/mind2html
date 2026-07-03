@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanpix.ai · 行业定位与双层级产品架构</title>
+    <style id="theme-vars">
+/* Wanpix.ai Strategic Positioning — Dark AI Platform Theme */
+:root {
+  /* ── Color System ── */
+  --color-background: #0a0a0f;
+  --color-background-elevated: #12121a;
+  --color-surface: #1a1a2e;
+  --color-surface-hover: #22223a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+
+  --color-primary: #6366f1;
+  --color-primary-hover: #818cf8;
+  --color-primary-muted: rgba(99, 102, 241, 0.15);
+  --color-primary-glow: rgba(99, 102, 241, 0.3);
+
+  --color-accent: #22d3ee;
+  --color-accent-muted: rgba(34, 211, 238, 0.12);
+  --color-accent-glow: rgba(34, 211, 238, 0.25);
+
+  --color-text: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-text-on-primary: #ffffff;
+
+  --color-highlight: #fbbf24;
+  --color-highlight-muted: rgba(251, 191, 36, 0.12);
+
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-serif: 'Noto Serif SC', 'Source Han Serif SC', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow-primary: 0 0 30px rgba(99, 102, 241, 0.2);
+  --shadow-glow-accent: 0 0 30px rgba(34, 211, 238, 0.15);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--color-background);
+    --color-background-elevated: var(--color-background-elevated);
+    --color-surface: var(--color-surface);
+    --color-surface-hover: var(--color-surface-hover);
+    --color-border: var(--color-border);
+    --color-border-strong: var(--color-border-strong);
+    --color-primary: var(--color-primary);
+    --color-primary-hover: var(--color-primary-hover);
+    --color-accent: var(--color-accent);
+    --color-text: var(--color-text);
+    --color-text-secondary: var(--color-text-secondary);
+    --color-text-muted: var(--color-text-muted);
+    --color-highlight: var(--color-highlight);
+    --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+    --font-serif: 'Noto Serif SC', Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+    </style>
+    <style>
+      :root { color-scheme: dark; }
+      html { scroll-behavior: smooth; }
+      body {
+        background-color: var(--color-background);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* ── Atmospheric background ── */
+      .bg-grid {
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 64px 64px;
+      }
+      .bg-dots {
+        background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      .glow-primary {
+        background: radial-gradient(circle at center, var(--color-primary-glow) 0%, transparent 60%);
+      }
+      .glow-accent {
+        background: radial-gradient(circle at center, var(--color-accent-glow) 0%, transparent 60%);
+      }
+      .text-gradient {
+        background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, #22d3ee 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .text-gradient-warm {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* ── Cards ── */
+      .card {
+        background: linear-gradient(180deg, rgba(26,26,46,0.7) 0%, rgba(18,18,26,0.7) 100%);
+        border: 1px solid var(--color-border);
+        backdrop-filter: blur(12px);
+        transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+      }
+      .card:hover {
+        border-color: var(--color-border-strong);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+      .card-primary {
+        background: linear-gradient(180deg, rgba(99,102,241,0.10) 0%, rgba(26,26,46,0.7) 100%);
+        border: 1px solid rgba(99,102,241,0.25);
+      }
+      .card-primary:hover {
+        border-color: rgba(99,102,241,0.5);
+        box-shadow: 0 0 40px rgba(99,102,241,0.15);
+      }
+      .card-accent {
+        background: linear-gradient(180deg, rgba(34,211,238,0.08) 0%, rgba(26,26,46,0.7) 100%);
+        border: 1px solid rgba(34,211,238,0.2);
+      }
+      .card-accent:hover {
+        border-color: rgba(34,211,238,0.45);
+        box-shadow: 0 0 40px rgba(34,211,238,0.12);
+      }
+
+      /* ── Labels & tags ── */
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+        border: 1px solid var(--color-border);
+        background: rgba(255,255,255,0.03);
+        color: var(--color-text-secondary);
+      }
+
+      /* ── Layer stack visual ── */
+      .layer-card {
+        position: relative;
+        border-radius: 16px;
+        border: 1px solid var(--color-border);
+        transition: all var(--transition-base);
+      }
+      .layer-card::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 3px;
+        border-radius: 3px 0 0 3px;
+      }
+      .layer-1::before { background: linear-gradient(180deg, #22d3ee, #6366f1); }
+      .layer-2::before { background: linear-gradient(180deg, #6366f1, #fbbf24); }
+      .layer-3::before { background: linear-gradient(180deg, #fbbf24, #f87171); }
+
+      /* ── Divider with dot ── */
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--color-text-muted);
+      }
+      .section-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--color-border) 0%, transparent 100%);
+      }
+
+      /* ── Entrance animations ── */
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .rise { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+      .d-1 { animation-delay: 0.05s; }
+      .d-2 { animation-delay: 0.15s; }
+      .d-3 { animation-delay: 0.25s; }
+      .d-4 { animation-delay: 0.35s; }
+      .d-5 { animation-delay: 0.45s; }
+      .d-6 { animation-delay: 0.55s; }
+
+      /* ── Number badge ── */
+      .num-badge {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 600;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      /* ── Connector line for architecture ── */
+      .arch-connector {
+        position: relative;
+      }
+      .arch-connector::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        width: 1px;
+        height: 1.75rem;
+        background: linear-gradient(180deg, var(--color-border-strong) 0%, transparent 100%);
+      }
+
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+    </style>
+</head>
+<body class="min-h-screen antialiased overflow-x-hidden">
+
+  <!-- ambient glows -->
+  <div class="fixed inset-0 -z-10 bg-grid opacity-60"></div>
+  <div class="fixed -top-40 -left-40 w-[40rem] h-[40rem] -z-10 glow-primary opacity-40 blur-3xl"></div>
+  <div class="fixed top-1/3 -right-40 w-[36rem] h-[36rem] -z-10 glow-accent opacity-30 blur-3xl"></div>
+
+  <main class="relative">
+
+    <!-- ═══════════════════ HERO ═══════════════════ -->
+    <header class="max-w-6xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+      <div class="flex items-center gap-3 mb-10 rise d-1">
+        <span class="pill">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] shadow-[0_0_8px_var(--color-primary)]"></span>
+          WANPIX.AI · STRATEGIC MEMO
+        </span>
+        <span class="pill">文旅营销域 · 能力基建</span>
+      </div>
+
+      <h1 class="rise d-2 font-[var(--font-serif)] font-black leading-[1.05] tracking-tight text-5xl md:text-7xl">
+        把<span class="text-gradient">专家级营销能力</span><br>
+        做成可规模化复制的<br>
+        <span class="text-gradient-warm">数字分身</span>
+      </h1>
+
+      <p class="rise d-3 mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-[var(--color-text-secondary)]">
+        Wanpix.ai 不是纯粹的“降本工具”。它的核心，是把专业代运营团队的
+        <span class="text-[var(--color-text)] font-medium">营销域核心能力</span>产品化、Agent 化——
+        解决文旅行业最痛的<span class="text-[var(--color-accent)] font-medium">“营销能力断层”</span>，
+        实现专家级能力的<span class="text-[var(--color-highlight)] font-medium">平权与规模化复制</span>。
+      </p>
+
+      <div class="rise d-4 mt-10 flex flex-wrap gap-3">
+        <a href="#participants" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">01 · 行业参与者重构</a>
+        <a href="#values" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">02 · 三大核心价值</a>
+        <a href="#positioning" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">03 · 全新定位</a>
+        <a href="#architecture" class="card-accent card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">04 · 双层级产品架构</a>
+        <a href="#ecosystem" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">05 · 生态定位</a>
+      </div>
+    </header>
+
+    <!-- ═══════════════════ 01 · 行业参与者重构 ═══════════════════ -->
+    <section id="participants" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4">
+        <span class="eyebrow">01 — Industry Re-map</span>
+      </div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">重新定义行业参与者</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        从“谁能解决营销问题”的视角，文旅行业存在三类角色，各自卡在不同环节。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <!-- 上游 & 中游 -->
+        <article class="card rounded-2xl p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge bg-white/5 text-[var(--color-text-secondary)]">01</span>
+            <span class="eyebrow">上游 · 中游</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">资源方 &amp; 服务商</h3>
+          <p class="text-sm font-medium text-[var(--color-text-muted)] mb-5">有产品，但无营销能力</p>
+          <div class="space-y-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            <div>
+              <p class="text-[var(--color-text)] font-medium mb-1">核心痛点</p>
+              <p>景区、酒店、体验服务商多是“资源型 / 服务密集型”企业。擅长做服务、搞基建，面对抖音、小红书等新媒体极度缺乏专业营销域能力——不懂抓热点、不懂写爆款脚本、不懂流量转化。</p>
+            </div>
+            <div class="pt-4 border-t border-[var(--color-border)]">
+              <p class="text-[var(--color-text)] font-medium mb-1">业务解法</p>
+              <p>通过代运营服务或数字化产品弥补内容营销、流量获取与转化闭环的短板，把“资源”转化为“客流”。</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 传统代运营 -->
+        <article class="card rounded-2xl p-7 flex flex-col">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge bg-white/5 text-[var(--color-text-secondary)]">02</span>
+            <span class="eyebrow">人力驱动</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">传统代运营团队</h3>
+          <p class="text-sm font-medium text-[var(--color-text-muted)] mb-5">解决 0→1 冷启动，但难规模化</p>
+          <div class="space-y-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            <div>
+              <p class="text-[var(--color-text)] font-medium mb-1">核心痛点</p>
+              <p>人力代运营是非标、重资产、难规模化。金牌运营一年能服务的客户有限，人员流动导致服务质量波动，边际成本极高。</p>
+            </div>
+            <div class="pt-4 border-t border-[var(--color-border)]">
+              <p class="text-[var(--color-text)] font-medium mb-1">业务解法</p>
+              <p>提供定制化专业策略，但难以覆盖全行业海量商家的普惠需求。</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Wanpix.ai -->
+        <article class="card-primary card rounded-2xl p-7 flex flex-col relative overflow-hidden">
+          <div class="absolute -top-8 -right-8 w-32 h-32 glow-primary blur-2xl opacity-60"></div>
+          <div class="flex items-center gap-3 mb-5 relative">
+            <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">03</span>
+            <span class="eyebrow text-[var(--color-primary-hover)]">Wanpix.ai</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 relative">营销域能力 Agent 化</h3>
+          <p class="text-sm font-medium text-[var(--color-accent)] mb-5 relative">专家级能力的规模化复制</p>
+          <div class="space-y-4 text-sm leading-relaxed text-[var(--color-text-secondary)] relative">
+            <div>
+              <p class="text-[var(--color-text)] font-medium mb-1">核心痛点</p>
+              <p>行业需要“懂文旅营销的专家”，但专家太贵且太少。纯工具不懂业务，纯人力跑不快。</p>
+            </div>
+            <div class="pt-4 border-t border-white/10">
+              <p class="text-[var(--color-text)] font-medium mb-1">业务解法</p>
+              <p>把“金牌运营”的人脑经验，转化为 AI Agent 的执行逻辑——永不离职、24h 在线、拥有全行业顶尖营销经验。</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 02 · 三大核心价值 ═══════════════════ -->
+    <section id="values" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4">
+        <span class="eyebrow">02 — Core Value Loop</span>
+      </div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">三大核心价值点</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        Wanpix.ai 把“人”的核心价值（策略、洞察、创意逻辑）抽离出来，用 Agent 规模化执行——这是一条从“经验”到“能力基建”的闭环。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <div class="card rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">①</span>
+            <span class="eyebrow">Knowledge</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">营销域知识的<br>结构化与沉淀</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            把代运营团队实战中积累的<span class="text-[var(--color-text)] font-medium">隐性 Know-how</span>——什么样的景区文案能爆、什么时间发视频转化率高、如何设计团购套餐钩子——提炼成标准化的策略模型。
+          </p>
+        </div>
+
+        <div class="card-accent card rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="num-badge bg-[var(--color-accent-muted)] text-[var(--color-accent)]">②</span>
+            <span class="eyebrow text-[var(--color-accent)]">Agentify</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">核心能力的<br>Agent 化封装</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            把“人脑经验”转化为“Agent 执行逻辑”。它不再只是生成文字，而是具备<span class="text-[var(--color-text)] font-medium">营销思维</span>——像资深运营一样自动策划营销动作、生成平台调性内容并执行分发。
+          </p>
+        </div>
+
+        <div class="card rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="num-badge bg-[var(--color-highlight-muted)] text-[var(--color-highlight)]">③</span>
+            <span class="eyebrow text-[var(--color-highlight)]">Scale</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">交付的标准化<br>与规模化</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            把依赖“金牌运营个人能力”的非标服务，变成可无限复制的<span class="text-[var(--color-text)] font-medium">标准化数字服务</span>。商家等于以极低成本雇佣了一支顶尖的超级数字运营团队。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 03 · 全新定位 ═══════════════════ -->
+    <section id="positioning" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4">
+        <span class="eyebrow">03 — New Positioning</span>
+      </div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">文旅营销领域的“能力基建”</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        四类参与者在价值链上各司其职，Wanpix.ai 处在最稀缺的那一层。
+      </p>
+
+      <div class="mt-12 rounded-2xl border border-[var(--color-border)] overflow-hidden">
+        <div class="grid grid-cols-12 bg-[var(--color-background-elevated)] border-b border-[var(--color-border)]">
+          <div class="col-span-4 md:col-span-3 px-5 py-4 eyebrow">参与者</div>
+          <div class="col-span-5 md:col-span-6 px-5 py-4 eyebrow">提供的能力</div>
+          <div class="col-span-3 px-5 py-4 eyebrow">本质</div>
+        </div>
+
+        <div class="divide-y divide-[var(--color-border)]">
+          <div class="grid grid-cols-12 items-center hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-4 md:col-span-3 px-5 py-5">
+              <p class="font-medium">上游 &amp; 中游</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">景区 · 酒店 · 体验商</p>
+            </div>
+            <div class="col-span-5 md:col-span-6 px-5 py-5 text-sm text-[var(--color-text-secondary)]">提供“物理世界的体验”</div>
+            <div class="col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">资源 / 服务</div>
+          </div>
+
+          <div class="grid grid-cols-12 items-center hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-4 md:col-span-3 px-5 py-5">
+              <p class="font-medium">传统代运营</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">人力团队</p>
+            </div>
+            <div class="col-span-5 md:col-span-6 px-5 py-5 text-sm text-[var(--color-text-secondary)]">提供“人力驱动的营销服务”</div>
+            <div class="col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">非标服务</div>
+          </div>
+
+          <div class="grid grid-cols-12 items-center hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-4 md:col-span-3 px-5 py-5">
+              <p class="font-medium">纯工具平台</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">通用 SaaS</p>
+            </div>
+            <div class="col-span-5 md:col-span-6 px-5 py-5 text-sm text-[var(--color-text-secondary)]">提供“内容生产的算力”</div>
+            <div class="col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">算力 / 工具</div>
+          </div>
+
+          <div class="grid grid-cols-12 items-center bg-[var(--color-primary-muted)]/40 hover:bg-[var(--color-primary-muted)]/60 transition-colors">
+            <div class="col-span-4 md:col-span-3 px-5 py-5">
+              <p class="font-semibold text-[var(--color-primary-hover)]">Wanpix.ai</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">营销域能力 Agent 化</p>
+            </div>
+            <div class="col-span-5 md:col-span-6 px-5 py-5 text-sm text-[var(--color-text)] font-medium">提供“营销域专家能力的数字化分身”</div>
+            <div class="col-span-3 px-5 py-5">
+              <span class="pill text-[var(--color-highlight)] border-[rgba(251,191,36,0.3)] bg-[var(--color-highlight-muted)]">能力基建</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-8 text-[var(--color-text-secondary)] leading-relaxed max-w-3xl">
+        你们把“人”的核心价值（策略、洞察、创意逻辑）抽离出来，用 Agent 去规模化执行。
+        这不仅解决了生产效率问题，更解决了文旅行业
+        <span class="text-[var(--color-highlight)] font-medium">“优质营销资源极度稀缺”</span>的结构性难题。
+      </p>
+    </section>
+
+    <!-- ═══════════════════ 04 · 双层级产品架构 ═══════════════════ -->
+    <section id="architecture" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4">
+        <span class="eyebrow">04 — Two-Layer Architecture</span>
+      </div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">双层级产品架构</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        把“能力”变成可组装的“乐高积木”——商业天花板从 SaaS 工具跃升到 <span class="text-[var(--color-accent)] font-medium">PaaS 生态平台</span>。
+      </p>
+
+      <div class="mt-14 space-y-5">
+
+        <!-- Layer 1 · 底座平台 -->
+        <div class="layer-card layer-1 bg-[var(--color-background-elevated)]/60 backdrop-blur-sm pl-7 pr-6 py-7">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="md:w-1/3">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="num-badge bg-[var(--color-accent-muted)] text-[var(--color-accent)]">L1</span>
+                <span class="eyebrow text-[var(--color-accent)]">Base Platform</span>
+              </div>
+              <h3 class="font-[var(--font-serif)] text-2xl font-bold mb-2">底座平台</h3>
+              <p class="text-sm text-[var(--color-text-muted)]">能力原子化 · 行业基建</p>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                Harness 技术（RAG / Skill / Tools）本质是把代运营团队积累的“营销域核心能力”进行结构化拆解与原子化封装——文旅营销领域的“操作系统”。
+              </p>
+            </div>
+
+            <div class="md:w-2/3 grid sm:grid-cols-3 gap-3">
+              <div class="card rounded-xl p-4">
+                <p class="font-mono text-xs text-[var(--color-accent)] mb-2">RAG</p>
+                <p class="font-medium text-sm mb-1.5">行业知识库</p>
+                <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">沉淀爆款文案库、平台算法规则、历史转化数据等“隐性知识”。</p>
+              </div>
+              <div class="card rounded-xl p-4">
+                <p class="font-mono text-xs text-[var(--color-accent)] mb-2">Skill</p>
+                <p class="font-medium text-sm mb-1.5">标准化技能</p>
+                <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">封装具体营销动作：热点捕捉、脚本生成、团购套餐设计。</p>
+              </div>
+              <div class="card rounded-xl p-4">
+                <p class="font-mono text-xs text-[var(--color-accent)] mb-2">Tools</p>
+                <p class="font-medium text-sm mb-1.5">执行接口</p>
+                <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">打通抖音、小红书等平台 API，解决“最后一公里”分发。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer 2 · 官方专家分身 -->
+        <div class="layer-card layer-2 bg-[var(--color-background-elevated)]/60 backdrop-blur-sm pl-7 pr-6 py-7">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="md:w-1/3">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L2</span>
+                <span class="eyebrow text-[var(--color-primary-hover)]">Official Avatar</span>
+              </div>
+              <h3 class="font-[var(--font-serif)] text-2xl font-bold mb-2">官方专家分身</h3>
+              <p class="text-sm text-[var(--color-text-muted)]">标准化交付 · 标杆示范</p>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                利用底座 Harness 能力，组装出“开箱即用”的标准化产品。解决行业 80% 的通用需求——是底座的<span class="text-[var(--color-text)] font-medium">旗舰应用</span>与样板间。
+              </p>
+            </div>
+            <div class="md:w-2/3 space-y-3">
+              <div class="flex items-start gap-3 p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+                <span class="text-[var(--color-primary-hover)] mt-0.5"><i data-lucide="zap" class="w-4 h-4"></i></span>
+                <p class="text-sm text-[var(--color-text-secondary)]">面向<span class="text-[var(--color-text)] font-medium">中小商家</span>——无需懂底层逻辑，直接带来客流的“超级数字员工”。</p>
+              </div>
+              <div class="flex items-start gap-3 p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+                <span class="text-[var(--color-primary-hover)] mt-0.5"><i data-lucide="badge-check" class="w-4 h-4"></i></span>
+                <p class="text-sm text-[var(--color-text-secondary)]">既是<span class="text-[var(--color-text)] font-medium">直接营收来源</span>，又向市场证明底层能力的强大。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer 3 · 用户自定义分身（隐藏价值） -->
+        <div class="layer-card layer-3 bg-[var(--color-background-elevated)]/60 backdrop-blur-sm pl-7 pr-6 py-7">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="md:w-1/3">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="num-badge bg-[var(--color-highlight-muted)] text-[var(--color-highlight)]">L3</span>
+                <span class="eyebrow text-[var(--color-highlight)]">Hidden Value</span>
+              </div>
+              <h3 class="font-[var(--font-serif)] text-2xl font-bold mb-2">用户自定义分身</h3>
+              <p class="text-sm text-[var(--color-text-muted)]">生态化 · 长尾赋能</p>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                允许大型文旅集团、MCN、资深代运营调用底座 Harness 能力，注入<span class="text-[var(--color-text)] font-medium">私有认知</span>（品牌调性、私域逻辑、客群洞察），构建专属 Agent。
+              </p>
+            </div>
+            <div class="md:w-2/3 grid sm:grid-cols-3 gap-3">
+              <div class="card rounded-xl p-4">
+                <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">长尾</p>
+                <p class="font-medium text-sm mb-1.5">个性化需求</p>
+                <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">文旅是非标行业，头部大客户有极个性化营销逻辑，官方分身无法完全覆盖。</p>
+              </div>
+              <div class="card rounded-xl p-4">
+                <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">粘性</p>
+                <p class="font-medium text-sm mb-1.5">Lock-in 效应</p>
+                <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">大客户用底座 RAG 与 Tools 搭建专属工作流后，迁移成本极高。</p>
+              </div>
+              <div class="card rounded-xl p-4">
+                <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">飞轮</p>
+                <p class="font-medium text-sm mb-1.5">反哺底座</p>
+                <p class="text-xs leading-relaxed text-[var(--color-text-secondary)]">自定义产生的新玩法、新认知，可被提炼回底座，形成生态飞轮。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 05 · 生态定位 ═══════════════════ -->
+    <section id="ecosystem" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4">
+        <span class="eyebrow">05 — Ecosystem</span>
+      </div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">从“造车”到开放“造车平台”</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        双层级架构让 Wanpix.ai 在不同客户眼中扮演不同角色——这是极具想象力和壁垒的 ToB 模式。
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-5 mt-12">
+
+        <article class="card rounded-2xl p-8 relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-40 h-40 glow-primary blur-3xl opacity-50"></div>
+          <span class="eyebrow text-[var(--color-primary-hover)] relative">对中小商家</span>
+          <h3 class="font-[var(--font-serif)] text-2xl font-bold mt-3 mb-4 relative">营销专家分身提供商</h3>
+          <p class="text-[var(--color-text-secondary)] leading-relaxed relative">
+            卖<span class="text-[var(--color-text)] font-medium">标准 SaaS / 服务</span>。以极低成本雇佣一支“永不离职、24h 在线、拥有全行业顶尖营销经验”的超级数字运营团队。
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2 relative">
+            <span class="pill">SaaS</span>
+            <span class="pill">标准化交付</span>
+            <span class="pill">旗舰应用</span>
+          </div>
+        </article>
+
+        <article class="card-accent card rounded-2xl p-8 relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-40 h-40 glow-accent blur-3xl opacity-50"></div>
+          <span class="eyebrow text-[var(--color-accent)] relative">对大型文旅集团 / MCN</span>
+          <h3 class="font-[var(--font-serif)] text-2xl font-bold mt-3 mb-4 relative">文旅营销能力的 PaaS 平台</h3>
+          <p class="text-[var(--color-text-secondary)] leading-relaxed relative">
+            卖<span class="text-[var(--color-text)] font-medium">底层能力与生态</span>。不仅自己造“车”（官方分身），还开放顶级“造车平台”，允许别人造出符合自己需求的“特种车辆”。
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2 relative">
+            <span class="pill">PaaS</span>
+            <span class="pill">Harness 开放</span>
+            <span class="pill">生态飞轮</span>
+            <span class="pill">高 Lock-in</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ Footer ═══════════════════ -->
+    <footer class="max-w-6xl mx-auto px-6 py-16 border-t border-[var(--color-border)] mt-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <p class="font-[var(--font-serif)] text-2xl font-bold">Wanpix.ai</p>
+          <p class="text-sm text-[var(--color-text-muted)] mt-1">营销域专家能力的数字化分身 · 文旅营销的能力基建</p>
+        </div>
+        <p class="eyebrow">Strategic Memo · 内部梳理文档</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

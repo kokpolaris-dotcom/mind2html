@@ -1,0 +1,103 @@
+{
+  "project": {
+    "name": "Wanpix.ai 战略定位",
+    "path": "/Users/bin/Projects/WanpixAI/wanpix-strategic-positioning",
+    "operation": "create",
+    "deviceType": "desktop",
+    "language": "zh-CN",
+    "dashboardMode": false,
+    "replicationMode": null,
+    "sourceUrl": null,
+    "visualSpecExcerpt": null,
+    "styleDefinitionBrief": "Dark AI platform theme with deep navy background, indigo primary accent, cyan secondary glow, network/node visualizations, monospace code elements for Agent/harness terms, editorial rhythm with large pull quotes and progressive narrative reveal",
+    "designRead": "B2B strategic positioning doc / tech-savvy business leaders / dark sci-fi authoritative / medium density / avoid neon glow overload",
+    "designDials": {
+      "layoutVariance": 4,
+      "motionIntensity": 2,
+      "visualDensity": 3
+    },
+    "styleContinuityAnchors": null,
+    "specsConstraints": null,
+    "sharedProjectShellContract": null,
+    "generationTree": {
+      "root": {
+        "nodeId": "gen-page-strategic-positioning",
+        "kind": "page-leaf",
+        "pageIds": ["page-strategic-positioning"],
+        "output": "pages/strategic-positioning.html",
+        "sharedRegions": [],
+        "privateRegions": ["full page body"],
+        "mutableSlots": [],
+        "status": "generated",
+        "children": []
+      }
+    }
+  },
+  "designSource": {
+    "operatingMode": "free-explore",
+    "libraryIdentity": { "name": null, "id": null, "version": null, "scope": null, "path": null, "versionSource": null },
+    "cssFilePath": "/Users/bin/Projects/WanpixAI/wanpix-strategic-positioning/colors_and_type.css",
+    "brandPrefix": "",
+    "themeMode": "dark",
+    "designDecisionSummary": "Dark AI platform aesthetic with deep navy (#0a0a0f) base, indigo (#6366f1) primary brand, cyan (#22d3ee) accent for tech/Agent highlights, gold (#fbbf24) for key insight callouts. Monospace font for code/harness terms. Network node visualizations and gradient mesh backgrounds.",
+    "componentContractKind": null,
+    "forbiddenInventedComponents": [],
+    "allowedComponents": [],
+    "styleConstraints": {
+      "radiusMax": 16,
+      "spacingBase": 1,
+      "fontSizeBody": 16,
+      "fontSizeMin": 12,
+      "controlHeightDefault": 36,
+      "controlHeightLarge": 44
+    },
+    "productContext": {
+      "kitType": null,
+      "productType": "B2B AI platform strategic positioning"
+    },
+    "actualTokenNameReference": [
+      { "semanticPurpose": "Primary background", "tokenName": "--color-background" },
+      { "semanticPurpose": "Surface/elevated background", "tokenName": "--color-surface" },
+      { "semanticPurpose": "Primary brand color", "tokenName": "--color-primary" },
+      { "semanticPurpose": "Accent/tech highlight", "tokenName": "--color-accent" },
+      { "semanticPurpose": "Key insight highlight", "tokenName": "--color-highlight" },
+      { "semanticPurpose": "Primary text", "tokenName": "--color-text" },
+      { "semanticPurpose": "Secondary text", "tokenName": "--color-text-secondary" },
+      { "semanticPurpose": "Muted text", "tokenName": "--color-text-muted" },
+      { "semanticPurpose": "Border", "tokenName": "--color-border" }
+    ]
+  },
+  "pages": [
+    {
+      "nodeId": "page-strategic-positioning",
+      "slug": "strategic-positioning",
+      "title": "Wanpix.ai 战略定位",
+      "htmlSrc": "pages/strategic-positioning.html",
+      "pageIndex": 1,
+      "stateGroupId": null,
+      "stateRole": null,
+      "baseStatePageId": null,
+      "sharedShellContract": [],
+      "mutableRegions": [],
+      "derivedFromHtmlSrc": null,
+      "derivationType": "original",
+      "sourcePageId": null,
+      "sourceHtmlSrc": null,
+      "pageType": "showcase",
+      "businessScenario": "Strategic positioning document for Wanpix.ai — AI Agent marketing platform for tourism industry",
+      "visualNorthStar": "A dark, immersive editorial scroll that reveals Wanpix.ai's strategic positioning like peeling layers of an onion — each scroll section deepens understanding with cinematic text reveals, glowing node networks, and data-like visual treatments",
+      "compositionPattern": "Progressive narrative scroll — editorial magazine with cinematic section reveals",
+      "continuityAnchors": ["dark background base", "indigo primary accent", "monospace harness terminology", "glow/shadow treatment"],
+      "libraryRestraintMode": false,
+      "uiKitPath": null,
+      "componentPlan": [],
+      "imagePlan": [],
+      "chartsRequired": false,
+      "miniProgramStyle": false,
+      "qualityRisks": ["very long Chinese text content", "dense conceptual sections", "multiple visual hierarchy levels needed"]
+    }
+  ],
+  "assets": [],
+  "wiringPlan": [],
+  "hiddenInteractionPlan": []
+}

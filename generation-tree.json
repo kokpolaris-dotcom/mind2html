@@ -1,0 +1,13 @@
+{
+  "root": {
+    "nodeId": "gen-page-strategic-positioning",
+    "kind": "page-leaf",
+    "pageIds": ["page-strategic-positioning"],
+    "output": "pages/strategic-positioning.html",
+    "sharedRegions": [],
+    "privateRegions": ["full page body"],
+    "mutableSlots": [],
+    "status": "generated",
+    "children": []
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "id": "page-strategic-positioning",
+      "title": "Wanpix.ai 战略定位",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1783073200000,
+      "devMetadata": {
+        "htmlSrc": "pages/strategic-positioning.html",
+        "interactions": []
+      },
+      "canvasData": { "x": 0, "y": 0, "group": 0 }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "desktop",
+    "projectName": "Wanpix.ai 战略定位",
+    "designLibrary": null
+  }
+}
