@@ -245,80 +245,220 @@
       <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">五大模块如何咬合</h2>
       <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
         自下而上看：知识中台提供“记忆”，技能工具层提供“手脚”，编排引擎作为“大脑”调度二者，
-        Agent Builder 让用户在上方搭建专属分身，数据飞轮贯穿全程持续进化。
+        Agent Builder 让用户在上方搭建专属分身，数据飞轮作为横切面贯穿全程，持续把执行结果反哺为新的能力。
+        五层共同构成“感知 → 决策 → 执行 → 反馈 → 进化”的完整闭环。
       </p>
 
-      <!-- Stacked architecture diagram -->
+      <!-- Layered architecture diagram (expanded) -->
       <div class="mt-14 space-y-2.5">
 
-        <!-- Top: User-facing layers -->
-        <div class="grid md:grid-cols-2 gap-2.5">
-          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
-            <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L4</span>
-            <div class="flex-1">
-              <p class="font-semibold">用户自定义分身</p>
-              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">由 Agent Builder 搭建 · 注入私有认知</p>
+        <!-- L4 · 应用层：分身（用户自定义 + 官方） -->
+        <div class="stack-layer rounded-2xl p-6 border-[rgba(244,114,182,0.25)]">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L4</span>
+              <div>
+                <p class="font-semibold">应用层 · Agent 分身</p>
+                <p class="text-xs text-[var(--color-text-muted)] mt-0.5">最终交付给商家的“超级数字员工”</p>
+              </div>
             </div>
             <i data-lucide="users" class="w-5 h-5 text-[var(--color-magenta)]"></i>
           </div>
-          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
-            <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L3</span>
-            <div class="flex-1">
-              <p class="font-semibold">官方专家分身</p>
-              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">基于底座 Harness 组装 · 开箱即用</p>
+          <div class="grid md:grid-cols-2 gap-2.5">
+            <div class="rounded-xl p-4 bg-[var(--color-magenta-muted)]/20 border border-[rgba(244,114,182,0.2)]">
+              <p class="font-medium text-sm text-[var(--color-magenta)] mb-2">用户自定义分身</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">由 Agent Builder 搭建，注入私有认知（品牌调性、私域逻辑、客群洞察）。调用“行业库 + 自有私有库”，支持 DIY 工作流。</p>
             </div>
-            <i data-lucide="sparkles" class="w-5 h-5 text-[var(--color-primary-hover)]"></i>
+            <div class="rounded-xl p-4 bg-[var(--color-primary-muted)]/20 border border-[rgba(99,102,241,0.2)]">
+              <p class="font-medium text-sm text-[var(--color-primary-hover)] mb-2">官方专家分身</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">基于底座 Harness 组装，开箱即用，调用官方行业通用库与官方 Skill 集，覆盖 80% 通用营销需求。</p>
+            </div>
           </div>
         </div>
 
-        <!-- Brain: Orchestration Engine -->
-        <div class="stack-layer rounded-xl p-6 border-[rgba(99,102,241,0.3)] bg-[linear-gradient(180deg,rgba(99,102,241,0.12)_0%,rgba(18,18,26,0.85)_100%)]">
-          <div class="flex items-center gap-4">
-            <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L2</span>
-            <div class="flex-1">
-              <div class="flex items-baseline gap-3">
-                <p class="font-semibold text-lg">Agent Orchestration Engine</p>
-                <span class="eyebrow text-[var(--color-primary-hover)]">核心中枢 · 大脑</span>
+        <!-- L3 · 编排引擎（大脑） -->
+        <div class="stack-layer rounded-2xl p-6 border-[rgba(99,102,241,0.35)] bg-[linear-gradient(180deg,rgba(99,102,241,0.10)_0%,rgba(18,18,26,0.85)_100%)]">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L3</span>
+              <div>
+                <p class="font-semibold">Agent Orchestration Engine <span class="text-[var(--color-text-muted)] font-normal text-sm">· 核心中枢 / 大脑</span></p>
+                <p class="text-xs text-[var(--color-text-muted)] mt-0.5">把 Harness 能力组装为可执行工作流</p>
               </div>
-              <p class="text-sm text-[var(--color-text-secondary)] mt-1">多 Agent 协作 · 动态 Planner · 状态管理 · DAG 工作流</p>
             </div>
-            <i data-lucide="brain-circuit" class="w-6 h-6 text-[var(--color-primary-hover)]"></i>
+            <i data-lucide="brain-circuit" class="w-5 h-5 text-[var(--color-primary-hover)]"></i>
+          </div>
+          <div class="grid md:grid-cols-3 gap-2.5">
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-1.5">Multi-Agent</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">基于 Mastra 的多 Agent 协作，DAG 工作流编排，选题 / 文案 / 分发 Agent 流水线协同。</p>
+            </div>
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-1.5">Planner</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">自然语言指令 → 任务自动拆解，调用底层 Skills 与 Tools。</p>
+            </div>
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-1.5">State Mgmt</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">长链路任务的上下文记忆，多轮对话与复杂执行中不丢信息。</p>
+            </div>
           </div>
         </div>
 
-        <!-- Bottom: Capability infrastructure (3 cols) -->
-        <div class="grid md:grid-cols-3 gap-2.5">
-          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
-            <span class="num-badge bg-[var(--color-accent-muted)] text-[var(--color-accent)]">L1</span>
-            <div class="flex-1">
-              <p class="font-semibold text-sm">RAG 2.0 知识中台</p>
-              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">记忆库 · 多租户隔离</p>
+        <!-- L2 · 能力层：RAG + Skill/Tools -->
+        <div class="grid md:grid-cols-2 gap-2.5">
+
+          <!-- RAG -->
+          <div class="stack-layer rounded-2xl p-6 border-[rgba(34,211,238,0.25)]">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="num-badge bg-[var(--color-accent-muted)] text-[var(--color-accent)]">L2</span>
+                <div>
+                  <p class="font-semibold text-sm">RAG 2.0 知识中台 <span class="text-[var(--color-text-muted)] font-normal">· 记忆库</span></p>
+                  <p class="text-xs text-[var(--color-text-muted)] mt-0.5">区分官方知识与用户私有认知</p>
+                </div>
+              </div>
+              <i data-lucide="database" class="w-5 h-5 text-[var(--color-accent)]"></i>
             </div>
-            <i data-lucide="database" class="w-5 h-5 text-[var(--color-accent)]"></i>
-          </div>
-          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
-            <span class="num-badge bg-[var(--color-emerald-muted)] text-[var(--color-emerald)]">L1</span>
-            <div class="flex-1">
-              <p class="font-semibold text-sm">Skill / Tools 层</p>
-              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">手脚 · 原子能力封装</p>
+            <div class="space-y-2">
+              <div class="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]">
+                <span class="font-mono text-[var(--color-accent)] mt-0.5">·</span>
+                <span><span class="text-[var(--color-text)] font-medium">多租户隔离</span>：Milvus / Qdrant Namespace，官方库 + 私有库</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]">
+                <span class="font-mono text-[var(--color-accent)] mt-0.5">·</span>
+                <span><span class="text-[var(--color-text)] font-medium">混合检索</span>：向量 + BM25 + 知识图谱，提高专有名词召回</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]">
+                <span class="font-mono text-[var(--color-accent)] mt-0.5">·</span>
+                <span><span class="text-[var(--color-text)] font-medium">动态更新管道</span>：ETL 实时抓取文旅热点、平台规则变化</span>
+              </div>
             </div>
-            <i data-lucide="wrench" class="w-5 h-5 text-[var(--color-emerald)]"></i>
           </div>
-          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
-            <span class="num-badge bg-[var(--color-highlight-muted)] text-[var(--color-highlight)]">L0</span>
-            <div class="flex-1">
-              <p class="font-semibold text-sm">Data Flywheel</p>
-              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">贯穿全程 · 持续进化</p>
+
+          <!-- Skill / Tools -->
+          <div class="stack-layer rounded-2xl p-6 border-[rgba(52,211,153,0.25)]">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="num-badge bg-[var(--color-emerald-muted)] text-[var(--color-emerald)]">L2</span>
+                <div>
+                  <p class="font-semibold text-sm">Skill / Tools 层 <span class="text-[var(--color-text-muted)] font-normal">· 手脚</span></p>
+                  <p class="text-xs text-[var(--color-text-muted)] mt-0.5">原子能力封装 + 平台对接</p>
+                </div>
+              </div>
+              <i data-lucide="wrench" class="w-5 h-5 text-[var(--color-emerald)]"></i>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]">
+                <span class="font-mono text-[var(--color-emerald)] mt-0.5">·</span>
+                <span><span class="text-[var(--color-text)] font-medium">标准化 Skill 协议</span>：JSON Schema / OpenAPI，官方与用户 Skill 统一接入</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]">
+                <span class="font-mono text-[var(--color-emerald)] mt-0.5">·</span>
+                <span><span class="text-[var(--color-text)] font-medium">API 聚合网关</span>：抖音 / 小红书 / 微信统一调用，限流、鉴权、重试</span>
+              </div>
+              <div class="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]">
+                <span class="font-mono text-[var(--color-emerald)] mt-0.5">·</span>
+                <span><span class="text-[var(--color-text)] font-medium">沙箱执行</span>：隔离用户自定义代码，防恶意代码 / 死循环</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- L1 · Agent Builder（横向） -->
+        <div class="stack-layer rounded-2xl p-6 border-[rgba(244,114,182,0.25)]">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L1</span>
+              <div>
+                <p class="font-semibold text-sm">Agent Builder <span class="text-[var(--color-text-muted)] font-normal">· 交互层 / 造车平台</span></p>
+                <p class="text-xs text-[var(--color-text-muted)] mt-0.5">用户 DIY 专属分身的前端入口</p>
+              </div>
+            </div>
+            <i data-lucide="puzzle" class="w-5 h-5 text-[var(--color-magenta)]"></i>
+          </div>
+          <div class="grid md:grid-cols-3 gap-2.5">
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-magenta)] mb-1.5">Visual Editor</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">拖拽式工作流，RAG / Skill / Tools 像搭积木一样组合。</p>
+            </div>
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-magenta)] mb-1.5">Prompt IDE</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">Few-shot 模板，上传品牌优秀文案让 Agent 学会调性。</p>
+            </div>
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-magenta)] mb-1.5">Simulation</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">发布前用历史数据跑沙盒，评估质量与合规。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- L0 · 数据飞轮（横切） -->
+        <div class="stack-layer rounded-2xl p-6 border-[rgba(251,191,36,0.25)] bg-[linear-gradient(180deg,rgba(251,191,36,0.08)_0%,rgba(18,18,26,0.85)_100%)]">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <span class="num-badge bg-[var(--color-highlight-muted)] text-[var(--color-highlight)]">L0</span>
+              <div>
+                <p class="font-semibold text-sm">Data Flywheel <span class="text-[var(--color-text-muted)] font-normal">· 横切 / 进化引擎</span></p>
+                <p class="text-xs text-[var(--color-text-muted)] mt-0.5">贯穿 L1–L4 全程，记录行为并反哺为新的能力</p>
+              </div>
             </div>
             <i data-lucide="refresh-cw" class="w-5 h-5 text-[var(--color-highlight)]"></i>
+          </div>
+          <div class="grid md:grid-cols-3 gap-2.5">
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-highlight)] mb-1.5">Tracing</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">全链路埋点：CoT、工具调用、业务结果（播放量 / 核销率）。</p>
+            </div>
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-highlight)] mb-1.5">RLHF</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">点赞 / 点踩 / 修改接口，反馈自动回流微调 LLM 与检索权重。</p>
+            </div>
+            <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <p class="font-mono text-xs text-[var(--color-highlight)] mb-1.5">A/B Testing</p>
+              <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">策略灰度测试，最优 SOP 固化为新的官方 Skill。</p>
+            </div>
           </div>
         </div>
 
       </div>
 
+      <!-- 典型调用流 -->
+      <div class="mt-12 card rounded-2xl p-7">
+        <div class="flex items-center gap-3 mb-5">
+          <i data-lucide="route" class="w-5 h-5 text-[var(--color-primary-hover)]"></i>
+          <h3 class="font-[var(--font-serif)] text-xl font-bold">典型调用流</h3>
+          <span class="eyebrow">一次请求如何穿过五层</span>
+        </div>
+        <p class="text-sm text-[var(--color-text-secondary)] mb-5">
+          以商家输入 <span class="font-mono text-xs text-[var(--color-accent)]">“帮我策划一个五一假期的景区促销”</span> 为例：
+        </p>
+        <div class="grid md:grid-cols-5 gap-2.5">
+          <div class="rounded-xl p-4 bg-[var(--color-magenta-muted)]/20 border border-[rgba(244,114,182,0.2)]">
+            <p class="font-mono text-xs text-[var(--color-magenta)] mb-2">① 接收</p>
+            <p class="text-xs text-[var(--color-text-secondary)]">分身接收自然语言指令，传递给编排引擎</p>
+          </div>
+          <div class="rounded-xl p-4 bg-[var(--color-primary-muted)]/20 border border-[rgba(99,102,241,0.2)]">
+            <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-2">② 规划</p>
+            <p class="text-xs text-[var(--color-text-secondary)]">Planner 拆解任务，编排多 Agent 工作流</p>
+          </div>
+          <div class="rounded-xl p-4 bg-[var(--color-accent-muted)]/20 border border-[rgba(34,211,238,0.2)]">
+            <p class="font-mono text-xs text-[var(--color-accent)] mb-2">③ 检索</p>
+            <p class="text-xs text-[var(--color-text-secondary)]">RAG 混合检索五一热点 / 景区知识 / 历史 SOP</p>
+          </div>
+          <div class="rounded-xl p-4 bg-[var(--color-emerald-muted)]/20 border border-[rgba(52,211,153,0.2)]">
+            <p class="font-mono text-xs text-[var(--color-emerald)] mb-2">④ 执行</p>
+            <p class="text-xs text-[var(--color-text-secondary)]">Skill 生成脚本，Tools 分发到抖音 / 小红书</p>
+          </div>
+          <div class="rounded-xl p-4 bg-[var(--color-highlight-muted)]/20 border border-[rgba(251,191,36,0.2)]">
+            <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">⑤ 回流</p>
+            <p class="text-xs text-[var(--color-text-secondary)]">飞轮记录结果，A/B 验证后沉淀为官方 Skill</p>
+          </div>
+        </div>
+      </div>
+
       <p class="mt-8 text-sm text-[var(--color-text-muted)] flex items-center gap-2">
         <i data-lucide="info" class="w-4 h-4"></i>
-        数据飞轮作为横切关注点（cross-cutting），记录其他所有模块的行为与结果，形成回流闭环。
+        数据飞轮作为横切关注点（cross-cutting），记录其他所有模块的行为与结果，形成“执行 → 反馈 → 进化”的回流闭环。
       </p>
     </section>
 
@@ -339,9 +479,9 @@
           </div>
           <h3 class="text-lg font-semibold mb-3">多 Agent 协作框架</h3>
           <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-            引入或自研多智能体协作框架（基于 <span class="font-mono text-xs text-[var(--color-primary-hover)]">LangGraph</span> / <span class="font-mono text-xs text-[var(--color-primary-hover)]">AutoGen</span> 深度定制）。
-            支持 <span class="text-[var(--color-text)] font-medium">DAG 有向无环图</span>工作流编排——
-            让“选题 Agent”“文案 Agent”“分发 Agent”像流水线一样协同工作。
+            基于 <span class="font-mono text-xs text-[var(--color-primary-hover)]">Mastra</span>（TypeScript 原生 Agent 框架）搭建多智能体协作体系。
+            支持 <span class="text-[var(--color-text)] font-medium">DAG 有向无环图</span>工作流编排，让“选题 Agent”“文案 Agent”“分发 Agent”像流水线一样协同工作；
+            并通过其原生的 Agent Network 与 Workflow 能力，支持顺序、并行、循环等多种协同模式。
           </p>
         </div>
 
