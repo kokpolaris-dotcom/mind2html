@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanpix.ai · 技术架构总览</title>
+    <style id="theme-vars">
+:root {
+  --color-background: #0a0a0f;
+  --color-background-elevated: #12121a;
+  --color-surface: #1a1a2e;
+  --color-surface-hover: #22223a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+
+  --color-primary: #6366f1;
+  --color-primary-hover: #818cf8;
+  --color-primary-muted: rgba(99, 102, 241, 0.15);
+  --color-primary-glow: rgba(99, 102, 241, 0.3);
+
+  --color-accent: #22d3ee;
+  --color-accent-muted: rgba(34, 211, 238, 0.12);
+  --color-accent-glow: rgba(34, 211, 238, 0.25);
+
+  --color-text: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  --color-highlight: #fbbf24;
+  --color-highlight-muted: rgba(251, 191, 36, 0.12);
+
+  --color-magenta: #f472b6;
+  --color-magenta-muted: rgba(244, 114, 182, 0.12);
+
+  --color-emerald: #34d399;
+  --color-emerald-muted: rgba(52, 211, 153, 0.12);
+
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--color-background);
+    --color-background-elevated: var(--color-background-elevated);
+    --color-surface: var(--color-surface);
+    --color-border: var(--color-border);
+    --color-border-strong: var(--color-border-strong);
+    --color-primary: var(--color-primary);
+    --color-primary-hover: var(--color-primary-hover);
+    --color-accent: var(--color-accent);
+    --color-text: var(--color-text);
+    --color-text-secondary: var(--color-text-secondary);
+    --color-text-muted: var(--color-text-muted);
+    --color-highlight: var(--color-highlight);
+    --color-magenta: var(--color-magenta);
+    --color-emerald: var(--color-emerald);
+    --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+    --font-serif: 'Noto Serif SC', Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+    </style>
+    <style>
+      :root { color-scheme: dark; }
+      html { scroll-behavior: smooth; }
+      body {
+        background-color: var(--color-background);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* ── Atmospheric background ── */
+      .bg-grid {
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 64px 64px;
+      }
+      .glow-primary { background: radial-gradient(circle at center, var(--color-primary-glow) 0%, transparent 60%); }
+      .glow-accent { background: radial-gradient(circle at center, var(--color-accent-glow) 0%, transparent 60%); }
+      .glow-magenta { background: radial-gradient(circle at center, rgba(244,114,182,0.25) 0%, transparent 60%); }
+
+      .text-gradient {
+        background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, #22d3ee 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      }
+
+      /* ── Cards ── */
+      .card {
+        background: linear-gradient(180deg, rgba(26,26,46,0.7) 0%, rgba(18,18,26,0.7) 100%);
+        border: 1px solid var(--color-border);
+        backdrop-filter: blur(12px);
+        transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+      }
+      .card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+      .pill {
+        display: inline-flex; align-items: center; gap: 0.375rem;
+        font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em;
+        padding: 0.25rem 0.625rem; border-radius: 9999px;
+        border: 1px solid var(--color-border); background: rgba(255,255,255,0.03);
+        color: var(--color-text-secondary);
+      }
+
+      /* ── Module color theming ── */
+      .mod-orch { --mc: var(--color-primary); --mc-muted: var(--color-primary-muted); --mc-hover: var(--color-primary-hover); }
+      .mod-rag  { --mc: var(--color-accent);  --mc-muted: var(--color-accent-muted);  --mc-hover: var(--color-accent); }
+      .mod-skill{ --mc: var(--color-emerald); --mc-muted: var(--color-emerald-muted); --mc-hover: var(--color-emerald); }
+      .mod-build{ --mc: var(--color-magenta); --mc-muted: var(--color-magenta-muted); --mc-hover: var(--color-magenta); }
+      .mod-fly  { --mc: var(--color-highlight); --mc-muted: var(--color-highlight-muted); --mc-hover: var(--color-highlight); }
+
+      .mod-card {
+        position: relative;
+        background: linear-gradient(180deg, color-mix(in srgb, var(--mc) 8%, transparent) 0%, rgba(18,18,26,0.85) 100%);
+        border: 1px solid color-mix(in srgb, var(--mc) 25%, transparent);
+      }
+      .mod-card::before {
+        content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+        background: var(--mc); border-radius: 3px 0 0 3px;
+      }
+      .mod-card:hover {
+        border-color: color-mix(in srgb, var(--mc) 55%, transparent);
+        box-shadow: 0 0 40px color-mix(in srgb, var(--mc) 18%, transparent);
+      }
+      .mod-num {
+        font-family: var(--font-mono); font-weight: 700;
+        color: var(--mc-hover);
+        background: var(--mc-muted);
+      }
+      .mod-eyebrow { color: var(--mc-hover); }
+
+      /* ── Section divider ── */
+      .section-divider { display: flex; align-items: center; gap: 1rem; color: var(--color-text-muted); }
+      .section-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--color-border) 0%, transparent 100%); }
+
+      /* ── Entrance animations ── */
+      @keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      .rise { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+      .d-1 { animation-delay: 0.05s; } .d-2 { animation-delay: 0.15s; } .d-3 { animation-delay: 0.25s; }
+      .d-4 { animation-delay: 0.35s; } .d-5 { animation-delay: 0.45s; } .d-6 { animation-delay: 0.55s; }
+
+      .num-badge {
+        font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600;
+        width: 1.75rem; height: 1.75rem; border-radius: 8px;
+        display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+
+      /* ── Architecture stack visual ── */
+      .stack-layer {
+        position: relative;
+        border: 1px solid var(--color-border);
+        background: linear-gradient(180deg, rgba(26,26,46,0.6) 0%, rgba(18,18,26,0.6) 100%);
+        backdrop-filter: blur(8px);
+        transition: all 250ms ease;
+      }
+      .stack-layer:hover {
+        transform: translateX(4px);
+        border-color: var(--color-border-strong);
+      }
+
+      /* ── Flywheel circle ── */
+      .flywheel-ring {
+        position: relative;
+        aspect-ratio: 1;
+      }
+      .flywheel-node {
+        position: absolute;
+        width: 22%; aspect-ratio: 1;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 50%;
+        border: 1px solid var(--color-border-strong);
+        background: var(--color-background-elevated);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        text-align: center;
+      }
+
+      ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+    </style>
+</head>
+<body class="min-h-screen antialiased overflow-x-hidden">
+
+  <!-- ambient glows -->
+  <div class="fixed inset-0 -z-10 bg-grid opacity-60"></div>
+  <div class="fixed -top-40 -left-40 w-[40rem] h-[40rem] -z-10 glow-primary opacity-40 blur-3xl"></div>
+  <div class="fixed top-1/2 -right-40 w-[36rem] h-[36rem] -z-10 glow-accent opacity-25 blur-3xl"></div>
+  <div class="fixed bottom-0 left-1/3 w-[32rem] h-[32rem] -z-10 glow-magenta opacity-20 blur-3xl"></div>
+
+  <main class="relative">
+
+    <!-- ═══════════════════ HERO ═══════════════════ -->
+    <header class="max-w-6xl mx-auto px-6 pt-24 pb-16 md:pt-32 md:pb-24">
+      <div class="flex items-center gap-3 mb-10 rise d-1">
+        <span class="pill">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] shadow-[0_0_8px_var(--color-primary)]"></span>
+          WANPIX.AI · TECHNICAL ARCHITECTURE
+        </span>
+        <span class="pill">底座平台 · 五大核心模块</span>
+      </div>
+
+      <p class="rise d-1 eyebrow mb-4">业务域已清晰 → 技术域如何落地</p>
+
+      <h1 class="rise d-2 font-[var(--font-serif)] font-black leading-[1.05] tracking-tight text-5xl md:text-7xl">
+        把营销域的<span class="text-gradient">能力</span>、<br>
+        <span class="text-gradient">知识</span>、<span class="text-gradient">执行</span>，<br>
+        沉淀为可编排的<span class="text-gradient">底座</span>
+      </h1>
+
+      <p class="rise d-3 mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-[var(--color-text-secondary)]">
+        围绕双层级产品架构（底座 + 官方 / 自定义分身），技术上由
+        <span class="text-[var(--color-text)] font-medium">五大核心模块</span>配套：
+        编排引擎、知识中台、技能工具层、Agent Builder、数据飞轮——
+        形成“感知 → 决策 → 执行 → 反馈 → 进化”的完整闭环。
+      </p>
+
+      <div class="rise d-4 mt-10 flex flex-wrap gap-3">
+        <a href="#overview" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">00 · 架构总览</a>
+        <a href="#orchestration" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">01 · 编排引擎</a>
+        <a href="#rag" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">02 · 知识中台</a>
+        <a href="#skills" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">03 · 技能工具层</a>
+        <a href="#builder" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">04 · Agent Builder</a>
+        <a href="#flywheel" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">05 · 数据飞轮</a>
+        <a href="#mapping" class="card-accent card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">06 · 业务映射</a>
+      </div>
+    </header>
+
+    <!-- ═══════════════════ 00 · 架构总览 ═══════════════════ -->
+    <section id="overview" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">00 — System Overview</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">五大模块如何咬合</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        自下而上看：知识中台提供“记忆”，技能工具层提供“手脚”，编排引擎作为“大脑”调度二者，
+        Agent Builder 让用户在上方搭建专属分身，数据飞轮贯穿全程持续进化。
+      </p>
+
+      <!-- Stacked architecture diagram -->
+      <div class="mt-14 space-y-2.5">
+
+        <!-- Top: User-facing layers -->
+        <div class="grid md:grid-cols-2 gap-2.5">
+          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
+            <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L4</span>
+            <div class="flex-1">
+              <p class="font-semibold">用户自定义分身</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">由 Agent Builder 搭建 · 注入私有认知</p>
+            </div>
+            <i data-lucide="users" class="w-5 h-5 text-[var(--color-magenta)]"></i>
+          </div>
+          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
+            <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L3</span>
+            <div class="flex-1">
+              <p class="font-semibold">官方专家分身</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">基于底座 Harness 组装 · 开箱即用</p>
+            </div>
+            <i data-lucide="sparkles" class="w-5 h-5 text-[var(--color-primary-hover)]"></i>
+          </div>
+        </div>
+
+        <!-- Brain: Orchestration Engine -->
+        <div class="stack-layer rounded-xl p-6 border-[rgba(99,102,241,0.3)] bg-[linear-gradient(180deg,rgba(99,102,241,0.12)_0%,rgba(18,18,26,0.85)_100%)]">
+          <div class="flex items-center gap-4">
+            <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L2</span>
+            <div class="flex-1">
+              <div class="flex items-baseline gap-3">
+                <p class="font-semibold text-lg">Agent Orchestration Engine</p>
+                <span class="eyebrow text-[var(--color-primary-hover)]">核心中枢 · 大脑</span>
+              </div>
+              <p class="text-sm text-[var(--color-text-secondary)] mt-1">多 Agent 协作 · 动态 Planner · 状态管理 · DAG 工作流</p>
+            </div>
+            <i data-lucide="brain-circuit" class="w-6 h-6 text-[var(--color-primary-hover)]"></i>
+          </div>
+        </div>
+
+        <!-- Bottom: Capability infrastructure (3 cols) -->
+        <div class="grid md:grid-cols-3 gap-2.5">
+          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
+            <span class="num-badge bg-[var(--color-accent-muted)] text-[var(--color-accent)]">L1</span>
+            <div class="flex-1">
+              <p class="font-semibold text-sm">RAG 2.0 知识中台</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">记忆库 · 多租户隔离</p>
+            </div>
+            <i data-lucide="database" class="w-5 h-5 text-[var(--color-accent)]"></i>
+          </div>
+          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
+            <span class="num-badge bg-[var(--color-emerald-muted)] text-[var(--color-emerald)]">L1</span>
+            <div class="flex-1">
+              <p class="font-semibold text-sm">Skill / Tools 层</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">手脚 · 原子能力封装</p>
+            </div>
+            <i data-lucide="wrench" class="w-5 h-5 text-[var(--color-emerald)]"></i>
+          </div>
+          <div class="stack-layer rounded-xl p-5 flex items-center gap-4">
+            <span class="num-badge bg-[var(--color-highlight-muted)] text-[var(--color-highlight)]">L0</span>
+            <div class="flex-1">
+              <p class="font-semibold text-sm">Data Flywheel</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">贯穿全程 · 持续进化</p>
+            </div>
+            <i data-lucide="refresh-cw" class="w-5 h-5 text-[var(--color-highlight)]"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="mt-8 text-sm text-[var(--color-text-muted)] flex items-center gap-2">
+        <i data-lucide="info" class="w-4 h-4"></i>
+        数据飞轮作为横切关注点（cross-cutting），记录其他所有模块的行为与结果，形成回流闭环。
+      </p>
+    </section>
+
+    <!-- ═══════════════════ 01 · Agent Orchestration Engine ═══════════════════ -->
+    <section id="orchestration" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">01 — Core Brain</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">Agent Orchestration Engine</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        底座的“大脑”。解决<span class="text-[var(--color-text)] font-medium">“如何把 Harness 能力组装起来”</span>的问题。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <div class="mod-card mod-orch rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">①</span>
+            <span class="eyebrow mod-eyebrow">Multi-Agent Framework</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">多 Agent 协作框架</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            引入或自研多智能体协作框架（基于 <span class="font-mono text-xs text-[var(--color-primary-hover)]">LangGraph</span> / <span class="font-mono text-xs text-[var(--color-primary-hover)]">AutoGen</span> 深度定制）。
+            支持 <span class="text-[var(--color-text)] font-medium">DAG 有向无环图</span>工作流编排——
+            让“选题 Agent”“文案 Agent”“分发 Agent”像流水线一样协同工作。
+          </p>
+        </div>
+
+        <div class="mod-card mod-orch rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">②</span>
+            <span class="eyebrow mod-eyebrow">Dynamic Planner</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">动态任务规划</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            底层需要一个强大的 Planner，能够根据用户的自然语言指令——
+            比如<span class="text-[var(--color-text)] font-medium">“帮我策划一个五一假期的景区促销”</span>——
+            自动拆解任务，并调用底层的 Skills 和 Tools。
+          </p>
+        </div>
+
+        <div class="mod-card mod-orch rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">③</span>
+            <span class="eyebrow mod-eyebrow">State Management</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">状态管理</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            文旅营销是<span class="text-[var(--color-text)] font-medium">长链路任务</span>，引擎必须能精准记忆上下文状态，
+            确保在多轮对话和复杂任务执行中不丢失信息。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 02 · RAG 2.0 ═══════════════════ -->
+    <section id="rag" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">02 — Knowledge Infrastructure</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">RAG 2.0 与向量知识中台</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        底座的“记忆库”。<span class="text-[var(--color-text)] font-medium">区分官方知识与用户私有认知</span>的关键。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <div class="mod-card mod-rag rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">①</span>
+            <span class="eyebrow mod-eyebrow">Multi-Tenant Isolation</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">多租户知识隔离</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            在向量数据库（<span class="font-mono text-xs text-[var(--color-accent)]">Milvus</span> / <span class="font-mono text-xs text-[var(--color-accent)]">Qdrant</span>）层面实现严格的
+            <span class="text-[var(--color-text)] font-medium">Namespace 命名空间</span>隔离。
+            官方分身调用行业通用库，自定义分身调用“行业库 + 自有私有库”。
+          </p>
+        </div>
+
+        <div class="mod-card mod-rag rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">②</span>
+            <span class="eyebrow mod-eyebrow">Hybrid Retrieval</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">混合检索策略</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            文旅行业有大量专有名词（特定景区 IP、非遗名称），纯向量检索易出错。
+            采用 <span class="text-[var(--color-text)] font-medium">向量检索 + 关键词检索（BM25）+ 知识图谱</span> 的混合模式，提高召回准确率。
+          </p>
+        </div>
+
+        <div class="mod-card mod-rag rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">③</span>
+            <span class="eyebrow mod-eyebrow">Live Update Pipeline</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">知识动态更新管道</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            文旅热点变化极快。需搭建<span class="text-[var(--color-text)] font-medium">自动化 ETL 管道</span>，
+            实时抓取全网文旅热点、平台算法规则变化，自动清洗并向量化注入知识库。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 03 · Skill / Tools ═══════════════════ -->
+    <section id="skills" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">03 — Capability Layer</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">Skill / Tools 注册与网关</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        底座的“手脚”。实现<span class="text-[var(--color-text)] font-medium">能力的原子化封装</span>。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <div class="mod-card mod-skill rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">①</span>
+            <span class="eyebrow mod-eyebrow">Standard Protocol</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">标准化 Skill 协议</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            定义一套标准的 Skill 描述协议（基于 <span class="font-mono text-xs text-[var(--color-emerald)]">JSON Schema</span> 或 <span class="font-mono text-xs text-[var(--color-emerald)]">OpenAPI</span>）。
+            无论官方“脚本生成 Skill”，还是用户上传的“私域客服 Skill”，都必须遵循该协议才能被 Agent 调用。
+          </p>
+        </div>
+
+        <div class="mod-card mod-skill rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">②</span>
+            <span class="eyebrow mod-eyebrow">API Gateway</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">API 聚合网关</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            统一管理对抖音、小红书、微信等第三方平台 API 的调用。
+            做好<span class="text-[var(--color-text)] font-medium">限流、鉴权、异常重试</span>机制，
+            避免因某个平台接口波动导致整个 Agent 瘫痪。
+          </p>
+        </div>
+
+        <div class="mod-card mod-skill rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">③</span>
+            <span class="eyebrow mod-eyebrow">Sandbox Execution</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">沙箱执行环境</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            当用户自定义分身调用复杂代码或工具时，必须在<span class="text-[var(--color-text)] font-medium">隔离的沙箱环境</span>中执行，
+            防止恶意代码或死循环拖垮整个底座平台。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 04 · Agent Builder ═══════════════════ -->
+    <section id="builder" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">04 — User DIY Layer</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">低代码 / 无代码 Agent Builder</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        实现<span class="text-[var(--color-text)] font-medium">“用户 DIY 专属分身”</span>的前端交互核心。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <div class="mod-card mod-build rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">①</span>
+            <span class="eyebrow mod-eyebrow">Visual Workflow Editor</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">可视化工作流编辑器</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            提供类似 <span class="font-mono text-xs text-[var(--color-magenta)]">Coze</span> / <span class="font-mono text-xs text-[var(--color-magenta)]">Dify</span> 的拖拽式界面。
+            用户可通过连线方式，把底座的 RAG、Skill、Tools 像<span class="text-[var(--color-text)] font-medium">搭积木</span>一样组合起来。
+          </p>
+        </div>
+
+        <div class="mod-card mod-build rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">②</span>
+            <span class="eyebrow mod-eyebrow">Prompt IDE</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">提示词工程辅助</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            可视化的 Prompt 调试界面，帮助用户注入自己的“认知”。
+            提供 <span class="text-[var(--color-text)] font-medium">Few-shot 少样本学习</span>模板——
+            用户上传自己品牌的优秀文案作为范例，Agent 就能快速学会这种调性。
+          </p>
+        </div>
+
+        <div class="mod-card mod-build rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">③</span>
+            <span class="eyebrow mod-eyebrow">Simulation Sandbox</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">仿真测试环境</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            在用户发布自定义 Agent 前，提供<span class="text-[var(--color-text)] font-medium">仿真沙盒</span>，
+            用历史数据跑一遍，评估其生成内容的质量和合规性。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 05 · Data Flywheel ═══════════════════ -->
+    <section id="flywheel" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">05 — Evolution Loop</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">Data Flywheel 数据飞轮</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        确保<span class="text-[var(--color-text)] font-medium">“官方分身越来越聪明，底座越来越强”</span>的闭环。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-5 mt-12">
+
+        <div class="mod-card mod-fly rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">①</span>
+            <span class="eyebrow mod-eyebrow">Full-Chain Tracing</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">全链路埋点与追踪</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            记录 Agent 的每一次<span class="text-[var(--color-text)] font-medium">思考链（CoT）</span>、
+            每一次工具调用、以及最终的业务结果（视频播放量、核销率）。
+          </p>
+        </div>
+
+        <div class="mod-card mod-fly rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">②</span>
+            <span class="eyebrow mod-eyebrow">RLHF Interface</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">RLHF 人类反馈接口</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            在官方分身和自定义分身后台，提供便捷的<span class="text-[var(--color-text)] font-medium">点赞 / 点踩 / 修改</span>接口。
+            用户反馈自动回流，用于微调底层 LLM 或优化 RAG 检索权重。
+          </p>
+        </div>
+
+        <div class="mod-card mod-fly rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="num-badge mod-num">③</span>
+            <span class="eyebrow mod-eyebrow">A/B Testing</span>
+          </div>
+          <h3 class="text-lg font-semibold mb-3">A/B Testing 框架</h3>
+          <p class="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            支持对不同 Agent 策略进行灰度测试，自动筛选出<span class="text-[var(--color-text)] font-medium">转化率最高的营销 SOP</span>，
+            并将其固化为新的官方 Skill。
+          </p>
+        </div>
+      </div>
+
+      <!-- Flywheel closed loop visualization -->
+      <div class="mt-14 card rounded-2xl p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <i data-lucide="repeat" class="w-5 h-5 text-[var(--color-highlight)]"></i>
+          <h3 class="font-[var(--font-serif)] text-xl font-bold">飞轮闭环</h3>
+          <span class="eyebrow">Flywheel Closed Loop</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div class="text-center p-4 rounded-xl bg-[var(--color-primary-muted)]/30 border border-[rgba(99,102,241,0.25)]">
+            <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-2">STEP 1</p>
+            <p class="font-medium text-sm">Agent 执行</p>
+            <p class="text-xs text-[var(--color-text-muted)] mt-1">编排 + 知识 + 工具</p>
+          </div>
+          <div class="text-center p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+            <p class="font-mono text-xs text-[var(--color-text-secondary)] mb-2">STEP 2</p>
+            <p class="font-medium text-sm">行为埋点</p>
+            <p class="text-xs text-[var(--color-text-muted)] mt-1">CoT + 调用日志</p>
+          </div>
+          <div class="text-center p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+            <p class="font-mono text-xs text-[var(--color-text-secondary)] mb-2">STEP 3</p>
+            <p class="font-medium text-sm">业务结果</p>
+            <p class="text-xs text-[var(--color-text-muted)] mt-1">播放量 / 核销率</p>
+          </div>
+          <div class="text-center p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+            <p class="font-mono text-xs text-[var(--color-text-secondary)] mb-2">STEP 4</p>
+            <p class="font-medium text-sm">反馈回流</p>
+            <p class="text-xs text-[var(--color-text-muted)] mt-1">RLHF + A/B</p>
+          </div>
+          <div class="text-center p-4 rounded-xl bg-[var(--color-highlight-muted)]/30 border border-[rgba(251,191,36,0.25)]">
+            <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">STEP 5</p>
+            <p class="font-medium text-sm">沉淀为 Skill</p>
+            <p class="text-xs text-[var(--color-text-muted)] mt-1">反哺底座 · 进化</p>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+          <i data-lucide="corner-up-right" class="w-3.5 h-3.5"></i>
+          最优 SOP 经 A/B 验证后固化为新的官方 Skill，回到 STEP 1 形成闭环
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 06 · 业务映射 ═══════════════════ -->
+    <section id="mapping" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <div class="section-divider mb-4"><span class="eyebrow">06 — Business Mapping</span></div>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">技术与业务架构的映射</h2>
+      <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
+        每个技术模块都对应业务架构中的具体能力。下表展示两者如何咬合。
+      </p>
+
+      <div class="mt-12 rounded-2xl border border-[var(--color-border)] overflow-hidden">
+        <div class="grid grid-cols-12 bg-[var(--color-background-elevated)] border-b border-[var(--color-border)]">
+          <div class="col-span-12 md:col-span-3 px-5 py-4 eyebrow">技术模块</div>
+          <div class="col-span-12 md:col-span-2 px-5 py-4 eyebrow">角色定位</div>
+          <div class="col-span-12 md:col-span-4 px-5 py-4 eyebrow">支撑业务能力</div>
+          <div class="col-span-12 md:col-span-3 px-5 py-4 eyebrow">对应业务层</div>
+        </div>
+
+        <div class="divide-y divide-[var(--color-border)]">
+          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-12 md:col-span-3 px-5 py-5">
+              <p class="font-medium text-[var(--color-primary-hover)]">① Orchestration Engine</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">编排引擎</p>
+            </div>
+            <div class="col-span-12 md:col-span-2 px-5 py-5 text-sm">大脑</div>
+            <div class="col-span-12 md:col-span-4 px-5 py-5 text-sm text-[var(--color-text-secondary)]">将 Harness 能力组装为可执行工作流</div>
+            <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">底座平台核心</div>
+          </div>
+
+          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-12 md:col-span-3 px-5 py-5">
+              <p class="font-medium text-[var(--color-accent)]">② RAG 2.0 知识中台</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">向量知识中台</p>
+            </div>
+            <div class="col-span-12 md:col-span-2 px-5 py-5 text-sm">记忆库</div>
+            <div class="col-span-12 md:col-span-4 px-5 py-5 text-sm text-[var(--color-text-secondary)]">官方行业库 + 用户私有库的隔离与检索</div>
+            <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">底座 · 自定义分身</div>
+          </div>
+
+          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-12 md:col-span-3 px-5 py-5">
+              <p class="font-medium text-[var(--color-emerald)]">③ Skill / Tools 层</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">技能工具层</p>
+            </div>
+            <div class="col-span-12 md:col-span-2 px-5 py-5 text-sm">手脚</div>
+            <div class="col-span-12 md:col-span-4 px-5 py-5 text-sm text-[var(--color-text-secondary)]">原子化营销动作 + 平台 API 分发</div>
+            <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">底座 · 官方 / 自定义分身</div>
+          </div>
+
+          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-12 md:col-span-3 px-5 py-5">
+              <p class="font-medium text-[var(--color-magenta)]">④ Agent Builder</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">低代码搭建器</p>
+            </div>
+            <div class="col-span-12 md:col-span-2 px-5 py-5 text-sm">交互层</div>
+            <div class="col-span-12 md:col-span-4 px-5 py-5 text-sm text-[var(--color-text-secondary)]">用户 DIY 专属分身 + 注入私有认知</div>
+            <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">用户自定义分身</div>
+          </div>
+
+          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+            <div class="col-span-12 md:col-span-3 px-5 py-5">
+              <p class="font-medium text-[var(--color-highlight)]">⑤ Data Flywheel</p>
+              <p class="text-xs text-[var(--color-text-muted)] mt-0.5">数据飞轮</p>
+            </div>
+            <div class="col-span-12 md:col-span-2 px-5 py-5 text-sm">进化引擎</div>
+            <div class="col-span-12 md:col-span-4 px-5 py-5 text-sm text-[var(--color-text-secondary)]">埋点 + RLHF + A/B 反哺 Skill 沉淀</div>
+            <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">横切 · 全层受益</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 grid md:grid-cols-2 gap-5">
+        <div class="card rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <i data-lucide="package-check" class="w-5 h-5 text-[var(--color-primary-hover)]"></i>
+            <h3 class="font-semibold">官方专家分身的技术依赖</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+            <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> ① 编排引擎 + ② 官方行业库 + ③ 官方 Skill 集</li>
+            <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> ⑤ 飞轮回流让官方 Skill 持续升级</li>
+            <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> <span class="text-[var(--color-text-muted)]">不依赖 ④ Agent Builder——官方分身是底座自带的旗舰应用</span></li>
+          </ul>
+        </div>
+
+        <div class="card rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-4">
+            <i data-lucide="puzzle" class="w-5 h-5 text-[var(--color-magenta)]"></i>
+            <h3 class="font-semibold">用户自定义分身的技术依赖</h3>
+          </div>
+          <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
+            <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ④ Agent Builder + ② 私有 Namespace + ③ 用户上传 Skill</li>
+            <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ① 编排引擎调度混合调用（官方 + 私有）</li>
+            <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ③ 沙箱执行 / ④ 仿真测试保障安全合规</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ Footer ═══════════════════ -->
+    <footer class="max-w-6xl mx-auto px-6 py-16 border-t border-[var(--color-border)] mt-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <p class="font-[var(--font-serif)] text-2xl font-bold">Wanpix.ai · Tech Architecture</p>
+          <p class="text-sm text-[var(--color-text-muted)] mt-1">五大核心模块 · 支撑双层级产品架构的能力底座</p>
+        </div>
+        <div class="flex gap-2">
+          <a href="industry-positioning.html" class="pill hover:text-white transition-colors">← 业务定位</a>
+          <span class="pill">技术架构</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
