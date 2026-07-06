@@ -233,7 +233,7 @@
         min-height: 0;
       }
       .cards-l1 { grid-template-columns: repeat(6, 1fr); }
-      .cards-l2 { grid-template-columns: repeat(4, 1fr); }
+      .cards-l2 { grid-template-columns: repeat(3, 1fr); }
       .cards-l3-aaas { grid-template-columns: repeat(2, 1fr); }
       .cards-l3-builder { grid-template-columns: 1fr; }
       .cards-l3-ops { grid-template-columns: 1fr; }
@@ -600,21 +600,41 @@
         <div class="layer-label">
           <p class="layer-num">L2</p>
           <p class="layer-name">AI Native 层</p>
-          <p class="layer-desc">处理不确定性，封装行业 Know-how。算法引擎与技能模块。</p>
+          <p class="layer-desc">处理不确定性，封装行业 Know-how。编排 + 认知 + 记忆 + 技能 + 调度 + 进化的完整闭环。</p>
         </div>
         <div class="layer-content">
           <div class="cards cards-l2">
             <div class="card">
-              <div class="card-head"><span class="card-title">文旅垂类 RAG 引擎</span><span class="card-role">认知核心</span></div>
+              <div class="card-head"><span class="card-title">Agent 编排引擎</span><span class="card-role">大脑</span></div>
+              <p class="card-en">Orchestration Engine</p>
+              <ul class="card-list">
+                <li><strong>ReAct + Function Calling</strong>：推理-行动循环</li>
+                <li><strong>Planner</strong>：长链路任务分解与多步规划</li>
+                <li><strong>异常恢复</strong>：失败重试 + 状态回滚</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="card-title">文旅垂类 RAG 引擎</span><span class="card-role">认知</span></div>
               <p class="card-en">Domain RAG & Insight</p>
               <ul class="card-list">
                 <li><strong>营销归因</strong>：为什么火？BGM？文案？</li>
                 <li><strong>爆款拆解</strong>：提炼可复用爆款公式</li>
                 <li><strong>路书规划</strong>：多点路径优化推理</li>
+                <li><strong>多租户隔离</strong>：Namespace 知识边界</li>
               </ul>
             </div>
             <div class="card">
-              <div class="card-head"><span class="card-title">文旅专用 Skill 技能集</span><span class="card-role">执行手脚</span></div>
+              <div class="card-head"><span class="card-title">记忆与上下文管理</span><span class="card-role">记忆</span></div>
+              <p class="card-en">Memory & Context</p>
+              <ul class="card-list">
+                <li><strong>短期会话记忆</strong>：当前任务上下文</li>
+                <li><strong>长期用户画像</strong>：偏好/历史/风格</li>
+                <li><strong>跨 Agent 传递</strong>：上下文接力</li>
+                <li><strong>Checkpoint</strong>：状态恢复与续跑</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-head"><span class="card-title">文旅专用 Skill 技能集</span><span class="card-role">手脚</span></div>
               <p class="card-en">Domain Skills</p>
               <ul class="card-list">
                 <li><strong>脚本创作</strong>：热点自动生成口播文案</li>
@@ -624,20 +644,23 @@
               </ul>
             </div>
             <div class="card">
-              <div class="card-head"><span class="card-title">多模型路由与调度</span><span class="card-role">算力调度</span></div>
+              <div class="card-head"><span class="card-title">多模型路由与调度</span><span class="card-role">调度</span></div>
               <p class="card-en">Model Router</p>
               <ul class="card-list">
-                <li><strong>模型超市</strong>：统一管理 Seedance/GPT img/可灵/Vidu/Nano Pro</li>
+                <li><strong>模型超市</strong>：Seedance/GPT img/可灵/Vidu/Nano Pro</li>
                 <li><strong>场景化包装</strong>：任务类型自动选最优模型</li>
+                <li><strong>成本-质量平衡</strong>：按预算路由</li>
+                <li><strong>合规质检</strong>：文化常识/画面违规/品牌调性</li>
               </ul>
             </div>
             <div class="card">
-              <div class="card-head"><span class="card-title">合规与审美质检</span><span class="card-role">质量把关</span></div>
-              <p class="card-en">Compliance & Aesthetic QA</p>
+              <div class="card-head"><span class="card-title">Agent 评估与飞轮</span><span class="card-role">进化</span></div>
+              <p class="card-en">Evaluation & Flywheel</p>
               <ul class="card-list">
-                <li>文化常识错误审核</li>
-                <li>画面违规检测</li>
-                <li>品牌调性+审美标准符合度</li>
+                <li><strong>LLM-as-Judge</strong>：双模型交叉评分</li>
+                <li><strong>仿真测试</strong>：Replay + 评估闭环</li>
+                <li><strong>DPO 反馈回流</strong>：偏好数据沉淀 Skill</li>
+                <li><strong>Bayesian 评估</strong>：小样本 A/B 测试</li>
               </ul>
             </div>
           </div>
