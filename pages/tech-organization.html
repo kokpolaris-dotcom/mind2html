@@ -234,9 +234,9 @@
       }
       .cards-l1 { grid-template-columns: repeat(6, 1fr); }
       .cards-l2 { grid-template-columns: repeat(4, 1fr); }
-      .cards-l3-row1 { grid-template-columns: repeat(5, 1fr); }
-      .cards-l3-row2 { grid-template-columns: repeat(3, 1fr); }
-      .cards-l3-builder { grid-template-columns: repeat(4, 1fr); }
+      .cards-l3-aaas { grid-template-columns: repeat(2, 1fr); }
+      .cards-l3-builder { grid-template-columns: 1fr; }
+      .cards-l3-ops { grid-template-columns: 1fr; }
 
       /* Card */
       .card {
@@ -323,11 +323,15 @@
       .layer-l3 .card.builder:hover { border-color: var(--color-highlight); border-left-color: var(--color-highlight); }
       .layer-l3 .card.builder .card-role { background: var(--color-highlight-muted); color: var(--color-highlight); }
 
-      /* L3 split row */
+      .layer-l3 .card.ops { border-left-color: var(--color-emerald); }
+      .layer-l3 .card.ops:hover { border-color: var(--color-emerald); border-left-color: var(--color-emerald); }
+      .layer-l3 .card.ops .card-role { background: var(--color-emerald-muted); color: var(--color-emerald); }
+
+      /* L3 three-column split */
       .l3-split {
         display: grid;
-        grid-template-rows: 1fr 1fr;
-        gap: 0.4rem;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        gap: 0.5rem;
         flex: 1;
         min-height: 0;
       }
@@ -336,7 +340,14 @@
         flex-direction: column;
         gap: 0.3rem;
         min-height: 0;
+        padding: 0.4rem;
+        border-radius: 0.5rem;
+        background: var(--color-surface-hover);
+        border: 1px solid var(--color-border);
       }
+      .l3-section.aaas-section { border-top: 2px solid var(--color-magenta); }
+      .l3-section.builder-section { border-top: 2px solid var(--color-highlight); }
+      .l3-section.ops-section { border-top: 2px solid var(--color-emerald); }
 
       /* ── Footer ── */
       .footer {
@@ -410,19 +421,19 @@
         <div class="layer-label">
           <p class="layer-num">L3</p>
           <p class="layer-name">应用交付层</p>
-          <p class="layer-desc">直接面向客户交付价值。AaaS 官方标杆 + Agent Builder 自定义平台。</p>
+          <p class="layer-desc">直接面向客户交付价值。AaaS 官方标杆 + Agent Builder 自定义平台 + 内部运营平台。</p>
         </div>
         <div class="layer-content">
           <div class="l3-split">
 
-            <!-- AaaS -->
-            <div class="l3-section">
+            <!-- AaaS · 官方标杆业务智能体 -->
+            <div class="l3-section aaas-section">
               <div class="sub-header">
                 <span class="sub-tag sub-tag-a">AaaS</span>
                 <span class="sub-title">官方标杆业务智能体</span>
-                <span class="sub-meta">8 Agent · 按业务域划分</span>
+                <span class="sub-meta">8 Agent</span>
               </div>
-              <div class="cards cards-l3-row1">
+              <div class="cards cards-l3-aaas">
                 <div class="card">
                   <div class="card-head"><span class="card-title">新媒体情报官</span><span class="card-role">侦察兵</span></div>
                   <ul class="card-list">
@@ -463,14 +474,12 @@
                     <li>营销自动执行</li>
                   </ul>
                 </div>
-              </div>
-              <div class="cards cards-l3-row2">
                 <div class="card">
                   <div class="card-head"><span class="card-title">旅行社 Agent</span><span class="card-role">导游销售</span></div>
                   <ul class="card-list">
                     <li>路书定制+行程规划</li>
                     <li>IM 小助手+在线下单</li>
-                    <li>行中管家+多语言+SOP 化</li>
+                    <li>行中管家+多语言</li>
                   </ul>
                 </div>
                 <div class="card">
@@ -492,12 +501,12 @@
               </div>
             </div>
 
-            <!-- Agent Builder -->
-            <div class="l3-section">
+            <!-- Agent Builder · 自定义分身构建平台 -->
+            <div class="l3-section builder-section">
               <div class="sub-header">
                 <span class="sub-tag sub-tag-b">BUILDER</span>
                 <span class="sub-title">自定义分身构建平台</span>
-                <span class="sub-meta">赋能客户利用 L2 能力，结合自身 Know-how 造 Agent</span>
+                <span class="sub-meta">客户自建</span>
               </div>
               <div class="cards cards-l3-builder">
                 <div class="card builder">
@@ -526,6 +535,57 @@
                   <ul class="card-list">
                     <li>自建 Agent 嵌入 APP/官网</li>
                     <li>内部系统集成</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Internal Ops · 内部运营平台 -->
+            <div class="l3-section ops-section">
+              <div class="sub-header">
+                <span class="sub-tag" style="background: var(--color-emerald);">OPS</span>
+                <span class="sub-title">内部运营平台</span>
+                <span class="sub-meta">自用</span>
+              </div>
+              <div class="cards cards-l3-ops">
+                <div class="card ops">
+                  <div class="card-head"><span class="card-title">计费与商业化</span><span class="card-role">收入</span></div>
+                  <ul class="card-list">
+                    <li><strong>套餐管理</strong>：AaaS 订阅 + Foundry 工位</li>
+                    <li><strong>计量扣费</strong>：Token/会话/Agent 多维度</li>
+                    <li><strong>增值包</strong>：超额流量、私有模型部署</li>
+                  </ul>
+                </div>
+                <div class="card ops">
+                  <div class="card-head"><span class="card-title">促销与增长</span><span class="card-role">拉新</span></div>
+                  <ul class="card-list">
+                    <li><strong>优惠券</strong>：新客试用、续费激励</li>
+                    <li><strong>活动引擎</strong>：限时折扣、拼团</li>
+                    <li><strong>推荐返佣</strong>：MCN 渠道分润</li>
+                  </ul>
+                </div>
+                <div class="card ops">
+                  <div class="card-head"><span class="card-title">经营分析 Agent</span><span class="card-role">决策</span></div>
+                  <ul class="card-list">
+                    <li><strong>客户健康度</strong>：续费/流失预警</li>
+                    <li><strong>Agent ROI</strong>：单 Agent 创收/成本</li>
+                    <li><strong>飞轮监控</strong>：Skill 沉淀速度/质量</li>
+                  </ul>
+                </div>
+                <div class="card ops">
+                  <div class="card-head"><span class="card-title">客户成功 Agent</span><span class="card-role">服务</span></div>
+                  <ul class="card-list">
+                    <li><strong>Onboarding</strong>：自动配置+培训引导</li>
+                    <li><strong>工单处理</strong>：智能分派+升级</li>
+                    <li><strong>续费挽留</strong>：流失信号识别+话术</li>
+                  </ul>
+                </div>
+                <div class="card ops">
+                  <div class="card-head"><span class="card-title">运营监控</span><span class="card-role">护航</span></div>
+                  <ul class="card-list">
+                    <li><strong>系统健康</strong>：服务可用性、延迟</li>
+                    <li><strong>Agent 表现</strong>：质量评分、异常拦截</li>
+                    <li><strong>成本归因</strong>：模型 Token 成本拆解</li>
                   </ul>
                 </div>
               </div>
