@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wanpix.ai · 技术架构总览</title>
     <style id="theme-vars">
 :root {
-  --color-background: #0a0a0f;
-  --color-background-elevated: #12121a;
-  --color-surface: #1a1a2e;
-  --color-surface-hover: #22223a;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.15);
+  --color-background: #f8fafc;
+  --color-background-elevated: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.15);
 
   --color-primary: #6366f1;
-  --color-primary-hover: #818cf8;
-  --color-primary-muted: rgba(99, 102, 241, 0.15);
-  --color-primary-glow: rgba(99, 102, 241, 0.3);
+  --color-primary-hover: #4f46e5;
+  --color-primary-muted: rgba(99, 102, 241, 0.10);
+  --color-primary-glow: rgba(99, 102, 241, 0.20);
 
-  --color-accent: #22d3ee;
-  --color-accent-muted: rgba(34, 211, 238, 0.12);
-  --color-accent-glow: rgba(34, 211, 238, 0.25);
+  --color-accent: #0891b2;
+  --color-accent-muted: rgba(8, 145, 178, 0.10);
+  --color-accent-glow: rgba(8, 145, 178, 0.18);
 
-  --color-text: #e2e8f0;
-  --color-text-secondary: #94a3b8;
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
   --color-text-muted: #64748b;
+  --color-text-on-primary: #ffffff;
 
-  --color-highlight: #fbbf24;
-  --color-highlight-muted: rgba(251, 191, 36, 0.12);
+  --color-highlight: #d97706;
+  --color-highlight-muted: rgba(217, 119, 6, 0.10);
 
-  --color-magenta: #f472b6;
-  --color-magenta-muted: rgba(244, 114, 182, 0.12);
+  --color-magenta: #db2777;
+  --color-magenta-muted: rgba(219, 39, 119, 0.10);
 
-  --color-emerald: #34d399;
-  --color-emerald-muted: rgba(52, 211, 153, 0.12);
+  --color-emerald: #059669;
+  --color-emerald-muted: rgba(5, 150, 105, 0.10);
 
   --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
   --font-serif: 'Noto Serif SC', Georgia, serif;
@@ -67,7 +68,7 @@
   }
     </style>
     <style>
-      :root { color-scheme: dark; }
+      :root { color-scheme: light; }
       html { scroll-behavior: smooth; }
       body {
         background-color: var(--color-background);
@@ -80,27 +81,28 @@
       /* ── Atmospheric background ── */
       .bg-grid {
         background-image:
-          linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+          linear-gradient(to right, rgba(15,23,42,0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(15,23,42,0.04) 1px, transparent 1px);
         background-size: 64px 64px;
       }
       .glow-primary { background: radial-gradient(circle at center, var(--color-primary-glow) 0%, transparent 60%); }
       .glow-accent { background: radial-gradient(circle at center, var(--color-accent-glow) 0%, transparent 60%); }
-      .glow-magenta { background: radial-gradient(circle at center, rgba(244,114,182,0.25) 0%, transparent 60%); }
+      .glow-magenta { background: radial-gradient(circle at center, rgba(219,39,119,0.18) 0%, transparent 60%); }
 
       .text-gradient {
-        background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, #22d3ee 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #4f46e5 50%, #0891b2 100%);
         -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
       }
 
       /* ── Cards ── */
       .card {
-        background: linear-gradient(180deg, rgba(26,26,46,0.7) 0%, rgba(18,18,26,0.7) 100%);
+        background: var(--color-surface);
         border: 1px solid var(--color-border);
         backdrop-filter: blur(12px);
         transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
       }
-      .card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+      .card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,0.10); }
 
       .eyebrow {
         font-family: var(--font-mono);
@@ -113,7 +115,7 @@
         display: inline-flex; align-items: center; gap: 0.375rem;
         font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em;
         padding: 0.25rem 0.625rem; border-radius: 9999px;
-        border: 1px solid var(--color-border); background: rgba(255,255,255,0.03);
+        border: 1px solid var(--color-border); background: var(--color-surface);
         color: var(--color-text-secondary);
       }
 
@@ -126,7 +128,7 @@
 
       .mod-card {
         position: relative;
-        background: linear-gradient(180deg, color-mix(in srgb, var(--mc) 8%, transparent) 0%, rgba(18,18,26,0.85) 100%);
+        background: linear-gradient(180deg, color-mix(in srgb, var(--mc) 6%, transparent) 0%, var(--color-surface) 100%);
         border: 1px solid color-mix(in srgb, var(--mc) 25%, transparent);
       }
       .mod-card::before {
@@ -135,7 +137,7 @@
       }
       .mod-card:hover {
         border-color: color-mix(in srgb, var(--mc) 55%, transparent);
-        box-shadow: 0 0 40px color-mix(in srgb, var(--mc) 18%, transparent);
+        box-shadow: 0 0 40px color-mix(in srgb, var(--mc) 14%, transparent);
       }
       .mod-num {
         font-family: var(--font-mono); font-weight: 700;
@@ -164,9 +166,10 @@
       .stack-layer {
         position: relative;
         border: 1px solid var(--color-border);
-        background: linear-gradient(180deg, rgba(26,26,46,0.6) 0%, rgba(18,18,26,0.6) 100%);
+        background: var(--color-surface);
         backdrop-filter: blur(8px);
         transition: all 250ms ease;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
       }
       .stack-layer:hover {
         transform: translateX(4px);
@@ -229,13 +232,13 @@
       </p>
 
       <div class="rise d-4 mt-10 flex flex-wrap gap-3">
-        <a href="#overview" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">00 · 架构总览</a>
-        <a href="#orchestration" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">01 · 编排引擎</a>
-        <a href="#rag" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">02 · 知识中台</a>
-        <a href="#skills" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">03 · 技能工具层</a>
-        <a href="#builder" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">04 · Agent Builder</a>
-        <a href="#flywheel" class="card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">05 · 数据飞轮</a>
-        <a href="#mapping" class="card-accent card px-5 py-2.5 text-sm font-medium hover:text-white transition-colors">06 · 业务映射</a>
+        <a href="#overview" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">00 · 架构总览</a>
+        <a href="#orchestration" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">01 · 编排引擎</a>
+        <a href="#rag" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">02 · 知识中台</a>
+        <a href="#skills" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">03 · 技能工具层</a>
+        <a href="#builder" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">04 · Agent Builder</a>
+        <a href="#flywheel" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">05 · 数据飞轮</a>
+        <a href="#mapping" class="card-accent card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">06 · 业务映射</a>
       </div>
     </header>
 
@@ -256,7 +259,7 @@
         <div class="space-y-2.5 flex flex-col">
 
           <!-- L4 · 应用层 · Agent 分身 -->
-          <div class="stack-layer rounded-2xl p-6 border-[rgba(244,114,182,0.3)] bg-[linear-gradient(180deg,rgba(244,114,182,0.08)_0%,rgba(18,18,26,0.7)_100%)]">
+          <div class="stack-layer rounded-2xl p-6 border-[rgba(219,39,119,0.3)] bg-[linear-gradient(180deg,rgba(219,39,119,0.06)_0%,rgba(255,255,255,0.7)_100%)]">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-3">
                 <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L4</span>
@@ -268,7 +271,7 @@
               <i data-lucide="users" class="w-5 h-5 text-[var(--color-magenta)]"></i>
             </div>
             <div class="grid md:grid-cols-2 gap-2.5">
-              <div class="rounded-xl p-3.5 bg-[var(--color-magenta-muted)]/20 border border-[rgba(244,114,182,0.2)]">
+              <div class="rounded-xl p-3.5 bg-[var(--color-magenta-muted)]/20 border border-[rgba(219,39,119,0.2)]">
                 <p class="font-medium text-sm text-[var(--color-magenta)] mb-1.5">用户自定义分身</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">注入私有认知（品牌调性 / 私域逻辑 / 客群洞察），调用“行业库 + 私有库”。</p>
               </div>
@@ -280,7 +283,7 @@
           </div>
 
           <!-- L3 · 构建层 · Agent Builder -->
-          <div class="stack-layer rounded-2xl p-6 border-[rgba(244,114,182,0.3)]">
+          <div class="stack-layer rounded-2xl p-6 border-[rgba(219,39,119,0.3)]">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-3">
                 <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L3</span>
@@ -292,15 +295,15 @@
               <i data-lucide="puzzle" class="w-5 h-5 text-[var(--color-magenta)]"></i>
             </div>
             <div class="grid md:grid-cols-3 gap-2.5">
-              <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <div class="rounded-xl p-3.5 bg-slate-50 border border-[var(--color-border)]">
                 <p class="font-mono text-xs text-[var(--color-magenta)] mb-1.5">Visual Editor</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">拖拽式工作流，把 RAG / Skill / Tools 像搭积木一样组合。</p>
               </div>
-              <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <div class="rounded-xl p-3.5 bg-slate-50 border border-[var(--color-border)]">
                 <p class="font-mono text-xs text-[var(--color-magenta)] mb-1.5">Prompt IDE</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">Few-shot 模板，上传品牌优秀文案让 Agent 学会调性。</p>
               </div>
-              <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <div class="rounded-xl p-3.5 bg-slate-50 border border-[var(--color-border)]">
                 <p class="font-mono text-xs text-[var(--color-magenta)] mb-1.5">Simulation</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">发布前用历史数据跑沙盒，评估质量与合规性。</p>
               </div>
@@ -308,7 +311,7 @@
           </div>
 
           <!-- L2 · 编排层 · Orchestration Engine -->
-          <div class="stack-layer rounded-2xl p-6 border-[rgba(99,102,241,0.35)] bg-[linear-gradient(180deg,rgba(99,102,241,0.10)_0%,rgba(18,18,26,0.85)_100%)]">
+          <div class="stack-layer rounded-2xl p-6 border-[rgba(99,102,241,0.35)] bg-[linear-gradient(180deg,rgba(99,102,241,0.06)_0%,rgba(255,255,255,0.85)_100%)]">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-3">
                 <span class="num-badge bg-[var(--color-primary-muted)] text-[var(--color-primary-hover)]">L2</span>
@@ -320,15 +323,15 @@
               <i data-lucide="brain-circuit" class="w-5 h-5 text-[var(--color-primary-hover)]"></i>
             </div>
             <div class="grid md:grid-cols-3 gap-2.5">
-              <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <div class="rounded-xl p-3.5 bg-slate-50 border border-[var(--color-border)]">
                 <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-1.5">Multi-Agent</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">基于 Mastra 的多 Agent 协作，DAG 工作流，选题 / 文案 / 分发流水线。</p>
               </div>
-              <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <div class="rounded-xl p-3.5 bg-slate-50 border border-[var(--color-border)]">
                 <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-1.5">Planner</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">自然语言指令 → 任务自动拆解，调用底层 Skills 与 Tools。</p>
               </div>
-              <div class="rounded-xl p-3.5 bg-white/[0.02] border border-[var(--color-border)]">
+              <div class="rounded-xl p-3.5 bg-slate-50 border border-[var(--color-border)]">
                 <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-1.5">State Mgmt</p>
                 <p class="text-xs text-[var(--color-text-secondary)] leading-relaxed">长链路任务的上下文记忆，多轮对话中不丢信息。</p>
               </div>
@@ -338,7 +341,7 @@
           <!-- L1 · 能力层 · RAG + Skill/Tools -->
           <div class="grid md:grid-cols-2 gap-2.5 flex-1">
 
-            <div class="stack-layer rounded-2xl p-6 border-[rgba(34,211,238,0.25)]">
+            <div class="stack-layer rounded-2xl p-6 border-[rgba(8,145,178,0.25)]">
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-3">
                   <span class="num-badge bg-[var(--color-accent-muted)] text-[var(--color-accent)]">L1</span>
@@ -361,7 +364,7 @@
               </div>
             </div>
 
-            <div class="stack-layer rounded-2xl p-6 border-[rgba(52,211,153,0.25)]">
+            <div class="stack-layer rounded-2xl p-6 border-[rgba(5,150,105,0.25)]">
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-3">
                   <span class="num-badge bg-[var(--color-emerald-muted)] text-[var(--color-emerald)]">L1</span>
@@ -388,7 +391,7 @@
         </div>
 
         <!-- 右侧：纵向基础设施柱（贯穿 L1–L4） -->
-        <aside class="stack-layer rounded-2xl p-5 flex flex-col border-[rgba(148,163,184,0.25)] bg-[linear-gradient(180deg,rgba(34,211,238,0.05)_0%,rgba(99,102,241,0.05)_50%,rgba(251,191,36,0.06)_100%)]">
+        <aside class="stack-layer rounded-2xl p-5 flex flex-col border-[rgba(148,163,184,0.25)] bg-[linear-gradient(180deg,rgba(8,145,178,0.05)_0%,rgba(99,102,241,0.04)_50%,rgba(217,119,6,0.05)_100%)]">
           <div class="flex items-center gap-2 mb-1 pb-4 border-b border-[var(--color-border)]">
             <i data-lucide="layers-3" class="w-4 h-4 text-[var(--color-text-secondary)]"></i>
             <div>
@@ -451,7 +454,7 @@
           以商家输入 <span class="font-mono text-xs text-[var(--color-accent)]">“帮我策划一个五一假期的景区促销”</span> 为例：
         </p>
         <div class="grid md:grid-cols-5 gap-2.5">
-          <div class="rounded-xl p-4 bg-[var(--color-magenta-muted)]/20 border border-[rgba(244,114,182,0.2)]">
+          <div class="rounded-xl p-4 bg-[var(--color-magenta-muted)]/20 border border-[rgba(219,39,119,0.2)]">
             <p class="font-mono text-xs text-[var(--color-magenta)] mb-2">① 接收 · L4</p>
             <p class="text-xs text-[var(--color-text-secondary)]">分身接收自然语言指令，传递给编排引擎</p>
           </div>
@@ -459,15 +462,15 @@
             <p class="font-mono text-xs text-[var(--color-primary-hover)] mb-2">② 规划 · L2</p>
             <p class="text-xs text-[var(--color-text-secondary)]">Planner 拆解任务，编排多 Agent 工作流</p>
           </div>
-          <div class="rounded-xl p-4 bg-[var(--color-accent-muted)]/20 border border-[rgba(34,211,238,0.2)]">
+          <div class="rounded-xl p-4 bg-[var(--color-accent-muted)]/20 border border-[rgba(8,145,178,0.2)]">
             <p class="font-mono text-xs text-[var(--color-accent)] mb-2">③ 检索 · L1</p>
             <p class="text-xs text-[var(--color-text-secondary)]">RAG 混合检索五一热点 / 景区知识 / 历史 SOP</p>
           </div>
-          <div class="rounded-xl p-4 bg-[var(--color-emerald-muted)]/20 border border-[rgba(52,211,153,0.2)]">
+          <div class="rounded-xl p-4 bg-[var(--color-emerald-muted)]/20 border border-[rgba(5,150,105,0.2)]">
             <p class="font-mono text-xs text-[var(--color-emerald)] mb-2">④ 执行 · L1</p>
             <p class="text-xs text-[var(--color-text-secondary)]">Skill 生成脚本，Tools 分发到抖音 / 小红书</p>
           </div>
-          <div class="rounded-xl p-4 bg-[var(--color-highlight-muted)]/20 border border-[rgba(251,191,36,0.2)]">
+          <div class="rounded-xl p-4 bg-[var(--color-highlight-muted)]/20 border border-[rgba(217,119,6,0.2)]">
             <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">⑤ 回流 · 贯穿</p>
             <p class="text-xs text-[var(--color-text-secondary)]">飞轮记录结果，A/B 验证后沉淀为官方 Skill</p>
           </div>
@@ -736,22 +739,22 @@
             <p class="font-medium text-sm">Agent 执行</p>
             <p class="text-xs text-[var(--color-text-muted)] mt-1">编排 + 知识 + 工具</p>
           </div>
-          <div class="text-center p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+          <div class="text-center p-4 rounded-xl bg-slate-50 border border-[var(--color-border)]">
             <p class="font-mono text-xs text-[var(--color-text-secondary)] mb-2">STEP 2</p>
             <p class="font-medium text-sm">行为埋点</p>
             <p class="text-xs text-[var(--color-text-muted)] mt-1">CoT + 调用日志</p>
           </div>
-          <div class="text-center p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+          <div class="text-center p-4 rounded-xl bg-slate-50 border border-[var(--color-border)]">
             <p class="font-mono text-xs text-[var(--color-text-secondary)] mb-2">STEP 3</p>
             <p class="font-medium text-sm">业务结果</p>
             <p class="text-xs text-[var(--color-text-muted)] mt-1">播放量 / 核销率</p>
           </div>
-          <div class="text-center p-4 rounded-xl bg-white/[0.02] border border-[var(--color-border)]">
+          <div class="text-center p-4 rounded-xl bg-slate-50 border border-[var(--color-border)]">
             <p class="font-mono text-xs text-[var(--color-text-secondary)] mb-2">STEP 4</p>
             <p class="font-medium text-sm">反馈回流</p>
             <p class="text-xs text-[var(--color-text-muted)] mt-1">RLHF + A/B</p>
           </div>
-          <div class="text-center p-4 rounded-xl bg-[var(--color-highlight-muted)]/30 border border-[rgba(251,191,36,0.25)]">
+          <div class="text-center p-4 rounded-xl bg-[var(--color-highlight-muted)]/30 border border-[rgba(217,119,6,0.25)]">
             <p class="font-mono text-xs text-[var(--color-highlight)] mb-2">STEP 5</p>
             <p class="font-medium text-sm">沉淀为 Skill</p>
             <p class="text-xs text-[var(--color-text-muted)] mt-1">反哺底座 · 进化</p>
@@ -781,7 +784,7 @@
         </div>
 
         <div class="divide-y divide-[var(--color-border)]">
-          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+          <div class="grid grid-cols-12 hover:bg-slate-100 transition-colors">
             <div class="col-span-12 md:col-span-3 px-5 py-5">
               <p class="font-medium text-[var(--color-primary-hover)]">① Orchestration Engine</p>
               <p class="text-xs text-[var(--color-text-muted)] mt-0.5">编排引擎</p>
@@ -791,7 +794,7 @@
             <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">底座平台核心</div>
           </div>
 
-          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+          <div class="grid grid-cols-12 hover:bg-slate-100 transition-colors">
             <div class="col-span-12 md:col-span-3 px-5 py-5">
               <p class="font-medium text-[var(--color-accent)]">② RAG 2.0 知识中台</p>
               <p class="text-xs text-[var(--color-text-muted)] mt-0.5">向量知识中台</p>
@@ -801,7 +804,7 @@
             <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">底座 · 自定义分身</div>
           </div>
 
-          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+          <div class="grid grid-cols-12 hover:bg-slate-100 transition-colors">
             <div class="col-span-12 md:col-span-3 px-5 py-5">
               <p class="font-medium text-[var(--color-emerald)]">③ Skill / Tools 层</p>
               <p class="text-xs text-[var(--color-text-muted)] mt-0.5">技能工具层</p>
@@ -811,7 +814,7 @@
             <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">底座 · 官方 / 自定义分身</div>
           </div>
 
-          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+          <div class="grid grid-cols-12 hover:bg-slate-100 transition-colors">
             <div class="col-span-12 md:col-span-3 px-5 py-5">
               <p class="font-medium text-[var(--color-magenta)]">④ Agent Builder</p>
               <p class="text-xs text-[var(--color-text-muted)] mt-0.5">低代码搭建器</p>
@@ -821,7 +824,7 @@
             <div class="col-span-12 md:col-span-3 px-5 py-5 text-sm text-[var(--color-text-muted)]">用户自定义分身</div>
           </div>
 
-          <div class="grid grid-cols-12 hover:bg-white/[0.02] transition-colors">
+          <div class="grid grid-cols-12 hover:bg-slate-100 transition-colors">
             <div class="col-span-12 md:col-span-3 px-5 py-5">
               <p class="font-medium text-[var(--color-highlight)]">⑤ Data Flywheel</p>
               <p class="text-xs text-[var(--color-text-muted)] mt-0.5">数据飞轮</p>
@@ -868,7 +871,7 @@
           <p class="text-sm text-[var(--color-text-muted)] mt-1">五大核心模块 · 支撑双层级产品架构的能力底座</p>
         </div>
         <div class="flex gap-2">
-          <a href="industry-positioning.html" class="pill hover:text-white transition-colors">← 业务定位</a>
+          <a href="industry-positioning.html" class="pill hover:text-[color:var(--color-text)] transition-colors">← 业务定位</a>
           <span class="pill">技术架构</span>
         </div>
       </div>

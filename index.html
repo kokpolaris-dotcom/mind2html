@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wanpix.ai · 产品技术方案</title>
     <style>
 :root {
-  --color-background: #0a0a0f;
-  --color-surface: #1a1a2e;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
   --color-primary: #6366f1;
-  --color-accent: #22d3ee;
-  --color-text: #e2e8f0;
-  --color-text-secondary: #94a3b8;
-  --color-border: rgba(255,255,255,0.08);
+  --color-accent: #0891b2;
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-border: rgba(15, 23, 42, 0.08);
   --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; background: var(--color-background); color: var(--color-text); font-family: var(--font-sans); }
 body { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; }
-.glow { position: fixed; top: -20%; left: -10%; width: 40rem; height: 40rem; background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 60%); z-index: 0; }
-.glow-accent { position: fixed; bottom: -20%; right: -10%; width: 36rem; height: 36rem; background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 60%); z-index: 0; }
-.grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; }
+.glow { position: fixed; top: -20%; left: -10%; width: 40rem; height: 40rem; background: radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 60%); z-index: 0; }
+.glow-accent { position: fixed; bottom: -20%; right: -10%; width: 36rem; height: 36rem; background: radial-gradient(circle, rgba(8,145,178,0.03) 0%, transparent 60%); z-index: 0; }
+.grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; }
 .content { position: relative; z-index: 1; max-width: 600px; width: 100%; text-align: center; }
 h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
 h1 span { background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 p { color: var(--color-text-secondary); margin-bottom: 2.5rem; font-size: 1.1rem; }
 .links { display: flex; flex-direction: column; gap: 1rem; }
-a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: 1rem; color: var(--color-text); text-decoration: none; transition: all 0.2s; }
-a:hover { background: rgba(255,255,255,0.08); border-color: var(--color-primary); }
+a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1rem; color: var(--color-text); text-decoration: none; transition: all 0.2s; }
+a:hover { background: #f1f5f9; border-color: var(--color-primary); }
 a .icon { color: var(--color-accent); }
 a .arrow { color: var(--color-text-secondary); }
 a:hover .arrow { color: var(--color-accent); transform: translateX(4px); }
