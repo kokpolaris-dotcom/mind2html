@@ -227,7 +227,7 @@
       <p class="rise d-3 mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-[var(--color-text-secondary)]">
         围绕双层级产品架构（底座 + 官方 / 自定义分身），技术上由
         <span class="text-[var(--color-text)] font-medium">五大核心模块</span>配套：
-        编排引擎、知识中台、技能工具层、Agent Builder、数据飞轮——
+        编排引擎、知识中台、技能工具层、Agent Foundry、数据飞轮——
         形成“感知 → 决策 → 执行 → 反馈 → 进化”的完整闭环。
       </p>
 
@@ -236,7 +236,7 @@
         <a href="#orchestration" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">01 · 编排引擎</a>
         <a href="#rag" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">02 · 知识中台</a>
         <a href="#skills" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">03 · 技能工具层</a>
-        <a href="#builder" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">04 · Agent Builder</a>
+        <a href="#builder" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">04 · Agent Foundry</a>
         <a href="#flywheel" class="card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">05 · 数据飞轮</a>
         <a href="#mapping" class="card-accent card px-5 py-2.5 text-sm font-medium hover:text-[color:var(--color-text)] transition-colors">06 · 业务映射</a>
       </div>
@@ -249,7 +249,7 @@
       <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
         <span class="text-[var(--color-text)] font-medium">横向</span>是业务纵深：应用层（分身）→ 构建层（Builder）→ 编排层（大脑）→ 能力层（RAG + Skill/Tools）；
         <span class="text-[var(--color-text)] font-medium">纵向</span>是基础设施柱：多租户、权限、计费、数据飞轮贯穿全部四层。
-        Agent Builder 位于分身与大脑之间——它是“铸造厂”，在分身（数字员工）和编排引擎（大脑）之间做组装。
+        Agent Foundry 位于分身与大脑之间——它是“铸造厂”，在分身（数字员工）和编排引擎（大脑）之间做组装。
       </p>
 
       <!-- Architecture diagram: 横向业务纵深(4层) + 右侧纵向基础设施柱 -->
@@ -282,13 +282,13 @@
             </div>
           </div>
 
-          <!-- L3 · 构建层 · Agent Builder -->
+          <!-- L3 · 构建层 · Agent Foundry -->
           <div class="stack-layer rounded-2xl p-6 border-[rgba(219,39,119,0.3)]">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-3">
                 <span class="num-badge bg-[var(--color-magenta-muted)] text-[var(--color-magenta)]">L3</span>
                 <div>
-                  <p class="font-semibold">构建层 · Agent Builder <span class="text-[var(--color-text-muted)] font-normal text-sm">· 铸造厂</span></p>
+                  <p class="font-semibold">构建层 · Agent Foundry <span class="text-[var(--color-text-muted)] font-normal text-sm">· 铸造厂</span></p>
                   <p class="text-xs text-[var(--color-text-muted)] mt-0.5">在分身与大脑之间——用户 DIY 专属分身的前端入口</p>
                 </div>
               </div>
@@ -630,10 +630,10 @@
       </div>
     </section>
 
-    <!-- ═══════════════════ 04 · Agent Builder ═══════════════════ -->
+    <!-- ═══════════════════ 04 · Agent Foundry ═══════════════════ -->
     <section id="builder" class="max-w-6xl mx-auto px-6 py-20 md:py-28">
       <div class="section-divider mb-4"><span class="eyebrow">04 — User DIY Layer</span></div>
-      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">低代码 / 无代码 Agent Builder</h2>
+      <h2 class="font-[var(--font-serif)] text-3xl md:text-5xl font-bold tracking-tight mb-3">低代码 / 无代码 Agent Foundry</h2>
       <p class="max-w-2xl text-[var(--color-text-secondary)] text-lg">
         实现<span class="text-[var(--color-text)] font-medium">“用户 DIY 专属分身”</span>的前端交互核心。
       </p>
@@ -816,7 +816,7 @@
 
           <div class="grid grid-cols-12 hover:bg-slate-100 transition-colors">
             <div class="col-span-12 md:col-span-3 px-5 py-5">
-              <p class="font-medium text-[var(--color-magenta)]">④ Agent Builder</p>
+              <p class="font-medium text-[var(--color-magenta)]">④ Agent Foundry</p>
               <p class="text-xs text-[var(--color-text-muted)] mt-0.5">低代码搭建器</p>
             </div>
             <div class="col-span-12 md:col-span-2 px-5 py-5 text-sm">交互层</div>
@@ -845,7 +845,7 @@
           <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
             <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> ① 编排引擎 + ② 官方行业库 + ③ 官方 Skill 集</li>
             <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> ⑤ 飞轮回流让官方 Skill 持续升级</li>
-            <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> <span class="text-[var(--color-text-muted)]">不依赖 ④ Agent Builder——官方分身是底座自带的旗舰应用</span></li>
+            <li class="flex gap-2"><span class="text-[var(--color-primary-hover)]">·</span> <span class="text-[var(--color-text-muted)]">不依赖 ④ Agent Foundry——官方分身是底座自带的旗舰应用</span></li>
           </ul>
         </div>
 
@@ -855,7 +855,7 @@
             <h3 class="font-semibold">用户自定义分身的技术依赖</h3>
           </div>
           <ul class="space-y-2 text-sm text-[var(--color-text-secondary)]">
-            <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ④ Agent Builder + ② 私有 Namespace + ③ 用户上传 Skill</li>
+            <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ④ Agent Foundry + ② 私有 Namespace + ③ 用户上传 Skill</li>
             <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ① 编排引擎调度混合调用（官方 + 私有）</li>
             <li class="flex gap-2"><span class="text-[var(--color-magenta)]">·</span> ③ 沙箱执行 / ④ 仿真测试保障安全合规</li>
           </ul>
