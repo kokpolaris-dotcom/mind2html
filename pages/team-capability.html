@@ -75,8 +75,8 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-        padding: 0.75rem 1.25rem 0.5rem;
-        gap: 0.4rem;
+        padding: 1rem 1.5rem 0.75rem;
+        gap: 0.6rem;
       }
 
       /* ── Header ── */
@@ -84,22 +84,22 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 0.25rem 0.4rem;
+        padding: 0 0.25rem 0.6rem;
         border-bottom: 1px solid var(--color-border);
       }
       .header-left { display: flex; align-items: center; gap: 0.6rem; }
       .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); box-shadow: 0 0 10px var(--color-primary); }
-      .brand-text { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--color-text-muted); }
+      .brand-text { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--color-text-muted); }
       .title {
         font-family: var(--font-serif);
         font-weight: 800;
-        font-size: 1.35rem;
+        font-size: 1.6rem;
         letter-spacing: -0.01em;
         color: var(--color-text);
       }
       .title-accent { color: var(--color-primary-hover); }
       .subtitle {
-        font-size: 0.68rem;
+        font-size: 0.72rem;
         color: var(--color-text-muted);
         font-family: var(--font-mono);
       }
@@ -127,7 +127,7 @@
         flex: 1;
         display: grid;
         grid-template-columns: 1.5fr 1fr;
-        gap: 0.5rem;
+        gap: 0.7rem;
         min-height: 0;
       }
 
@@ -135,7 +135,7 @@
       .left-zone {
         display: flex;
         flex-direction: column;
-        gap: 0.4rem;
+        gap: 0.6rem;
         min-height: 0;
       }
 
@@ -145,7 +145,7 @@
         border: 1px solid var(--color-border);
         border-left: 3px solid var(--mc, var(--color-accent));
         border-radius: 0.6rem;
-        padding: 0.5rem 0.7rem;
+        padding: 0.75rem 1rem;
         display: flex;
         flex-direction: column;
         min-height: 0;
@@ -163,29 +163,29 @@
       }
       .team-num {
         font-family: var(--font-mono);
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-weight: 700;
         color: var(--mc);
       }
       .team-name {
-        font-size: 0.85rem;
+        font-size: 1rem;
         font-weight: 700;
         color: var(--color-text);
       }
       .team-name .accent { color: var(--mc); }
       .team-role {
         font-family: var(--font-mono);
-        font-size: 0.58rem;
+        font-size: 0.7rem;
         color: var(--color-text-muted);
         margin-left: auto;
       }
 
       .team-profile {
-        font-size: 0.62rem;
+        font-size: 0.78rem;
         color: var(--color-text-secondary);
-        line-height: 1.4;
-        margin-bottom: 0.3rem;
-        padding: 0.25rem 0.4rem;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+        padding: 0.4rem 0.6rem;
         background: color-mix(in srgb, var(--mc) 4%, transparent);
         border-radius: 0.3rem;
       }
@@ -193,7 +193,7 @@
 
       .mini-cards {
         display: grid;
-        gap: 0.3rem;
+        gap: 0.5rem;
         flex: 1;
         min-height: 0;
       }
@@ -204,10 +204,10 @@
         background: var(--color-surface);
         border: 1px solid var(--color-border);
         border-radius: 0.35rem;
-        padding: 0.3rem 0.4rem;
+        padding: 0.5rem 0.55rem;
         display: flex;
         flex-direction: column;
-        gap: 0.2rem;
+        gap: 0.3rem;
         transition: all 150ms ease;
       }
       .mini-card:hover {
@@ -215,21 +215,21 @@
         transform: translateY(-1px);
       }
       .mini-card-title {
-        font-size: 0.62rem;
+        font-size: 0.8rem;
         font-weight: 600;
         color: var(--color-text);
-        line-height: 1.2;
+        line-height: 1.25;
       }
       .mini-tags {
         display: flex;
-        gap: 0.2rem;
+        gap: 0.25rem;
         flex-wrap: wrap;
       }
       .team-tag {
         font-family: var(--font-mono);
-        font-size: 0.5rem;
+        font-size: 0.62rem;
         font-weight: 600;
-        padding: 0.08rem 0.3rem;
+        padding: 0.12rem 0.35rem;
         border-radius: 2px;
         letter-spacing: 0.02em;
       }
@@ -238,25 +238,25 @@
 
       .team-tech {
         font-family: var(--font-mono);
-        font-size: 0.55rem;
+        font-size: 0.68rem;
         color: var(--color-text-muted);
-        padding-top: 0.25rem;
+        padding-top: 0.4rem;
         border-top: 1px dashed var(--color-border);
-        margin-top: 0.2rem;
+        margin-top: 0.35rem;
       }
       .team-tech strong { color: var(--color-text-secondary); }
 
       .mindset-diff {
         display: flex;
         gap: 0.5rem;
-        margin-top: 0.25rem;
-        font-size: 0.56rem;
+        margin-top: 0.4rem;
+        font-size: 0.7rem;
       }
       .mindset {
         flex: 1;
-        padding: 0.2rem 0.35rem;
+        padding: 0.35rem 0.5rem;
         border-radius: 0.25rem;
-        line-height: 1.3;
+        line-height: 1.4;
       }
       .mindset.saas-side {
         background: var(--color-accent-muted);
@@ -274,7 +274,7 @@
       .l3-cols {
         display: grid;
         grid-template-columns: 1.2fr 1fr 1fr;
-        gap: 0.4rem;
+        gap: 0.6rem;
         flex: 1;
         min-height: 0;
       }
@@ -283,7 +283,7 @@
         border: 1px solid var(--color-border);
         border-top: 2px solid var(--cc, var(--color-magenta));
         border-radius: 0.4rem;
-        padding: 0.35rem 0.5rem;
+        padding: 0.5rem 0.65rem;
         display: flex;
         flex-direction: column;
         min-height: 0;
@@ -295,15 +295,15 @@
         display: flex;
         align-items: baseline;
         gap: 0.35rem;
-        margin-bottom: 0.25rem;
-        padding-bottom: 0.2rem;
+        margin-bottom: 0.3rem;
+        padding-bottom: 0.25rem;
         border-bottom: 1px solid var(--color-border);
       }
       .l3-col-tag {
         font-family: var(--font-mono);
-        font-size: 0.55rem;
+        font-size: 0.65rem;
         font-weight: 700;
-        padding: 0.08rem 0.3rem;
+        padding: 0.12rem 0.35rem;
         border-radius: 2px;
         color: white;
       }
@@ -311,25 +311,26 @@
       .l3-col-tag.foundry { background: var(--color-highlight); }
       .l3-col-tag.ops { background: var(--color-emerald); }
       .l3-col-name {
-        font-size: 0.65rem;
+        font-size: 0.78rem;
         font-weight: 600;
         color: var(--color-text);
       }
       .l3-col-meta {
         font-family: var(--font-mono);
-        font-size: 0.52rem;
+        font-size: 0.62rem;
         color: var(--color-text-muted);
         margin-left: auto;
       }
       .l3-list {
         list-style: none;
-        font-size: 0.58rem;
+        font-size: 0.72rem;
         color: var(--color-text-secondary);
-        line-height: 1.5;
+        line-height: 1.6;
       }
       .l3-list li {
-        padding-left: 0.5rem;
+        padding-left: 0.6rem;
         position: relative;
+        margin-bottom: 0.25rem;
       }
       .l3-list li::before {
         content: '·';
@@ -347,7 +348,7 @@
       .right-zone {
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
+        gap: 0.5rem;
         min-height: 0;
       }
 
@@ -356,25 +357,25 @@
         border: 1px solid var(--color-border);
         border-left: 3px solid var(--pc, var(--color-primary));
         border-radius: 0.5rem;
-        padding: 0.45rem 0.6rem;
+        padding: 0.65rem 0.8rem;
         display: flex;
         flex-direction: column;
       }
-      .priority-card.p0-commercial { --pc: var(--color-error); }
-      .priority-card.p0-poc { --pc: var(--color-highlight); }
-      .priority-card.p1-ga { --pc: var(--color-primary); }
+      .priority-card.p0-commercial { --pc: var(--color-error); flex: 1.1; }
+      .priority-card.p0-poc { --pc: var(--color-highlight); flex: 1.2; }
+      .priority-card.p1-ga { --pc: var(--color-primary); flex: 1; }
 
       .pri-head {
         display: flex;
         align-items: baseline;
         gap: 0.4rem;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.3rem;
       }
       .pri-tag {
         font-family: var(--font-mono);
-        font-size: 0.62rem;
+        font-size: 0.72rem;
         font-weight: 700;
-        padding: 0.12rem 0.4rem;
+        padding: 0.15rem 0.45rem;
         border-radius: 3px;
         color: white;
       }
@@ -382,28 +383,28 @@
       .pri-tag.p0-poc { background: var(--color-highlight); }
       .pri-tag.p1-ga { background: var(--color-primary); }
       .pri-title {
-        font-size: 0.78rem;
+        font-size: 0.9rem;
         font-weight: 700;
         color: var(--color-text);
       }
       .pri-sub {
-        font-size: 0.58rem;
+        font-size: 0.7rem;
         color: var(--color-text-muted);
-        margin-bottom: 0.25rem;
-        padding-bottom: 0.2rem;
+        margin-bottom: 0.35rem;
+        padding-bottom: 0.3rem;
         border-bottom: 1px dashed var(--color-border);
       }
 
       .pri-list {
         list-style: none;
-        font-size: 0.6rem;
+        font-size: 0.75rem;
         color: var(--color-text-secondary);
-        line-height: 1.45;
+        line-height: 1.55;
       }
       .pri-list li {
-        padding-left: 0.7rem;
+        padding-left: 0.8rem;
         position: relative;
-        margin-bottom: 0.18rem;
+        margin-bottom: 0.28rem;
       }
       .pri-list li::before {
         content: '•';
@@ -418,27 +419,29 @@
       }
       .pri-list li .sub {
         display: block;
-        padding-left: 0.5rem;
+        padding-left: 0.6rem;
         color: var(--color-text-muted);
-        font-size: 0.56rem;
+        font-size: 0.68rem;
         margin-top: 0.05rem;
+        line-height: 1.5;
       }
 
       .pri-foot {
-        margin-top: 0.2rem;
-        padding-top: 0.2rem;
+        margin-top: 0.35rem;
+        padding-top: 0.3rem;
         border-top: 1px dashed var(--color-border);
         font-family: var(--font-mono);
-        font-size: 0.54rem;
+        font-size: 0.66rem;
         color: var(--pc);
+        line-height: 1.5;
       }
       .pri-foot strong { color: var(--color-text); font-weight: 600; }
 
       .parallel-tag {
         display: inline-block;
         font-family: var(--font-mono);
-        font-size: 0.5rem;
-        padding: 0.06rem 0.28rem;
+        font-size: 0.6rem;
+        padding: 0.1rem 0.35rem;
         border-radius: 2px;
         background: var(--color-highlight-muted);
         color: var(--color-highlight);
@@ -448,73 +451,76 @@
 
       /* 协作模型卡 */
       .collab-card {
+        flex: 0.9;
         background: var(--color-surface);
         border: 1px solid var(--color-border);
         border-radius: 0.5rem;
-        padding: 0.4rem 0.6rem;
+        padding: 0.6rem 0.8rem;
+        display: flex;
+        flex-direction: column;
       }
       .collab-head {
-        font-size: 0.68rem;
+        font-size: 0.8rem;
         font-weight: 700;
         color: var(--color-text);
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.35rem;
       }
       .collab-head .tag {
         font-family: var(--font-mono);
-        font-size: 0.52rem;
+        font-size: 0.62rem;
         font-weight: 600;
         color: var(--color-magenta);
         background: var(--color-magenta-muted);
-        padding: 0.08rem 0.3rem;
+        padding: 0.12rem 0.35rem;
         border-radius: 2px;
         margin-right: 0.3rem;
       }
       .collab-flow {
         display: flex;
         align-items: center;
-        gap: 0.3rem;
-        font-size: 0.58rem;
-        margin-bottom: 0.25rem;
+        gap: 0.35rem;
+        font-size: 0.65rem;
+        margin-bottom: 0.35rem;
       }
       .collab-box {
-        padding: 0.2rem 0.4rem;
+        padding: 0.28rem 0.5rem;
         border-radius: 0.25rem;
         font-family: var(--font-mono);
         font-weight: 600;
-        font-size: 0.55rem;
+        font-size: 0.65rem;
       }
       .collab-box.l1 { background: var(--color-accent-muted); color: var(--color-accent); }
       .collab-box.l2 { background: var(--color-primary-muted); color: var(--color-primary-hover); }
       .collab-box.team {
         background: var(--color-magenta-muted);
         color: var(--color-magenta);
-        padding: 0.2rem 0.5rem;
+        padding: 0.28rem 0.6rem;
       }
       .collab-box.out {
         background: var(--color-emerald-muted);
         color: var(--color-emerald);
-        padding: 0.2rem 0.5rem;
+        padding: 0.28rem 0.6rem;
       }
       .collab-arrow {
         color: var(--color-text-muted);
-        font-size: 0.7rem;
+        font-size: 0.8rem;
       }
       .collab-merge {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.05rem;
+        gap: 0.1rem;
       }
       .collab-purposes {
         list-style: none;
-        font-size: 0.55rem;
+        font-size: 0.7rem;
         color: var(--color-text-secondary);
-        line-height: 1.4;
+        line-height: 1.5;
       }
       .collab-purposes li {
-        padding-left: 0.6rem;
+        padding-left: 0.7rem;
         position: relative;
-        margin-bottom: 0.08rem;
+        margin-bottom: 0.18rem;
       }
       .collab-purposes li::before {
         content: '→';
@@ -530,7 +536,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.3rem 0.25rem 0;
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         color: var(--color-text-muted);
         font-family: var(--font-mono);
         border-top: 1px solid var(--color-border);
