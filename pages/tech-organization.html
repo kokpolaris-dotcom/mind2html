@@ -232,7 +232,43 @@
         flex: 1;
         min-height: 0;
       }
-      .cards-l1 { grid-template-columns: repeat(8, 1fr); }
+      .cards-l1-dam, .cards-l1-tools { grid-template-columns: repeat(2, 1fr); }
+      .cards-l1-base { grid-template-columns: 1fr; }
+
+      /* L1 三类分组 */
+      .l1-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr 0.55fr;
+        gap: 0.5rem;
+        flex: 1;
+        min-height: 0;
+      }
+      .l1-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        min-height: 0;
+        padding: 0.4rem;
+        border-radius: 0.5rem;
+        background: var(--color-surface-hover);
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+      }
+      .l1-section.dam-section { border-top: 2px solid var(--color-accent); }
+      .l1-section.tools-section { border-top: 2px solid var(--color-primary); }
+      .l1-section.base-section { border-top: 2px solid var(--color-emerald); }
+
+      .sub-tag-dam { background: var(--color-accent); }
+      .sub-tag-tools { background: var(--color-primary); }
+      .sub-tag-base { background: var(--color-emerald); }
+
+      /* L1 Tools / 基础支撑 卡片配色覆盖 */
+      .layer-l1 .l1-section.tools-section .card { border-left-color: var(--color-primary); }
+      .layer-l1 .l1-section.tools-section .card:hover { border-color: var(--color-primary); border-left-color: var(--color-primary); }
+      .layer-l1 .l1-section.tools-section .card-role { background: var(--color-primary-muted); color: var(--color-primary-hover); }
+      .layer-l1 .l1-section.base-section .card { border-left-color: var(--color-emerald); }
+      .layer-l1 .l1-section.base-section .card:hover { border-color: var(--color-emerald); border-left-color: var(--color-emerald); }
+      .layer-l1 .l1-section.base-section .card-role { background: var(--color-emerald-muted); color: var(--color-emerald); }
       .cards-l2 { grid-template-columns: repeat(3, 1fr); }
       .cards-l3-aaas { grid-template-columns: repeat(2, 1fr); }
       .cards-l3-builder { grid-template-columns: 1fr; }
@@ -480,7 +516,7 @@
             <div class="l3-section aaas-section">
               <div class="sub-header">
                 <span class="sub-tag sub-tag-a">AaaS</span>
-                <span class="sub-title">官方标杆业务智能体</span>
+                <span class="sub-title">官方标杆业务智能体 · Agent as a Service</span>
                 <span class="sub-meta">8 Agent</span>
               </div>
               <div class="cards cards-l3-aaas">
@@ -753,79 +789,128 @@
           <p class="layer-desc">提供确定性输入。所有智能体运行的物理底座。</p>
         </div>
         <div class="layer-content">
-          <div class="cards cards-l1">
-            <div class="card">
-              <div class="card-head"><span class="card-title">全域数据采集</span><span class="card-role">外部感知</span></div>
-              <p class="card-en">Data Crawler</p>
-              <ul class="card-list">
-                <li><strong>内容</strong>：抖音/小红书/TikTok/IG 爆款</li>
-                <li><strong>交易</strong>：电商+OTA 票务库存价格</li>
-                <li><strong>直播</strong>：弹幕/点击率/场观实时</li>
-                <li><strong>合规</strong>：采集脱敏与合规审计</li>
-              </ul>
+          <div class="l1-split">
+
+            <!-- 数字资产 DAM -->
+            <div class="l1-section dam-section">
+              <div class="sub-header">
+                <span class="sub-tag sub-tag-dam">DAM</span>
+                <span class="sub-title">数字资产</span>
+                <span class="sub-meta">4 模块</span>
+              </div>
+              <div class="cards cards-l1-dam">
+                <div class="card">
+                  <div class="card-head"><span class="card-title">全域数据采集</span><span class="card-role">外部感知</span></div>
+                  <p class="card-en">Data Crawler</p>
+                  <ul class="card-list">
+                    <li><strong>内容</strong>：抖音/小红书/TikTok/IG 爆款</li>
+                    <li><strong>交易</strong>：电商+OTA 票务库存价格</li>
+                    <li><strong>直播</strong>：弹幕/点击率/场观实时</li>
+                    <li><strong>合规</strong>：采集脱敏与合规审计</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">结构化知识库</span><span class="card-role">内部沉淀</span></div>
+                  <p class="card-en">Knowledge Base</p>
+                  <ul class="card-list">
+                    <li><strong>POI</strong>：景点/交通/攻略</li>
+                    <li><strong>品牌</strong>：历史/调性/话术</li>
+                    <li><strong>SOP</strong>：操作手册机器可读</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">内容素材资产库</span><span class="card-role">素材底料</span></div>
+                  <p class="card-en">Asset Library</p>
+                  <ul class="card-list">
+                    <li><strong>视频</strong>：文旅垂类视频素材</li>
+                    <li><strong>BGM</strong>：音乐版权库</li>
+                    <li><strong>模板</strong>：图文/脚本模板</li>
+                    <li><strong>KOL</strong>：授权素材与画像</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">自研算法</span><span class="card-role">核心资产</span></div>
+                  <p class="card-en">Proprietary Algo</p>
+                  <ul class="card-list">
+                    <li><strong>素材</strong>：打标 / 聚类 / 匹配</li>
+                    <li><strong>语音</strong>：识别 / 合成</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">结构化知识库</span><span class="card-role">内部沉淀</span></div>
-              <p class="card-en">Knowledge Base</p>
-              <ul class="card-list">
-                <li><strong>POI</strong>：景点/交通/攻略</li>
-                <li><strong>品牌</strong>：历史/调性/话术</li>
-                <li><strong>SOP</strong>：操作手册机器可读</li>
-              </ul>
+
+            <!-- 外部 Tools -->
+            <div class="l1-section tools-section">
+              <div class="sub-header">
+                <span class="sub-tag sub-tag-tools">TOOLS</span>
+                <span class="sub-title">外部 Tools</span>
+                <span class="sub-meta">4 模块</span>
+              </div>
+              <div class="cards cards-l1-tools">
+                <div class="card">
+                  <div class="card-head"><span class="card-title">时空 Tools</span><span class="card-role">公共服务</span></div>
+                  <p class="card-en">External Context</p>
+                  <ul class="card-list">
+                    <li><strong>气象</strong>：天气/AQI/灾害预警</li>
+                    <li><strong>交通</strong>：路况/航班高铁/停车场</li>
+                    <li><strong>LBS</strong>：地图/定位/路径规划</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">IM 与支付</span><span class="card-role">交付渠道</span></div>
+                  <p class="card-en">IM & Payment</p>
+                  <ul class="card-list">
+                    <li><strong>消息</strong>：微信/飞书/钉钉/企微</li>
+                    <li><strong>支付</strong>：微信/支付宝/银联</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">客户 Tools</span><span class="card-role">业务对接</span></div>
+                  <p class="card-en">Customer Tools</p>
+                  <ul class="card-list">
+                    <li><strong>客户系统</strong>：自我游 / 马代</li>
+                    <li><strong>回流</strong>：订单 / 库存 / 投放消耗</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">OTA 业务</span><span class="card-role">票务对接</span></div>
+                  <p class="card-en">OTA Integration</p>
+                  <ul class="card-list">
+                    <li><strong>票务</strong>：美团/携程/自建票务</li>
+                    <li><strong>同步</strong>：库存/价格实时同步</li>
+                    <li><strong>核销</strong>：订单核销与对账</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">内容素材资产库</span><span class="card-role">素材底料</span></div>
-              <p class="card-en">Asset Library</p>
-              <ul class="card-list">
-                <li><strong>视频</strong>：文旅垂类视频素材</li>
-                <li><strong>BGM</strong>：音乐版权库</li>
-                <li><strong>模板</strong>：图文/脚本模板</li>
-                <li><strong>KOL</strong>：授权素材与画像</li>
-              </ul>
+
+            <!-- 基础支撑 -->
+            <div class="l1-section base-section">
+              <div class="sub-header">
+                <span class="sub-tag sub-tag-base">BASE</span>
+                <span class="sub-title">基础支撑</span>
+                <span class="sub-meta">2 模块</span>
+              </div>
+              <div class="cards cards-l1-base">
+                <div class="card">
+                  <div class="card-head"><span class="card-title">多租户与权限</span><span class="card-role">组织基建</span></div>
+                  <p class="card-en">Multi-Tenancy · RBAC</p>
+                  <ul class="card-list">
+                    <li><strong>多级租户</strong>：集团-分公司-门店</li>
+                    <li><strong>RBAC</strong>：Agent 应用与账号隔离</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-head"><span class="card-title">Token 计量中心</span><span class="card-role">计量</span></div>
+                  <p class="card-en">Metering</p>
+                  <ul class="card-list">
+                    <li><strong>多维度计量</strong>：租户/Agent/会话/模型</li>
+                    <li><strong>成本归因</strong>：模型 Token 成本拆解</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">外部时空 API</span><span class="card-role">公共服务</span></div>
-              <p class="card-en">External Context</p>
-              <ul class="card-list">
-                <li><strong>气象</strong>：天气/AQI/灾害预警</li>
-                <li><strong>交通</strong>：路况/航班高铁/停车场</li>
-                <li><strong>LBS</strong>：地图/定位/路径规划</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">客户系统与数据接入</span><span class="card-role">业务对接</span></div>
-              <p class="card-en">Customer Systems</p>
-              <ul class="card-list">
-                <li><strong>票务</strong>：美团/携程/自建票务</li>
-                <li><strong>支付</strong>：微信/支付宝/银联</li>
-                <li><strong>CRM</strong>：Salesforce/用友/金蝶</li>
-                <li><strong>回流</strong>：订单/库存/投放消耗</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">多租户与权限</span><span class="card-role">组织基建</span></div>
-              <p class="card-en">Multi-Tenancy · RBAC</p>
-              <ul class="card-list">
-                <li><strong>多级租户</strong>：集团-分公司-门店</li>
-                <li><strong>RBAC</strong>：Agent 应用与账号隔离</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">Token 计量中心</span><span class="card-role">商业化</span></div>
-              <p class="card-en">Metering & Billing</p>
-              <ul class="card-list">
-                <li><strong>多维度计量</strong>：租户/Agent/会话/模型</li>
-                <li><strong>商业化</strong>：套餐+增值包+支付</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-head"><span class="card-title">IM 与办公集成</span><span class="card-role">交付渠道</span></div>
-              <p class="card-en">Workspace Integration</p>
-              <ul class="card-list">
-                <li><strong>消息</strong>：微信/飞书/钉钉/企微</li>
-                <li><strong>办公</strong>：PPT/PDF 解析与生成</li>
-              </ul>
-            </div>
+
           </div>
         </div>
       </section>
