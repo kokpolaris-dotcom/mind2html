@@ -205,8 +205,42 @@
         min-height: 0;
         align-content: start;
       }
-      .mini-cards.l1 { grid-template-columns: repeat(4, 1fr); }
+      .mini-cards.l1 {
+        grid-template-columns: 1fr 1fr 0.7fr;
+        gap: 0.4rem;
+      }
       .mini-cards.l2 { grid-template-columns: repeat(3, 1fr); }
+
+      /* L1 分组 */
+      .mini-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        min-height: 0;
+      }
+      .mini-group-label {
+        font-family: var(--font-mono);
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        padding: 0.15rem 0.4rem;
+        border-radius: 2px;
+        color: white;
+        align-self: flex-start;
+      }
+      .mini-group-label.dam { background: var(--color-accent); }
+      .mini-group-label.tools { background: var(--color-primary); }
+      .mini-group-label.base { background: var(--color-emerald); }
+      .mini-group-cards {
+        display: grid;
+        gap: 0.25rem;
+        flex: 1;
+        align-content: start;
+      }
+      .mini-group-cards > .mini-card { padding: 0.32rem 0.4rem; }
+      .mini-group:nth-child(1) .mini-group-cards { grid-template-columns: repeat(2, 1fr); }
+      .mini-group:nth-child(2) .mini-group-cards { grid-template-columns: repeat(2, 1fr); }
+      .mini-group:nth-child(3) .mini-group-cards { grid-template-columns: 1fr; }
 
       .mini-card {
         background: var(--color-surface);
@@ -612,37 +646,60 @@
             <strong>团队画像</strong>：SaaS 工程师（爬虫/ETL/API 对接/系统集成/计费）　·　<strong>为什么</strong>：处理确定性内容，SaaS 选型已被业界充分验证
           </div>
           <div class="mini-cards l1">
-            <div class="mini-card">
-              <span class="mini-card-title">全域数据采集</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+            <div class="mini-group">
+              <span class="mini-group-label dam">DAM · 数字资产</span>
+              <div class="mini-group-cards">
+                <div class="mini-card">
+                  <span class="mini-card-title">全域数据采集</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">结构化知识库</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span><span class="team-tag ai">AI-RAG</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">内容素材资产库</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span><span class="team-tag ai">AI-RAG</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">自研算法</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span><span class="team-tag ai">AI-RAG</span></div>
+                </div>
+              </div>
             </div>
-            <div class="mini-card">
-              <span class="mini-card-title">结构化知识库</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span><span class="team-tag ai">AI-RAG</span></div>
+            <div class="mini-group">
+              <span class="mini-group-label tools">外部 Tools</span>
+              <div class="mini-group-cards">
+                <div class="mini-card">
+                  <span class="mini-card-title">时空 Tools</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">IM 与支付</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">客户 Tools</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">OTA 业务</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+              </div>
             </div>
-            <div class="mini-card">
-              <span class="mini-card-title">内容素材资产库</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span><span class="team-tag ai">AI-RAG</span></div>
-            </div>
-            <div class="mini-card">
-              <span class="mini-card-title">外部时空 API</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
-            </div>
-            <div class="mini-card">
-              <span class="mini-card-title">客户系统接入</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
-            </div>
-            <div class="mini-card">
-              <span class="mini-card-title">多租户与权限</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
-            </div>
-            <div class="mini-card">
-              <span class="mini-card-title">Token 计量中心</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
-            </div>
-            <div class="mini-card">
-              <span class="mini-card-title">IM 与办公集成</span>
-              <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+            <div class="mini-group">
+              <span class="mini-group-label base">基础支撑</span>
+              <div class="mini-group-cards">
+                <div class="mini-card">
+                  <span class="mini-card-title">多租户与权限</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card-title">Token 计量中心</span>
+                  <div class="mini-tags"><span class="team-tag saas">SaaS</span></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="team-tech">
