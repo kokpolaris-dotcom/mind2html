@@ -184,43 +184,6 @@
       background: var(--color-text-secondary);
     }
 
-    .back-link {
-      position: fixed;
-      top: 1.5rem;
-      left: 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--color-text-secondary);
-      text-decoration: none;
-      padding: 0.375rem 0.875rem;
-      border: 1px solid var(--color-border);
-      border-radius: 9999px;
-      background: var(--color-surface);
-      z-index: 100;
-      transition: all 0.2s;
-    }
-    .back-link:hover { color: var(--color-primary-hover); border-color: var(--color-primary); }
-
-    .brand {
-      position: fixed;
-      top: 1.5rem;
-      right: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      color: var(--color-text-muted);
-      z-index: 100;
-    }
-    .brand-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--color-primary);
-      box-shadow: 0 0 10px var(--color-primary);
-    }
-
     ::selection { background: rgba(99,102,241,0.35); color: #fff; }
   </style>
 </head>
@@ -228,12 +191,6 @@
   <div class="grid-bg"></div>
   <div class="glow-primary"></div>
   <div class="glow-accent"></div>
-
-  <a href="../index.html" class="back-link">← 首页</a>
-  <div class="brand">
-    <span class="brand-dot"></span>
-    <span>WANPIX.AI · TEAM DECK</span>
-  </div>
 
   <div class="progress-bar" id="progressBar" style="width: 33.33%"></div>
 
