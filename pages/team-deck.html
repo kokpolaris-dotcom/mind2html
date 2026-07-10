@@ -117,20 +117,28 @@
       box-shadow: 0 0 8px var(--color-primary);
     }
 
-    /* ── Stage ── */
+    /* ── Stage (pitch-deck 风格：slide 叠放，预加载) ── */
     .stage {
       flex: 1;
       position: relative;
       overflow: hidden;
       background: #f8fafc;
     }
-    .frame-wrap {
-      position: absolute; inset: 0;
-      opacity: 1;
-      transition: opacity 0.25s ease;
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
     }
-    .frame-wrap.switching { opacity: 0; }
-    .frame-wrap iframe {
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .slide iframe {
       width: 100%;
       height: 100%;
       border: none;
@@ -213,26 +221,6 @@
       box-shadow: 0 0 12px rgba(129,140,248,0.4);
     }
 
-    /* ── Slide title tooltip ── */
-    .slide-label {
-      position: absolute;
-      bottom: 0.6rem; left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      color: var(--color-text-muted);
-      padding: 0.2rem 0.6rem;
-      background: rgba(11, 15, 26, 0.7);
-      border-radius: 9999px;
-      border: 1px solid var(--color-border);
-      backdrop-filter: blur(8px);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 10;
-    }
-    .stage:hover .slide-label { opacity: 1; }
-
     ::selection { background: rgba(129,140,248,0.4); color: #fff; }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -249,7 +237,7 @@
         <span class="brand-dot"></span>
         <span class="brand-text">WANPIX.AI · TEAM DECK</span>
         <h1 class="title">团队<span class="title-accent">三页全览</span></h1>
-        <span class="subtitle" id="pageSubtitle">/ 技术组织架构</span>
+        <span class="subtitle" id="pageSubtitle">/ L1 基础 · L2 AI Native · L3 应用交付</span>
       </div>
       <div class="header-right">
         <span class="pill"><span class="num" id="curIdx">1</span> / 3</span>
@@ -260,11 +248,8 @@
       </div>
     </header>
 
-    <main class="stage">
-      <div class="frame-wrap" id="frameWrap">
-        <iframe id="frame" src="tech-organization.html" title="Team slide"></iframe>
-      </div>
-      <div class="slide-label" id="slideLabel">技术组织架构</div>
+    <main class="stage" id="stage">
+      <!-- 所有 slide 预加载叠放，参考 pitch-deck 模式 -->
     </main>
 
     <footer class="footer">
@@ -276,11 +261,7 @@
           <span>切换</span>
         </span>
       </div>
-      <div class="dots" id="dots">
-        <button class="dot active" data-idx="0" aria-label="第 1 页"></button>
-        <button class="dot" data-idx="1" aria-label="第 2 页"></button>
-        <button class="dot" data-idx="2" aria-label="第 3 页"></button>
-      </div>
+      <div class="dots" id="dots"></div>
       <div class="footer-right">
         <button class="nav-btn" id="prevBtn">← 上一页</button>
         <button class="nav-btn primary" id="nextBtn">下一页 →</button>
@@ -308,42 +289,52 @@
     ];
 
     let cur = 0;
-    let switching = false;
 
-    const frameWrap = document.getElementById('frameWrap');
-    const frame = document.getElementById('frame');
-    const dots = document.querySelectorAll('.dot');
+    const stage = document.getElementById('stage');
+    const dotsContainer = document.getElementById('dots');
     const curIdx = document.getElementById('curIdx');
     const pageSubtitle = document.getElementById('pageSubtitle');
     const progressBar = document.getElementById('progressBar');
-    const slideLabel = document.getElementById('slideLabel');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
 
+    // 预构建所有 slide（iframe 全部预加载）+ dots
+    pages.forEach((p, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'slide' + (i === 0 ? ' active' : '');
+      const iframe = document.createElement('iframe');
+      iframe.src = p.url;
+      iframe.title = p.title;
+      slide.appendChild(iframe);
+      stage.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.dataset.idx = i;
+      dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 页');
+      dot.addEventListener('click', () => go(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
     function go(i) {
-      if (switching) return;
       const next = Math.max(0, Math.min(pages.length - 1, i));
       if (next === cur) return;
-      switching = true;
       cur = next;
 
-      frameWrap.classList.add('switching');
-      setTimeout(() => {
-        frame.src = pages[cur].url;
-        pageSubtitle.textContent = pages[cur].subtitle;
-        slideLabel.textContent = pages[cur].title;
-        curIdx.textContent = cur + 1;
-        progressBar.style.width = ((cur + 1) / pages.length * 100) + '%';
-        dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
-        prevBtn.disabled = cur === 0;
-        nextBtn.disabled = cur === pages.length - 1;
-        switching = false;
-      }, 250);
+      slides.forEach((s, idx) => s.classList.toggle('active', idx === cur));
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
+      pageSubtitle.textContent = pages[cur].subtitle;
+      curIdx.textContent = cur + 1;
+      progressBar.style.width = ((cur + 1) / pages.length * 100) + '%';
+      prevBtn.disabled = cur === 0;
+      nextBtn.disabled = cur === pages.length - 1;
     }
 
     prevBtn.addEventListener('click', () => go(cur - 1));
     nextBtn.addEventListener('click', () => go(cur + 1));
-    dots.forEach(d => d.addEventListener('click', () => go(+d.dataset.idx)));
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
@@ -353,7 +344,6 @@
       else if (e.key === 'End') { e.preventDefault(); go(pages.length - 1); }
     });
 
-    // 初始化按钮状态
     prevBtn.disabled = cur === 0;
     nextBtn.disabled = cur === pages.length - 1;
   </script>
