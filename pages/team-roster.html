@@ -176,9 +176,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.2rem;
-      padding: 0.3rem 0.6rem;
+      padding: 0.22rem 0.5rem;
       border-radius: 0.3rem;
-      font-size: 0.78rem;
+      font-size: 0.7rem;
       font-weight: 500;
       background: var(--color-accent-muted);
       color: var(--color-accent);
@@ -193,6 +193,11 @@
       background: var(--color-magenta-muted);
       color: var(--color-magenta);
       border-color: var(--color-magenta);
+    }
+    .member-badge.ai {
+      background: var(--color-primary-muted);
+      color: var(--color-primary-hover);
+      border-color: var(--color-primary);
     }
     .member-badge.pending {
       background: rgba(100, 116, 139, 0.08);
@@ -354,56 +359,55 @@
     </header>
     <main class="split-layout">
       <div class="left-zone">
-        <div class="team-card l1">
+        <div class="team-card l3">
           <div class="team-head">
-            <span class="team-num">L1</span>
-            <span class="team-name">基础能力层 · <span class="accent">互联网开发老兵为主</span></span>
-            <span class="team-role">11 人</span>
+            <span class="team-num">L3</span>
+            <span class="team-name">应用交付团队 · <span class="accent">虚拟项目制</span></span>
+            <span class="team-role">20 人</span>
           </div>
           <div class="team-profile">
-            <strong>数字资产（7）</strong>：高志扬、章旭阳、杨国防、龚哲明、杨杰、梁姬慧（算法）、胡慧（算法）<br>
-            <strong>基础支撑 + 外部 Tools（4）</strong>：陈彪、兰宇、孙静勇（后端）、胡晓运（后端）
+            <strong>构成</strong>：原 L3 前端 + 原 L1 基础能力 + 原 L2 部分成员，整体编入虚拟项目制　·　按业务域攻坚，基础团队感知真实业务
           </div>
           <div class="member-grid">
+            <span class="member-badge">徐豹</span>
+            <span class="member-badge">崔以微</span>
+            <span class="member-badge">王晓露</span>
+            <span class="member-badge">原振强</span>
+            <span class="member-badge ios">杨坤</span>
+            <span class="member-badge ai">潘俊霖</span>
+            <span class="member-badge ai">韩峰</span>
+            <span class="member-badge ai">张方辉</span>
+            <span class="member-badge algo">梁姬慧</span>
+            <span class="member-badge algo">胡慧</span>
+            <span class="member-badge algo">董文华</span>
             <span class="member-badge">高志扬</span>
             <span class="member-badge">章旭阳</span>
             <span class="member-badge">杨国防</span>
             <span class="member-badge">龚哲明</span>
             <span class="member-badge">杨杰</span>
-            <span class="member-badge algo">梁姬慧</span>
-            <span class="member-badge algo">胡慧</span>
             <span class="member-badge">陈彪</span>
             <span class="member-badge">兰宇</span>
             <span class="member-badge">孙静勇</span>
             <span class="member-badge">胡晓运</span>
             <span class="member-badge pending">资深 JAVA（待招）</span>
           </div>
-          <div class="mindset-diff">
-            <div class="mindset saas-side">
-              <strong>互联网开发思维</strong>：确定性 API + 状态机
-            </div>
-          </div>
           <div class="team-tech">
-            <strong>技术栈</strong>：Java · Python · 数仓 · 算法
+            <strong>技术栈</strong>：Web · iOS · Java · Python · TypeScript · Mastra · 数仓 · 算法
           </div>
         </div>
         <div class="team-card l2">
           <div class="team-head">
             <span class="team-num">L2</span>
             <span class="team-name">AI Native 层 · <span class="accent">AI Native 新军</span></span>
-            <span class="team-role">7 人</span>
+            <span class="team-role">3 人</span>
           </div>
           <div class="team-profile">
-            <strong>团队成员</strong>：陈暄、汪涛涛、苏智鹏、潘俊霖、韩峰、张方辉、董文华（算法）
+            <strong>团队成员</strong>：陈暄、苏智鹏、汪涛涛
           </div>
           <div class="member-grid">
             <span class="member-badge">陈暄</span>
-            <span class="member-badge">汪涛涛</span>
             <span class="member-badge">苏智鹏</span>
-            <span class="member-badge">潘俊霖</span>
-            <span class="member-badge">韩峰</span>
-            <span class="member-badge">张方辉</span>
-            <span class="member-badge algo">董文华</span>
+            <span class="member-badge">汪涛涛</span>
           </div>
           <div class="mindset-diff">
             <div class="mindset agent-side">
@@ -414,14 +418,14 @@
             <strong>技术栈</strong>：TypeScript · Mastra · Milvus · LangChain · LLM-Judge
           </div>
         </div>
-        <div class="team-card l3">
+        <div class="team-card l1">
           <div class="team-head">
-            <span class="team-num">L3</span>
-            <span class="team-name">前端团队 · <span class="accent">虚拟项目制</span></span>
-            <span class="team-role">5 人</span>
+            <span class="team-num">L1</span>
+            <span class="team-name">基础能力层 · <span class="accent">由业务驱动建设</span></span>
+            <span class="team-role">20 人（同 L3）</span>
           </div>
           <div class="team-profile">
-            <strong>团队成员</strong>：徐豹、崔以微、王晓露、原振强、杨坤（iOS）
+            <strong>备注</strong>：人员同 L3，由业务驱动完成 L1 的建设　·　基础能力（数字资产 / 外部 Tools / 基础支撑）职能由虚拟项目制团队承载
           </div>
           <div class="member-grid">
             <span class="member-badge">徐豹</span>
@@ -429,9 +433,25 @@
             <span class="member-badge">王晓露</span>
             <span class="member-badge">原振强</span>
             <span class="member-badge ios">杨坤</span>
+            <span class="member-badge ai">潘俊霖</span>
+            <span class="member-badge ai">韩峰</span>
+            <span class="member-badge ai">张方辉</span>
+            <span class="member-badge algo">梁姬慧</span>
+            <span class="member-badge algo">胡慧</span>
+            <span class="member-badge algo">董文华</span>
+            <span class="member-badge">高志扬</span>
+            <span class="member-badge">章旭阳</span>
+            <span class="member-badge">杨国防</span>
+            <span class="member-badge">龚哲明</span>
+            <span class="member-badge">杨杰</span>
+            <span class="member-badge">陈彪</span>
+            <span class="member-badge">兰宇</span>
+            <span class="member-badge">孙静勇</span>
+            <span class="member-badge">胡晓运</span>
+            <span class="member-badge pending">资深 JAVA（待招）</span>
           </div>
           <div class="team-tech">
-            <strong>技术栈</strong>：Web · iOS · APP
+            <strong>职能技术栈</strong>：Java · Python · 数仓 · 算法
           </div>
         </div>
       </div>
@@ -482,9 +502,10 @@
     </main>
     <footer class="footer">
       <div class="footer-left">
-        <span>团队配比：L1 11 人 · L2 7 人 · L3 5 人 · 总计 23 人</span>
+        <span>团队配比：L3 20 人 · L2 3 人 · L1 由 L3 兼任（业务驱动建设）· 总计 23 人</span>
         <div class="legend">
           <div class="legend-item"><span class="legend-dot" style="background: var(--color-accent);"></span><span>互联网开发</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: var(--color-primary);"></span><span>AI Native</span></div>
           <div class="legend-item"><span class="legend-dot" style="background: var(--color-highlight);"></span><span>算法</span></div>
           <div class="legend-item"><span class="legend-dot" style="background: var(--color-magenta);"></span><span>iOS</span></div>
           <div class="legend-item"><span class="legend-dot" style="background: var(--color-text-muted); border: 1px dashed var(--color-text-muted);"></span><span>待招</span></div>
