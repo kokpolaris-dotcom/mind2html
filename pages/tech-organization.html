@@ -351,12 +351,12 @@
       .layer-l2 .card:hover { border-color: var(--color-primary); border-left-color: var(--color-primary); }
       .layer-l2 .card-role { background: var(--color-primary-muted); color: var(--color-primary-hover); }
 
-      /* L2 快速原型验证大卡：跨 2 列，PoC 试验色 */
-      .cards-l2 .card-poc { grid-column: span 2; }
+      /* L2 4列×2行，大卡占 1 列 × 2 行 */
+      .cards-l2 { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; }
+      .cards-l2 .card-poc { grid-column: span 1; grid-row: span 2; }
       .layer-l2 .card-poc { border-left: 2px solid var(--color-highlight); }
       .layer-l2 .card-poc:hover { border-color: var(--color-highlight); border-left-color: var(--color-highlight); }
       .layer-l2 .card-poc .card-role { background: var(--color-highlight-muted); color: var(--color-highlight); }
-      .layer-l2 .card-poc .card-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.15rem 1rem; }
 
       .layer-l3 .card { border-left: 2px solid var(--color-magenta); }
       .layer-l3 .card:hover { border-color: var(--color-magenta); border-left-color: var(--color-magenta); }
