@@ -351,6 +351,13 @@
       .layer-l2 .card:hover { border-color: var(--color-primary); border-left-color: var(--color-primary); }
       .layer-l2 .card-role { background: var(--color-primary-muted); color: var(--color-primary-hover); }
 
+      /* L2 快速原型验证大卡：跨 2 列，PoC 试验色 */
+      .cards-l2 .card-poc { grid-column: span 2; }
+      .layer-l2 .card-poc { border-left: 2px solid var(--color-highlight); }
+      .layer-l2 .card-poc:hover { border-color: var(--color-highlight); border-left-color: var(--color-highlight); }
+      .layer-l2 .card-poc .card-role { background: var(--color-highlight-muted); color: var(--color-highlight); }
+      .layer-l2 .card-poc .card-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.15rem 1rem; }
+
       .layer-l3 .card { border-left: 2px solid var(--color-magenta); }
       .layer-l3 .card:hover { border-color: var(--color-magenta); border-left-color: var(--color-magenta); }
       .layer-l3 .card-role { background: var(--color-magenta-muted); color: var(--color-magenta); }
@@ -718,6 +725,18 @@
         </div>
         <div class="layer-content">
           <div class="cards cards-l2">
+            <div class="card card-poc">
+              <div class="card-head"><span class="card-title">快速原型验证平台</span><span class="card-role">试验</span></div>
+              <p class="card-en">PoC Sandbox · Mastra Native</p>
+              <ul class="card-list">
+                <li><strong>研发直写 Mastra</strong>：跳过编排配置，代码级快速试错</li>
+                <li><strong>商业模式先行</strong>：先验证 ROI，再投入工程化</li>
+                <li><strong>共用底层基建</strong>：Tools / RAG / 模型路由同源复用</li>
+                <li><strong>验证后搬迁</strong>：PoC 跑通 → 沉淀到生产底座</li>
+                <li><strong>同一技术栈</strong>：Mastra 贯穿，零迁移成本</li>
+                <li><strong>双轨并行</strong>：PoC 沙盒 ↔ 生产底座，同源异构</li>
+              </ul>
+            </div>
             <div class="card">
               <div class="card-head"><span class="card-title">Agent 编排引擎</span><span class="card-role">大脑</span></div>
               <p class="card-en">Orchestration Engine</p>
