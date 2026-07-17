@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanpix.ai · CEO 边界问题讨论</title>
+    <style id="theme-vars">
+:root {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.15);
+
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-muted: rgba(99, 102, 241, 0.10);
+
+  --color-accent: #0891b2;
+  --color-accent-muted: rgba(8, 145, 178, 0.10);
+
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --color-highlight: #d97706;
+  --color-highlight-muted: rgba(217, 119, 6, 0.10);
+
+  --color-magenta: #db2777;
+  --color-magenta-muted: rgba(219, 39, 119, 0.10);
+
+  --color-emerald: #059669;
+  --color-emerald-muted: rgba(5, 150, 105, 0.10);
+
+  --color-error: #dc2626;
+  --color-error-muted: rgba(220, 38, 38, 0.08);
+
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
+}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        height: 100%;
+        overflow: hidden;
+        background: var(--color-background);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* ── Atmospheric ── */
+      .bg-grid {
+        position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        background-image:
+          linear-gradient(to right, rgba(15,23,42,0.035) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(15,23,42,0.035) 1px, transparent 1px);
+        background-size: 48px 48px;
+      }
+      .glow-1 { position: fixed; top: -15%; right: -8%; width: 32rem; height: 32rem; z-index: 0; pointer-events: none;
+        background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, transparent 60%); }
+      .glow-2 { position: fixed; top: 30%; left: -10%; width: 30rem; height: 30rem; z-index: 0; pointer-events: none;
+        background: radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 60%); }
+      .glow-3 { position: fixed; bottom: -15%; right: 20%; width: 28rem; height: 28rem; z-index: 0; pointer-events: none;
+        background: radial-gradient(circle, rgba(8,145,178,0.10) 0%, transparent 60%); }
+
+      /* ── Layout ── */
+      .page {
+        position: relative; z-index: 1;
+        height: 100vh;
+        display: flex; flex-direction: column;
+        padding: 0.75rem 1.25rem 0.5rem;
+        gap: 0.4rem;
+        overflow: hidden;
+      }
+
+      /* ── Header ── */
+      .header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 0.25rem 0.4rem;
+        border-bottom: 1px solid var(--color-border);
+        flex-shrink: 0;
+      }
+      .header-left { display: flex; align-items: center; gap: 0.6rem; }
+      .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); box-shadow: 0 0 10px var(--color-primary); }
+      .brand-text { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--color-text-muted); }
+      .title {
+        font-family: var(--font-serif);
+        font-weight: 800;
+        font-size: 1.6rem;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+      }
+      .title-accent { color: var(--color-primary-hover); }
+      .subtitle {
+        font-size: 0.72rem;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+      }
+      .header-right { display: flex; align-items: center; gap: 0.5rem; }
+      .pill {
+        display: inline-flex; align-items: center; gap: 0.3rem;
+        font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.05em;
+        padding: 0.2rem 0.55rem; border-radius: 9999px;
+        border: 1px solid var(--color-border); background: var(--color-surface);
+        color: var(--color-text-secondary);
+      }
+      .back-link {
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        padding: 0.18rem 0.55rem;
+        border: 1px solid var(--color-border);
+        border-radius: 9999px;
+      }
+      .back-link:hover { color: var(--color-primary-hover); border-color: var(--color-primary); }
+
+      /* ── Issue Stack ── */
+      .stack {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      /* ── Issue Block ── */
+      .issue {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 0.6rem;
+        min-height: 0;
+        overflow: hidden;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 0.6rem;
+        padding: 0.7rem 0.85rem;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+      }
+
+      .issue-label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.3rem 0.6rem 0.3rem 0.75rem;
+        border-left: 4px solid var(--ic, var(--color-primary));
+        min-width: 0;
+      }
+      .issue-1 { --ic: var(--color-primary); }
+      .issue-2 { --ic: var(--color-magenta); }
+
+      .issue-num {
+        font-family: var(--font-mono);
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--ic);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .issue-name {
+        font-family: var(--font-serif);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--color-text);
+        line-height: 1.2;
+      }
+      .issue-desc {
+        font-size: 0.72rem;
+        color: var(--color-text-muted);
+        line-height: 1.4;
+        font-family: var(--font-mono);
+      }
+      .issue-tag {
+        margin-top: auto;
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        padding: 0.15rem 0.45rem;
+        border-radius: 2px;
+        color: white;
+        background: var(--ic);
+        align-self: flex-start;
+      }
+
+      .issue-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1.3fr;
+        gap: 0.5rem;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .col {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+        border-radius: 0.4rem;
+        padding: 0.5rem 0.6rem;
+        border: 1px solid var(--color-border);
+        border-left: 3px solid var(--cc, var(--color-text-muted));
+        background: color-mix(in srgb, var(--cc) 4%, transparent);
+      }
+      .col.dilemma { --cc: var(--color-error); }
+      .col.discuss { --cc: var(--color-text-muted); background: var(--color-surface); }
+      .col.propose { --cc: var(--color-primary); }
+
+      .col-head {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        margin-bottom: 0.35rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px dashed var(--color-border);
+        flex-shrink: 0;
+      }
+      .col-tag {
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        padding: 0.1rem 0.35rem;
+        border-radius: 2px;
+        color: white;
+        background: var(--cc);
+      }
+      .col-en {
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        color: var(--color-text-muted);
+        letter-spacing: 0.05em;
+      }
+
+      .col-body {
+        font-size: 0.78rem;
+        color: var(--color-text-secondary);
+        line-height: 1.55;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .col-body p { margin-bottom: 0.35rem; }
+      .col-body p:last-child { margin-bottom: 0; }
+
+      .hl-error { color: var(--color-error); font-weight: 600; }
+      .hl-warn  { color: var(--color-highlight); font-weight: 600; }
+      .hl-pri   { color: var(--color-primary-hover); font-weight: 600; }
+      .hl-acc   { color: var(--color-accent); font-weight: 600; }
+
+      .propose-list {
+        list-style: none;
+        counter-reset: m;
+      }
+      .propose-list li {
+        position: relative;
+        padding-left: 1.3rem;
+        margin-bottom: 0.45rem;
+        counter-increment: m;
+      }
+      .propose-list li::before {
+        content: counter(m);
+        position: absolute;
+        left: 0; top: 0.05rem;
+        width: 1rem; height: 1rem;
+        border-radius: 50%;
+        background: var(--color-primary-muted);
+        color: var(--color-primary-hover);
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .propose-list li strong {
+        color: var(--color-text);
+        font-weight: 600;
+      }
+
+      .conclusion {
+        margin-top: 0.4rem;
+        padding: 0.35rem 0.5rem;
+        background: color-mix(in srgb, var(--cc) 8%, transparent);
+        border-radius: 0.25rem;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--cc);
+        line-height: 1.4;
+      }
+
+      /* ── Footer ── */
+      .footer {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0.35rem 0.25rem 0;
+        font-size: 0.66rem;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        border-top: 1px solid var(--color-border);
+        flex-shrink: 0;
+      }
+      .footer-left { display: flex; align-items: center; gap: 0.5rem; }
+      .legend { display: flex; align-items: center; gap: 0.7rem; }
+      .legend-item { display: flex; align-items: center; gap: 0.25rem; }
+      .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+      .legend-dot.error { background: var(--color-error); }
+      .legend-dot.muted { background: var(--color-text-muted); }
+      .legend-dot.primary { background: var(--color-primary); }
+
+      ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+    </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+  <div class="glow-3"></div>
+  <div class="page">
+    <header class="header">
+      <div class="header-left">
+        <span class="brand-dot"></span>
+        <span class="brand-text">WANPIX.AI · CEO DISCUSSION</span>
+        <h1 class="title">边界问题<span class="title-accent">讨论</span></h1>
+        <span class="subtitle">/ 2 个待决议议题</span>
+      </div>
+      <div class="header-right">
+        <span class="pill">需 CEO 决断</span>
+        <a href="../index.html" class="back-link">← 首页</a>
+      </div>
+    </header>
+
+    <main class="stack">
+      <!-- ─── 议题 01 · 底座的双引擎 ─── -->
+      <section class="issue issue-1">
+        <div class="issue-label">
+          <span class="issue-num">01</span>
+          <span class="issue-name">底座的双引擎</span>
+          <span class="issue-desc">Agent 研发为何受限于无代码底座？</span>
+          <span class="issue-tag">Code vs NoCode</span>
+        </div>
+        <div class="issue-cards">
+          <div class="col dilemma">
+            <div class="col-head">
+              <span class="col-tag">困境</span>
+              <span class="col-en">Dilemma</span>
+            </div>
+            <div class="col-body">
+              <p>目前做智能体的开发，<span class="hl-error">受限于"底座"的开发进度</span>。</p>
+              <p>底座没就绪，业务侧 Agent 就只能排队等，研发产出无法转化为上线价值。</p>
+            </div>
+          </div>
+          <div class="col discuss">
+            <div class="col-head">
+              <span class="col-tag">讨论</span>
+              <span class="col-en">Discussion</span>
+            </div>
+            <div class="col-body">
+              <p>为什么会受限于底座？团队认知是：<span class="hl-warn">"所有 Agent 必须上无代码 Agent 引擎底座"</span>。</p>
+              <p>底座是不是<span class="hl-warn">只能是无代码</span>的？</p>
+              <p>一堆最擅长代码的 Agent 研发，却<span class="hl-warn">被困在无代码引擎</span>上 —— 这个是否合理？</p>
+            </div>
+          </div>
+          <div class="col propose">
+            <div class="col-head">
+              <span class="col-tag">建议</span>
+              <span class="col-en">Proposal</span>
+            </div>
+            <div class="col-body">
+              <p>不合理。底座应是 <span class="hl-pri">代码 + 无代码双引擎</span> 驱动。</p>
+              <ol class="propose-list">
+                <li>底座不成熟时，先通过<span class="hl-pri">代码快速应对核心场景价值交付</span>，并沉淀出底座真正要解决的业务 Agent 核心问题</li>
+                <li>解决<span class="hl-pri">特别复杂、开发门槛高</span>的 Agent 开发问题，比如基于项目画布的多 Agent 协作高质量内容创作</li>
+              </ol>
+              <div class="conclusion">双引擎同源：共用 Tools / RAG / 模型路由，PoC 跑通后可沉淀回生产底座</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── 议题 02 · 纳管边界与生态 ─── -->
+      <section class="issue issue-2">
+        <div class="issue-label">
+          <span class="issue-num">02</span>
+          <span class="issue-name">Agent 纳管边界与生态定位</span>
+          <span class="issue-desc">权限控制归属决定底座生态</span>
+          <span class="issue-tag">Tenant × Ecosystem</span>
+        </div>
+        <div class="issue-cards">
+          <div class="col dilemma">
+            <div class="col-head">
+              <span class="col-tag">困境</span>
+              <span class="col-en">Dilemma</span>
+            </div>
+            <div class="col-body">
+              <p>因<span class="hl-error">租户与权限问题</span>，引发产品边界、生态定位的思考。</p>
+              <p>一个具体场景的权限归属疑问，牵出整个 Agent 体系的归属权与控制权问题。</p>
+            </div>
+          </div>
+          <div class="col discuss">
+            <div class="col-head">
+              <span class="col-tag">讨论</span>
+              <span class="col-en">Discussion</span>
+            </div>
+            <div class="col-body">
+              <p>原问题：<span class="hl-warn">新媒体情报官的权限控制</span>，是来自原多多系统，还是底座的权限体系？</p>
+              <p>由此延展到 Agent 的<span class="hl-warn">归属权、控制权与生态</span>问题。</p>
+              <p>若 Agent 权限<span class="hl-warn">全来自多多而非底座</span>，那么底座的生态逻辑何在？</p>
+            </div>
+          </div>
+          <div class="col propose">
+            <div class="col-head">
+              <span class="col-tag">建议</span>
+              <span class="col-en">Proposal</span>
+            </div>
+            <div class="col-body">
+              <p>不管<span class="hl-pri">官方自建</span>或<span class="hl-pri">生态共建</span>的 Agent，本质统一由<span class="hl-pri">底座统一纳管</span>。</p>
+              <ol class="propose-list">
+                <li><strong>纳管对象</strong>：所有 Agent（自建 / 生态 / 三方）统一接入底座注册中心</li>
+                <li><strong>权限收口</strong>：租户、角色、权限由底座统一颁发，多多等业务系统只做业务态数据权限</li>
+                <li><strong>生态闭环</strong>：底座 = Agent 的生命周期 + 权限 + 计量 + 飞轮的唯一入口</li>
+              </ol>
+              <div class="conclusion">底座即生态：Agent 的"户籍"必须在底座，业务系统只是"使用方"</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-left">
+        <span>2 议题 · 待 CEO 决断</span>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot error"></span><span>困境</span></div>
+        <div class="legend-item"><span class="legend-dot muted"></span><span>讨论</span></div>
+        <div class="legend-item"><span class="legend-dot primary"></span><span>建议</span></div>
+      </div>
+      <div>WANPIX.AI · BOUNDARY ISSUES</div>
+    </footer>
+  </div>
+</body>
+</html>
