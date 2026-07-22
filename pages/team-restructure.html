@@ -108,13 +108,59 @@
       overflow: hidden;
     }
 
-    /* ── Left Zone: L1 横向沉淀 ── */
-    .left-zone {
+    /* ── Zone Frame (L1 / L3) ── */
+    .zone-frame {
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--color-border-strong);
+      border-radius: 0.7rem;
+      background: var(--color-surface);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+    .zone-label {
+      flex-shrink: 0;
+      width: 2.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      background: linear-gradient(180deg, var(--zc, var(--color-accent)) 0%, color-mix(in srgb, var(--zc) 70%, #000) 100%);
+      color: white;
+      padding: 0.5rem 0;
+    }
+    .zone-label .zl-num {
+      font-family: var(--font-mono);
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .zone-label .zl-text {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      opacity: 0.9;
+    }
+    .zone-content {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      padding: 0.5rem;
       min-height: 0;
       overflow: hidden;
+    }
+    .zone-frame.zone-l1 { --zc: var(--color-accent); }
+    .zone-frame.zone-l3 { --zc: var(--color-magenta); }
+
+    /* ── Left Zone: L1 横向沉淀 ── */
+    .left-zone {
+      flex: 1;
     }
     .mega-card {
       background: var(--color-surface);
@@ -133,35 +179,35 @@
 
     .mega-head {
       display: flex; align-items: baseline; gap: 0.5rem;
-      margin-bottom: 0.3rem;
-      padding-bottom: 0.25rem;
+      margin-bottom: 0.35rem;
+      padding-bottom: 0.3rem;
       border-bottom: 1px solid var(--color-border);
       flex-shrink: 0;
     }
     .mega-tag {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      padding: 0.12rem 0.45rem;
+      padding: 0.15rem 0.5rem;
       border-radius: 3px;
       color: white;
       background: var(--mc);
     }
     .mega-name {
       font-family: var(--font-serif);
-      font-size: 1.05rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--color-text);
     }
     .mega-desc {
-      font-size: 0.72rem;
+      font-size: 0.76rem;
       color: var(--color-text-muted);
       margin-left: auto;
     }
 
     .sub-grid {
       display: flex;
-      gap: 0.35rem;
+      gap: 0.4rem;
       flex: 1;
       min-height: 0;
       overflow: hidden;
@@ -171,10 +217,10 @@
       background: color-mix(in srgb, var(--mc) 3%, var(--color-surface));
       border: 1px solid color-mix(in srgb, var(--mc) 15%, var(--color-border));
       border-radius: 0.4rem;
-      padding: 0.35rem 0.5rem;
+      padding: 0.45rem 0.55rem;
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
+      gap: 0.3rem;
       min-height: 0;
       overflow: hidden;
     }
@@ -184,24 +230,24 @@
     }
     .sub-label {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--mc);
     }
     .sub-note {
-      font-size: 0.6rem;
+      font-size: 0.66rem;
       color: var(--color-text-muted);
     }
     .sub-count {
       font-family: var(--font-mono);
-      font-size: 0.58rem;
+      font-size: 0.64rem;
       color: var(--color-text-muted);
       margin-left: auto;
     }
     .badge-stack {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: 0.3rem;
       align-content: center;
       flex: 1;
       min-height: 0;
@@ -209,9 +255,9 @@
     .member-badge {
       display: inline-flex;
       align-items: center;
-      padding: 0.28rem 0.55rem;
+      padding: 0.35rem 0.65rem;
       border-radius: 0.3rem;
-      font-size: 0.76rem;
+      font-size: 0.85rem;
       font-weight: 500;
       background: var(--color-accent-muted);
       color: var(--color-accent);
@@ -242,10 +288,7 @@
 
     /* ── Right Zone: L3 应用虚拟 ── */
     .right-zone {
-      display: flex; flex-direction: column;
-      gap: 0.4rem;
-      min-height: 0;
-      overflow: hidden;
+      flex: 1;
     }
     .biz-card {
       background: var(--color-surface);
@@ -259,33 +302,34 @@
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
     }
     .biz-card.app { --bc: var(--color-magenta); flex: 1; }
-    .biz-card.atom { --bc: var(--color-emerald); flex: 0.45; }
-    .biz-card.note { --bc: var(--color-text-muted); flex: 0.35; border-style: dashed; }
+    .biz-card.atom { --bc: var(--color-emerald); flex: 0.5; }
+    .biz-card.note { --bc: var(--color-text-muted); flex: 0.4; border-style: dashed; }
 
     .biz-head {
       display: flex; align-items: baseline; gap: 0.4rem;
-      margin-bottom: 0.25rem;
-      padding-bottom: 0.2rem;
+      margin-bottom: 0.3rem;
+      padding-bottom: 0.25rem;
       border-bottom: 1px solid var(--color-border);
       flex-shrink: 0;
     }
     .biz-tag {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 0.1rem 0.4rem;
+      padding: 0.12rem 0.45rem;
       border-radius: 3px;
       color: white;
       background: var(--bc);
     }
     .biz-name {
-      font-size: 0.88rem;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--color-text);
     }
     .biz-meta {
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.66rem;
       color: var(--color-text-muted);
       margin-left: auto;
     }
@@ -293,7 +337,7 @@
     .biz-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.3rem;
+      gap: 0.35rem;
       flex: 1;
       min-height: 0;
       overflow: hidden;
@@ -302,14 +346,14 @@
       background: color-mix(in srgb, var(--bc) 3%, var(--color-surface));
       border: 1px solid color-mix(in srgb, var(--bc) 12%, var(--color-border));
       border-radius: 0.3rem;
-      padding: 0.25rem 0.4rem;
+      padding: 0.35rem 0.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.15rem;
+      gap: 0.2rem;
       min-height: 0;
     }
     .biz-item-name {
-      font-size: 0.74rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--color-text);
       display: flex;
@@ -318,17 +362,17 @@
     }
     .biz-item-count {
       font-family: var(--font-mono);
-      font-size: 0.56rem;
+      font-size: 0.62rem;
       color: var(--color-text-muted);
     }
     .biz-item-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.18rem;
+      gap: 0.22rem;
     }
     .biz-item-badges .member-badge {
-      font-size: 0.68rem;
-      padding: 0.18rem 0.4rem;
+      font-size: 0.74rem;
+      padding: 0.22rem 0.45rem;
     }
 
     .atom-body {
@@ -338,17 +382,17 @@
       flex: 1;
     }
     .atom-body .member-badge {
-      font-size: 0.82rem;
-      padding: 0.35rem 0.7rem;
+      font-size: 0.9rem;
+      padding: 0.4rem 0.75rem;
     }
     .atom-desc {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       color: var(--color-text-muted);
       line-height: 1.4;
     }
 
     .note-body {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       color: var(--color-text-secondary);
       line-height: 1.5;
       flex: 1;
@@ -398,7 +442,12 @@
     </header>
     <main class="split-layout">
       <!-- ═══ 左区：L1 横向沉淀 ═══ -->
-      <div class="left-zone">
+      <div class="zone-frame zone-l1">
+        <div class="zone-label">
+          <span class="zl-num">L1</span>
+          <span class="zl-text">横向沉淀</span>
+        </div>
+        <div class="zone-content left-zone">
         <!-- 大类 A · 数仓方向 -->
         <div class="mega-card cat-a">
           <div class="mega-head">
@@ -502,10 +551,16 @@
             </div>
           </div>
         </div>
-      </div>
+        </div><!-- /zone-content -->
+      </div><!-- /zone-frame zone-l1 -->
 
       <!-- ═══ 右区：L3 应用虚拟 ═══ -->
-      <div class="right-zone">
+      <div class="zone-frame zone-l3">
+        <div class="zone-label">
+          <span class="zl-num">L3</span>
+          <span class="zl-text">应用虚拟</span>
+        </div>
+        <div class="zone-content right-zone">
         <!-- 应用卡 -->
         <div class="biz-card app">
           <div class="biz-head">
@@ -595,7 +650,8 @@
             <span class="hl-b">L3 是枝</span>：应用层虚拟支持，同一人身兼两线
           </div>
         </div>
-      </div>
+        </div><!-- /zone-content -->
+      </div><!-- /zone-frame zone-l3 -->
     </main>
     <footer class="footer">
       <div class="footer-left">
