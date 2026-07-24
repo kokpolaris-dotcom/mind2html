@@ -224,6 +224,27 @@
       min-height: 0;
       overflow: hidden;
     }
+    .sub-card-wide { flex: 2; }
+    .inner-split { display: flex; gap: 0.4rem; flex: 1; min-height: 0; overflow: hidden; }
+    .inner-cell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-height: 0;
+      overflow: hidden;
+      background: var(--color-surface);
+      border: 1px solid color-mix(in srgb, var(--mc) 22%, var(--color-border));
+      border-radius: 0.35rem;
+      padding: 0.35rem 0.45rem;
+    }
+    .inner-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--mc);
+      flex-shrink: 0;
+    }
     .sub-head {
       display: flex; align-items: baseline; gap: 0.3rem;
       flex-shrink: 0;
@@ -471,13 +492,14 @@
               <div class="sub-head">
                 <span class="sub-label">爬虫</span>
                 <span class="sub-note">逆向工程 · 规则对抗</span>
-                <span class="sub-count">4 人</span>
+                <span class="sub-count">5 人</span>
               </div>
               <div class="badge-stack">
                 <span class="member-badge ai">潘俊霖</span>
                 <span class="member-badge">章旭阳</span>
                 <span class="member-badge">龚哲明</span>
                 <span class="member-badge">崔以微</span>
+                <span class="member-badge">杨杰</span>
               </div>
               <div class="sub-cap"><strong>能力</strong>：JS 逆向 · App 抓包 · 验证码对抗 · 反爬规则维护 · 定时抓取调度</div>
             </div>
@@ -516,18 +538,31 @@
               </div>
               <div class="sub-cap"><strong>能力</strong>：素材自动打标 · RAG 召回 RR 重排 · 本地推理降本 · 模型蒸馏与微调</div>
             </div>
-            <div class="sub-card">
+            <div class="sub-card sub-card-wide">
               <div class="sub-head">
-                <span class="sub-label">素材</span>
-                <span class="sub-note">素材处理</span>
-                <span class="sub-count">3 人</span>
+                <span class="sub-label">内容 & 素材</span>
+                <span class="sub-note">知识内容处理</span>
+                <span class="sub-count">5 人</span>
               </div>
-              <div class="badge-stack">
-                <span class="member-badge algo">董文华</span>
-                <span class="member-badge">胡晓运</span>
-                <span class="member-badge">原政强</span>
+              <div class="inner-split">
+                <div class="inner-cell">
+                  <span class="inner-label">素材</span>
+                  <div class="badge-stack">
+                    <span class="member-badge algo">董文华</span>
+                    <span class="member-badge">胡晓运</span>
+                    <span class="member-badge">原政强</span>
+                  </div>
+                  <div class="sub-cap"><strong>能力</strong>：图片/视频批量处理 · 智能裁剪 · OCR 提取 · 素材入库与检索</div>
+                </div>
+                <div class="inner-cell">
+                  <span class="inner-label">内容</span>
+                  <div class="badge-stack">
+                    <span class="member-badge">陈沛文</span>
+                    <span class="member-badge">孙静勇</span>
+                  </div>
+                  <div class="sub-cap"><strong>能力</strong>：内容采集与结构化 · 标签体系 · 内容审核 · 知识库构建与维护</div>
+                </div>
               </div>
-              <div class="sub-cap"><strong>能力</strong>：图片/视频批量处理 · 智能裁剪 · OCR 提取 · 素材入库与检索</div>
             </div>
             <div class="sub-card">
               <div class="sub-head">
@@ -541,19 +576,6 @@
                 <span class="member-badge ios">杨坤</span>
               </div>
               <div class="sub-cap"><strong>能力</strong>：POI 采集与清洗 · 地理编码 · 画像标签 · 多源数据融合去重</div>
-            </div>
-            <div class="sub-card">
-              <div class="sub-head">
-                <span class="sub-label">内容</span>
-                <span class="sub-note">内容方向</span>
-                <span class="sub-count">3 人</span>
-              </div>
-              <div class="badge-stack">
-                <span class="member-badge">陈沛文</span>
-                <span class="member-badge">杨杰</span>
-                <span class="member-badge">孙静勇</span>
-              </div>
-              <div class="sub-cap"><strong>能力</strong>：内容采集与结构化 · 标签体系 · 内容审核 · 知识库构建与维护</div>
             </div>
             <div class="sub-card">
               <div class="sub-head">
@@ -681,7 +703,7 @@
     </main>
     <footer class="footer">
       <div class="footer-left">
-        <span>19 人 · 2 大类 7 子方向 · 2 大卡（应用 + 原子能力）</span>
+        <span>19 人 · 2 大类 6 子方向 · 2 大卡（应用 + 原子能力）</span>
       </div>
       <div class="legend">
         <div class="legend-item"><span class="legend-dot" style="background:var(--color-accent)"></span><span>数仓</span></div>
