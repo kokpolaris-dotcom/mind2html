@@ -254,6 +254,32 @@
     .cell-no { color: var(--color-text-muted); }
     .cell-no::before { content: '— '; color: var(--color-border-strong); }
 
+    /* ── Ecosystem 生态资产版图 ── */
+    .eco-band {
+      flex-shrink: 0;
+      display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;
+      padding: clamp(0.26rem, 0.58vh, 0.44rem) clamp(0.42rem, 0.66vw, 0.62rem);
+      border-top: 1px solid var(--color-border);
+      background: linear-gradient(90deg, rgba(5,150,105,0.07) 0%, rgba(5,150,105,0.01) 70%);
+      font-size: clamp(0.52rem, 0.47rem + 0.16vw, 0.63rem);
+    }
+    .eco-label {
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: clamp(0.5rem, 0.46rem + 0.14vw, 0.6rem);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-emerald); white-space: nowrap;
+    }
+    .eco-items { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .eco-item {
+      padding: 0.08rem 0.4rem; border-radius: 9999px;
+      background: var(--color-surface);
+      border: 1px solid rgba(5,150,105,0.28);
+      color: var(--color-text-muted); white-space: nowrap;
+    }
+    .eco-item b { color: var(--color-emerald); font-weight: 600; margin-right: 0.18rem; }
+    .eco-note { color: var(--color-text-muted); }
+    .eco-note em { font-style: normal; color: var(--color-text-secondary); }
+
     /* ── Decision strip ── */
     .decisions {
       flex-shrink: 0;
@@ -287,8 +313,8 @@
 
     ::selection { background: rgba(99,102,241,0.35); color: #fff; }
 
-    /* ── 矮屏（1366×768 等投影环境）压缩矩阵，保证整屏不裁切 ── */
-    @media (max-height: 799px) {
+    /* ── 矮屏（1366×768、1280×800 等投影环境）压缩矩阵，保证整屏不裁切 ── */
+    @media (max-height: 820px) {
       .matrix thead th { padding: clamp(0.2rem, 0.46vh, 0.34rem) clamp(0.4rem, 0.62vw, 0.58rem); }
       .matrix thead th .th-goal { font-size: clamp(0.48rem, 0.44rem + 0.13vw, 0.56rem); }
       .matrix tbody th,
@@ -359,7 +385,7 @@
             </th>
             <th class="h-eco">
               <span class="th-name">Wanpix Ecosystem</span>
-              <span class="th-goal">双向 Skill Hub 与连接器生态</span>
+              <span class="th-goal">生态资产：技能 · 专家 · 连接器 · 知识 · 渠道</span>
             </th>
           </tr>
         </thead>
@@ -392,7 +418,7 @@
             <th>业务 Agent<span class="logic">效果由业务团队担责</span></th>
             <td class="td-agent own"><span class="badge-owner">业务 Owner</span>Prompt / Skill 编排、业务逻辑、业务 SLO；提交 Manifest 声明 <code>runtime / capabilities / permissions / limits</code></td>
             <td class="td-core">Loop Engine 与 SDK 稳定面；Manifest <b>三层校验</b>：Schema → Registry → Policy</td>
-            <td class="td-eco">提供可复用连接器与 Skill，不介入 Agent 编排</td>
+            <td class="td-eco"><span class="badge-owner">专家模板</span>提供预置专家与可复用 Skill 供派生，不介入 Agent 编排</td>
           </tr>
           <tr>
             <th>Tool / Skill<span class="logic">业务自建，生态双向引入与发布</span></th>
@@ -452,7 +478,7 @@
             <th>发布和运行<span class="logic">业务验收，平台托管</span></th>
             <td class="td-agent">业务验收、Eval、Agent 一级响应</td>
             <td class="td-core own"><span class="badge-owner">Gateway</span>路由键 <code>agentName + environment + version/channel</code>；local → preview → staging → canary → production；灰度含流量比例、租户范围、成功率阈值与自动回滚</td>
-            <td class="td-eco">连接器与渠道版本、第三方依赖 SLO</td>
+            <td class="td-eco"><span class="badge-owner">渠道适配</span>渠道分发与版本、连接器及第三方依赖 SLO</td>
           </tr>
 
           <!-- ⑥ 守治理 -->
@@ -475,6 +501,18 @@
 
         </tbody>
       </table>
+
+      <div class="eco-band">
+        <span class="eco-label">Ecosystem 生态资产版图</span>
+        <span class="eco-items">
+          <span class="eco-item"><b>技能</b>Skills</span>
+          <span class="eco-item"><b>专家</b>Experts</span>
+          <span class="eco-item"><b>连接器</b>Connectors</span>
+          <span class="eco-item"><b>知识</b>Knowledge</span>
+          <span class="eco-item"><b>渠道</b>Channels</span>
+        </span>
+        <span class="eco-note">统一<em>上架、版本、质量分级与弃用</em>；模型目录归 Runtime/Core，评测集由业务维护</span>
+      </div>
     </section>
 
     <!-- ════ 待确认 ════ -->
