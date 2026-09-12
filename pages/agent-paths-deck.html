@@ -173,24 +173,9 @@
       background: var(--color-text-secondary);
     }
 
-    /* ── 页标题（左上角） ── */
-    .slide-label {
-      position: fixed;
-      top: 1.35rem;
-      left: 3rem;
-      z-index: 100;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      opacity: 0.85;
-      pointer-events: none;
-    }
-    .slide-label b { color: var(--color-text-secondary); font-weight: 600; }
+    /* 页标题已由各幻灯片自身的 eyebrow 承载，此处不再叠加，避免左上角文字重叠 */
 
     @media (max-width: 1000px) {
-      .slide-label { left: 1rem; }
       .nav-btn { display: none; }
     }
 
@@ -203,7 +188,6 @@
   <div class="glow-accent"></div>
 
   <div class="progress-bar" id="progressBar" style="width: 50%"></div>
-  <div class="slide-label" id="slideLabel"></div>
 
   <div class="slide-container" id="slideContainer"></div>
 
@@ -223,7 +207,6 @@
     const dotsContainer = document.getElementById('slideDots');
     const progressBar = document.getElementById('progressBar');
     const slideNumber = document.getElementById('slideNumber');
-    const slideLabel = document.getElementById('slideLabel');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
 
@@ -270,7 +253,6 @@
       const progress = ((currentSlide + 1) / totalSlides) * 100;
       progressBar.style.width = progress + '%';
       slideNumber.textContent = (currentSlide + 1) + ' / ' + totalSlides;
-      slideLabel.innerHTML = '<b>' + pages[currentSlide].label + '</b> · AGENT 研发提效路线决策';
 
       prevBtn.disabled = currentSlide === 0;
       nextBtn.disabled = currentSlide === totalSlides - 1;
