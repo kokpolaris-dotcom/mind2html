@@ -207,8 +207,8 @@
     .block-desc { margin-top: 0.08rem; font-size: clamp(0.54rem, 0.49rem + 0.18vw, 0.66rem); line-height: 1.36; color: var(--color-text-secondary); }
     .block-desc b { color: var(--color-text); font-weight: 600; }
 
-    /* ── 两个深水区方向 ── */
-    .dir { display: flex; flex-direction: column; gap: clamp(0.14rem, 0.32vh, 0.24rem); margin-top: clamp(0.2rem, 0.46vh, 0.34rem); }
+    /* ── 三个垂类深水区方向 ── */
+    .dir { display: flex; flex-direction: column; gap: clamp(0.16rem, 0.36vh, 0.28rem); }
     .dir-head { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
     .dir-num {
       font-family: var(--font-mono); font-weight: 700;
@@ -216,18 +216,21 @@
       letter-spacing: 0.08em;
       padding: 0.08rem 0.36rem; border-radius: 4px;
       background: var(--color-emerald-muted); color: var(--color-emerald);
+      white-space: nowrap;
     }
-    .dir-title { font-size: clamp(0.62rem, 0.55rem + 0.28vw, 0.78rem); font-weight: 700; letter-spacing: -0.005em; }
+    .dir-title { font-size: clamp(0.64rem, 0.56rem + 0.3vw, 0.82rem); font-weight: 700; letter-spacing: -0.005em; }
     .dir-role { font-size: clamp(0.5rem, 0.46rem + 0.15vw, 0.6rem); color: var(--color-text-muted); }
-    .dir-rows { display: flex; flex-direction: column; gap: clamp(0.1rem, 0.24vh, 0.18rem); }
-    .drow {
-      display: grid; grid-template-columns: clamp(3.7rem, 6vw, 4.8rem) minmax(0, 1fr);
-      gap: 0.5rem; align-items: baseline;
-      padding: clamp(0.1rem, 0.24vh, 0.18rem) 0;
+    .dir-body {
+      font-size: clamp(0.6rem, 0.53rem + 0.25vw, 0.75rem);
+      line-height: 1.46; color: var(--color-text-secondary);
+      padding-left: clamp(0.5rem, 0.78vw, 0.75rem);
+      border-left: 2px solid rgba(5,150,105,0.25);
     }
-    .dname { font-size: clamp(0.55rem, 0.5rem + 0.19vw, 0.67rem); font-weight: 700; color: var(--color-text); }
-    .ddesc { font-size: clamp(0.54rem, 0.49rem + 0.18vw, 0.66rem); line-height: 1.38; color: var(--color-text-secondary); }
-    .ddesc b { color: var(--color-text); font-weight: 600; }
+    .dir-body b { color: var(--color-text); font-weight: 600; }
+    .dir-body code {
+      font-family: var(--font-mono); font-size: 0.92em;
+      background: rgba(15,23,42,0.05); padding: 0 0.16em; border-radius: 3px;
+    }
 
     .sol-note {
       margin-top: clamp(0.26rem, 0.6vh, 0.42rem);
@@ -391,29 +394,25 @@
               <span class="dir-title">记忆管理</span>
               <span class="dir-role">业务定规则 · 平台做机制</span>
             </p>
-            <div class="dir-rows">
-              <div class="drow"><span class="dname">三层存储</span><span class="ddesc">Run 内工作记忆 / 跨会话用户记忆 / 长期知识记忆，各自独立的准入、TTL 与权限</span></div>
-              <div class="drow"><span class="dname">读写一致性</span><span class="ddesc">统一 Memory API；写入幂等、跨实例一致；Checkpoint 只存<b>快照版本 + 读取引用 + 待写幂等键</b></span></div>
-              <div class="drow"><span class="dname">召回策略</span><span class="ddesc">向量 + 关键词混合召回、时间衰减、冲突消解、注入 token 预算，全链路可解释</span></div>
-              <div class="drow"><span class="dname">遗忘与删除</span><span class="ddesc">TTL 到期、用户删除、合规擦除；向量、缓存、备份与 Replay Fixture <b>同步清理</b></span></div>
-              <div class="drow"><span class="dname">与业务界线</span><span class="ddesc">「记什么 / 何时读 / 何时忘」由业务团队定规则，平台提供并强制执行上面这套机制</span></div>
-            </div>
+            <p class="dir-body">三层记忆存储与租户隔离；写入幂等与跨实例一致；TTL 到期与合规删除需<b>同步清理向量、缓存、备份与 Replay Fixture</b>，避免删除不彻底</p>
           </div>
 
           <div class="dir">
             <p class="dir-head">
               <span class="dir-num">方向二</span>
+              <span class="dir-title">上下文管理</span>
+              <span class="dir-role">平台统一执行</span>
+            </p>
+            <p class="dir-body">上下文组装 / 窗口预算 / 截断 / 摘要全链路由平台执行，禁止各 Agent 自行拼接；每次模型调用记录 <code>context.assembled</code>，使线上上下文<b>可解释、可对比</b></p>
+          </div>
+
+          <div class="dir">
+            <p class="dir-head">
+              <span class="dir-num">方向三</span>
               <span class="dir-title">文旅垂类知识库</span>
               <span class="dir-role">平台做切片与召回</span>
             </p>
-            <div class="dir-rows">
-              <div class="drow"><span class="dname">商品库</span><span class="ddesc">按 SKU / 类目 / 属性切片；<b>价格与库存独立成块</b>，便于时效更新而不重建全库</span></div>
-              <div class="drow"><span class="dname">SOP 库</span><span class="ddesc">按<b>流程步骤 + 角色</b>切片，一条流程不切碎，保证步骤完整召回与顺序正确</span></div>
-              <div class="drow"><span class="dname">品牌库</span><span class="ddesc">按调性 / 话术规范 / 禁忌切片，召回后作为<b>生成语气约束</b>而非事实来源</span></div>
-              <div class="drow"><span class="dname">POI 库</span><span class="ddesc">按<b>地理层级</b>切片，支持「附近 / 同城 / 线路」三类检索与行程串联</span></div>
-              <div class="drow"><span class="dname">多路召回</span><span class="ddesc">结构化过滤 + 语义检索 + 关键词并行召回，<b>按知识库类型分别设权重</b>后统一重排</span></div>
-              <div class="drow"><span class="dname">效用保障</span><span class="ddesc">切片语义边界由业务确认；召回率与命中准确率进评测集，badcase 反哺切片与召回策略</span></div>
-            </div>
+            <p class="dir-body">商品 / SOP / 品牌 / POI 四类库<b>差异化切片</b>；结构化过滤 + 语义检索 + 关键词多路召回后统一重排；切片边界由业务确认，召回率与命中准确率进评测集</p>
           </div>
 
           <div class="block b-key">
