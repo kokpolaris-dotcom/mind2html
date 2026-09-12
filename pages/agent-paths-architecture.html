@@ -32,9 +32,6 @@
   --color-emerald: #059669;
   --color-emerald-muted: rgba(5, 150, 105, 0.10);
 
-  --color-danger: #dc2626;
-  --color-danger-muted: rgba(220, 38, 38, 0.10);
-
   --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
   --font-serif: 'Noto Serif SC', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -88,21 +85,20 @@
     }
     h1 {
       margin-top: 0.3rem;
-      font-size: clamp(1.15rem, 0.82rem + 1.4vw, 1.9rem);
-      font-weight: 800; line-height: 1.16; letter-spacing: -0.025em;
+      font-size: clamp(1.2rem, 0.88rem + 1.4vw, 1.95rem);
+      font-weight: 800; line-height: 1.14; letter-spacing: -0.025em;
     }
     h1 .grad {
       background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
-    h1 .strike { color: var(--color-text-muted); text-decoration: line-through; text-decoration-thickness: 2px; }
     .sub {
       margin-top: 0.35rem;
       font-size: clamp(0.7rem, 0.6rem + 0.3vw, 0.875rem);
       line-height: 1.5; color: var(--color-text-secondary);
     }
     .verdict {
-      flex-shrink: 0; max-width: 25rem;
+      flex-shrink: 0; max-width: 26rem;
       padding: clamp(0.5rem, 1vh, 0.75rem) clamp(0.7rem, 1vw, 1.05rem);
       border-radius: 12px;
       background: linear-gradient(135deg, var(--color-primary-muted) 0%, rgba(8,145,178,0.06) 100%);
@@ -121,146 +117,71 @@
     }
     .verdict b { color: var(--color-primary-hover); font-weight: 700; }
 
-    /* ── 主区：现状 / 目标 ── */
-    .main {
+    /* ── 架构主体 ── */
+    .arch {
       flex: 1; min-height: 0;
-      display: grid; grid-template-columns: 0.82fr 1.18fr;
-      gap: clamp(0.55rem, 0.9vw, 0.95rem);
-    }
-    .panel {
-      position: relative; min-height: 0;
-      display: flex; flex-direction: column;
-      padding: clamp(0.5rem, 1.1vh, 0.85rem) clamp(0.6rem, 0.9vw, 0.95rem);
-      border: 1px solid var(--color-border);
+      display: flex; flex-direction: column; justify-content: center;
+      gap: clamp(0.24rem, 0.55vh, 0.42rem);
+      padding: clamp(0.5rem, 1.1vh, 0.85rem) clamp(0.6rem, 0.95vw, 1rem);
+      border: 1px solid rgba(99,102,241,0.2);
       border-radius: 16px;
-      background: var(--color-surface);
+      background: linear-gradient(180deg, rgba(99,102,241,0.045) 0%, rgba(8,145,178,0.02) 55%, rgba(5,150,105,0.02) 100%);
       box-shadow: 0 1px 2px rgba(15,23,42,0.04);
-      overflow: hidden;
-    }
-    .panel-now {
-      border-color: rgba(220,38,38,0.22);
-      background: linear-gradient(180deg, rgba(220,38,38,0.045) 0%, transparent 40%), var(--color-surface);
-    }
-    .panel-target {
-      border-color: rgba(99,102,241,0.25);
-      background: linear-gradient(180deg, rgba(99,102,241,0.05) 0%, transparent 35%), var(--color-surface);
     }
 
-    .panel-head { flex-shrink: 0; display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 0.2rem;
-      font-family: var(--font-mono); font-weight: 700;
-      font-size: clamp(0.5rem, 0.46rem + 0.14vw, 0.6rem);
-      letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.1rem 0.4rem; border-radius: 5px; white-space: nowrap;
-    }
-    .tag-bad  { background: var(--color-danger-muted);  color: var(--color-danger); }
-    .tag-good { background: var(--color-primary-muted); color: var(--color-primary-hover); }
-    .panel-title {
-      font-size: clamp(0.72rem, 0.62rem + 0.34vw, 0.9rem);
-      font-weight: 700; letter-spacing: -0.01em;
-    }
-
-    /* ── 现状：耦合链路 ── */
-    .chain {
-      flex: 1; min-height: 0;
-      display: flex; flex-direction: column; justify-content: center;
-      gap: 0; margin-top: clamp(0.35rem, 0.8vh, 0.6rem);
-    }
-    .node {
-      display: flex; align-items: center; gap: 0.45rem;
-      padding: clamp(0.34rem, 0.78vh, 0.55rem) clamp(0.5rem, 0.75vw, 0.7rem);
-      border-radius: 10px;
-      font-size: clamp(0.62rem, 0.55rem + 0.26vw, 0.78rem);
-      font-weight: 600; line-height: 1.3;
-    }
-    .node-agent { background: var(--color-accent-muted); border: 1px solid rgba(8,145,178,0.3); color: var(--color-accent); }
-    .node-block {
-      background: var(--color-danger-muted);
-      border: 1px dashed rgba(220,38,38,0.45);
-      color: var(--color-danger);
-    }
-    .node-fw    { background: rgba(15,23,42,0.04); border: 1px solid var(--color-border-strong); color: var(--color-text-secondary); }
-    .node-dot { width: 0.4rem; height: 0.4rem; border-radius: 50%; background: currentColor; flex-shrink: 0; opacity: 0.75; }
-
-    .link {
-      position: relative;
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: clamp(0.22rem, 0.5vh, 0.36rem) 0 clamp(0.22rem, 0.5vh, 0.36rem) 1.05rem;
-      font-size: clamp(0.55rem, 0.5rem + 0.18vw, 0.67rem);
-      line-height: 1.35; color: var(--color-text-muted);
-    }
-    .link::before {
-      content: ''; position: absolute; left: 0.32rem; top: 0; bottom: 0;
-      width: 1px; background: rgba(220,38,38,0.3);
-    }
-    .link::after {
-      content: '▼'; position: absolute; left: 0.05rem; bottom: -0.1rem;
-      font-size: 0.45rem; color: rgba(220,38,38,0.55); line-height: 1;
-    }
-    .link span { color: var(--color-text-secondary); }
-
-    .hurts { flex-shrink: 0; margin-top: clamp(0.35rem, 0.8vh, 0.6rem); display: flex; flex-direction: column; gap: 0.25rem; list-style: none; }
-    .hurts li {
-      display: flex; gap: 0.36rem; align-items: flex-start;
-      font-size: clamp(0.57rem, 0.51rem + 0.2vw, 0.69rem);
-      line-height: 1.38; color: var(--color-text-secondary);
-    }
-    .hurts li::before { content: '✕'; color: var(--color-danger); font-weight: 700; font-size: 0.9em; line-height: 1.5; flex-shrink: 0; }
-
-    /* ── 目标：分层架构 ── */
-    .stack {
-      flex: 1; min-height: 0;
-      display: flex; flex-direction: column; justify-content: center;
-      gap: clamp(0.14rem, 0.34vh, 0.26rem);
-      margin-top: clamp(0.35rem, 0.8vh, 0.6rem);
-    }
     .layer {
       --lc: var(--color-primary);
       position: relative;
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 0.75vw, 0.7rem);
-      border-radius: 10px;
-      background: color-mix(in srgb, var(--lc) 5%, transparent);
-      border: 1px solid color-mix(in srgb, var(--lc) 20%, transparent);
-      box-shadow: inset 3px 0 0 var(--lc);
+      display: grid;
+      grid-template-columns: clamp(4.4rem, 7.4vw, 6rem) minmax(0, 1fr) auto;
+      align-items: center;
+      gap: clamp(0.5rem, 0.85vw, 0.9rem);
+      padding: clamp(0.34rem, 0.8vh, 0.6rem) clamp(0.55rem, 0.85vw, 0.85rem);
+      border-radius: 11px;
+      background: var(--color-surface);
+      border: 1px solid color-mix(in srgb, var(--lc) 22%, transparent);
+      box-shadow: inset 3px 0 0 var(--lc), 0 1px 2px rgba(15,23,42,0.03);
+      transition: border-color 200ms ease;
     }
     .l-agent { --lc: var(--color-accent); }
+    .l-key   { --lc: var(--color-emerald); border-color: rgba(5,150,105,0.42); box-shadow: inset 3px 0 0 var(--color-emerald), 0 0 0 1px rgba(5,150,105,0.12); }
     .l-core  { --lc: var(--color-primary); }
-    .l-fw    { --lc: var(--color-text-muted); }
-    .l-key   { --lc: var(--color-emerald); box-shadow: inset 3px 0 0 var(--color-emerald), 0 0 0 1px rgba(5,150,105,0.18); }
+    .l-sep   { --lc: var(--color-text-muted); }
 
     .layer-tag {
-      flex-shrink: 0; width: clamp(3.4rem, 5.6vw, 4.3rem);
       font-family: var(--font-mono); font-weight: 700;
-      font-size: clamp(0.48rem, 0.44rem + 0.13vw, 0.58rem);
+      font-size: clamp(0.5rem, 0.46rem + 0.14vw, 0.6rem);
       letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--lc); line-height: 1.25;
     }
-    .layer-body { min-width: 0; }
     .layer-title {
-      font-size: clamp(0.62rem, 0.55rem + 0.28vw, 0.79rem);
+      font-size: clamp(0.64rem, 0.56rem + 0.3vw, 0.82rem);
       font-weight: 700; line-height: 1.28; letter-spacing: -0.005em;
     }
     .layer-desc {
       margin-top: 0.1rem;
-      font-size: clamp(0.55rem, 0.5rem + 0.19vw, 0.68rem);
-      line-height: 1.35; color: var(--color-text-secondary);
+      font-size: clamp(0.56rem, 0.5rem + 0.2vw, 0.7rem);
+      line-height: 1.38; color: var(--color-text-secondary);
     }
     .layer-desc code {
       font-family: var(--font-mono); font-size: 0.92em;
       background: rgba(15,23,42,0.05); padding: 0 0.16em; border-radius: 3px;
     }
+    .layer-desc b { color: var(--color-text); font-weight: 600; }
     .l-key .layer-title { color: var(--color-emerald); }
 
-    .gains { flex-shrink: 0; margin-top: clamp(0.35rem, 0.8vh, 0.6rem); display: flex; flex-direction: column; gap: 0.25rem; list-style: none; }
-    .gains li {
-      display: flex; gap: 0.36rem; align-items: flex-start;
-      font-size: clamp(0.57rem, 0.51rem + 0.2vw, 0.69rem);
-      line-height: 1.38; color: var(--color-text-secondary);
+    .owner {
+      flex-shrink: 0;
+      font-family: var(--font-mono); font-weight: 600;
+      font-size: clamp(0.47rem, 0.43rem + 0.12vw, 0.56rem);
+      letter-spacing: 0.04em; white-space: nowrap;
+      padding: 0.1rem 0.42rem; border-radius: 9999px;
+      color: var(--oc); background: color-mix(in srgb, var(--oc) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--oc) 24%, transparent);
     }
-    .gains li::before { content: '✓'; color: var(--color-emerald); font-weight: 700; font-size: 0.9em; line-height: 1.5; flex-shrink: 0; }
-    .gains b { color: var(--color-text); font-weight: 600; }
+    .o-agent { --oc: var(--color-accent); }
+    .o-core  { --oc: var(--color-primary); }
+    .o-eco   { --oc: var(--color-emerald); }
 
     /* ── 底部：演进路径 ── */
     .routes {
@@ -321,26 +242,22 @@
 
     /* ── 矮屏压缩 ── */
     @media (max-height: 820px) {
-      .layer-title { font-size: clamp(0.56rem, 0.5rem + 0.24vw, 0.7rem); }
-      .layer-desc, .node, .hurts li, .gains li { font-size: clamp(0.53rem, 0.48rem + 0.17vw, 0.64rem); }
-      .route-desc, .routes-note, .link { font-size: clamp(0.51rem, 0.47rem + 0.15vw, 0.61rem); }
-      .routes { border-radius: 12px; }
+      .layer-title { font-size: clamp(0.58rem, 0.52rem + 0.24vw, 0.72rem); }
+      .layer-desc { font-size: clamp(0.53rem, 0.48rem + 0.17vw, 0.64rem); }
+      .route-desc, .routes-note { font-size: clamp(0.51rem, 0.47rem + 0.15vw, 0.61rem); }
     }
     @media (max-height: 740px) {
-      .stack { gap: 0.1rem; }
-      .layer { padding: clamp(0.2rem, 0.5vh, 0.34rem) clamp(0.42rem, 0.66vw, 0.6rem); }
+      .arch { gap: 0.18rem; }
+      .layer { padding: clamp(0.22rem, 0.54vh, 0.38rem) clamp(0.45rem, 0.7vw, 0.7rem); }
       .layer-desc { margin-top: 0.06rem; }
-      .hurts, .gains { gap: 0.16rem; }
-      .link { padding-top: 0.14rem; padding-bottom: 0.14rem; }
-      .node { padding: clamp(0.24rem, 0.58vh, 0.4rem) clamp(0.42rem, 0.66vw, 0.6rem); }
     }
 
     @media (max-width: 1000px) {
       html, body { overflow: auto; height: auto; }
       .stage { height: auto; }
-      .main { grid-template-columns: 1fr; }
+      .arch { min-height: auto; }
+      .layer { grid-template-columns: 1fr; gap: 0.3rem; }
       .route-row { grid-template-columns: 1fr; }
-      .panel { min-height: auto; }
       .deck-head { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -356,94 +273,72 @@
     <!-- ════ 页头 ════ -->
     <header class="deck-head">
       <div>
-        <p class="eyebrow">AGENT 研发解耦 · 架构与演进路径</p>
-        <h1>把「<span class="strike">在 Wanpix Admin 上开发</span>」<br>换成「<span class="grad">框架自主开发 + 稳定接口接入</span>」</h1>
-        <p class="sub">要解决的不是选哪个框架，而是两个团队的开发链路被强行绑在一起。</p>
+        <p class="eyebrow">AGENT 研发解耦架构 · 三层归属</p>
+        <h1>研发自持开发能力，平台收敛到<span class="grad">接口与底座</span></h1>
+        <p class="sub">研发团队在自有仓库基于框架完整开发；平台定义统一接口与规范，并建设有壁垒的底座能力。</p>
       </div>
       <div class="verdict">
-        <p class="verdict-label">CEO 结论</p>
-        <p><b>存量走路线一</b> · <b>增量试路线二</b> · <b>路线三按证据进入</b><br>
-           先把开发链路解开，Wanpix 才能腾出手做高价值底座。</p>
+        <p class="verdict-label">解耦原则</p>
+        <p>接口与规范由平台<b>统一定义</b>，实现与托管位置<b>可替换</b>；<br>
+           研发能力不再绑定平台的包装进度。</p>
       </div>
     </header>
 
-    <!-- ════ 主区：现状 → 目标 ════ -->
-    <section class="main">
+    <!-- ════ 架构图 ════ -->
+    <section class="arch">
 
-      <!-- ── 现状 ── -->
-      <div class="panel panel-now">
-        <div class="panel-head">
-          <span class="tag tag-bad">现状</span>
-          <span class="panel-title">两个团队被开发链路绑死</span>
+      <div class="layer l-agent">
+        <span class="layer-tag">业务 Agent</span>
+        <div class="layer-body">
+          <p class="layer-title">研发团队自主开发的 Agent</p>
+          <p class="layer-desc">存量 Wanpix Agent · 新增自托管 Agent · 第三方 Agent，统一进入编排</p>
         </div>
-
-        <div class="chain">
-          <div class="node node-agent"><span class="node-dot"></span>Agent 研发团队</div>
-          <div class="link"><span>只能在 Wanpix Admin 上开发</span></div>
-          <div class="node node-block"><span class="node-dot"></span>Wanpix Admin · 能力包装层</div>
-          <div class="link">Mastra 的每个能力都要先在 Admin 包装一遍</div>
-          <div class="node node-fw"><span class="node-dot"></span>Mastra / Runtime 能力</div>
-        </div>
-
-        <ul class="hurts">
-          <li>包装没做完，Agent 研发就停等 —— 交付节奏被平台排期绑架</li>
-          <li>Wanpix 忙于逐个包装，没精力做底座能力</li>
-        </ul>
+        <span class="owner o-agent">Agent 业务团队</span>
       </div>
 
-      <!-- ── 目标 ── -->
-      <div class="panel panel-target">
-        <div class="panel-head">
-          <span class="tag tag-good">目标</span>
-          <span class="panel-title">框架自主开发 + 稳定接口接入</span>
+      <div class="layer l-key">
+        <span class="layer-tag">解耦边界</span>
+        <div class="layer-body">
+          <p class="layer-title">Agent Contract · 统一接口与规范</p>
+          <p class="layer-desc"><code>Manifest</code> · 调用协议 · 事件语义 · Tool / Skill / Knowledge 契约 —— <b>接口稳定即可更换实现</b></p>
         </div>
+        <span class="owner o-core">Runtime / Core</span>
+      </div>
 
-        <div class="stack">
-          <div class="layer l-agent">
-            <span class="layer-tag">业务 Agent</span>
-            <div class="layer-body">
-              <p class="layer-title">Agent 业务团队自主开发</p>
-              <p class="layer-desc">存量 Wanpix Agent · 新增自托管 Agent · 第三方 Agent（编排接入）</p>
-            </div>
-          </div>
-
-          <div class="layer l-key">
-            <span class="layer-tag">解耦边界</span>
-            <div class="layer-body">
-              <p class="layer-title">统一接口与规范 · Agent Contract</p>
-              <p class="layer-desc"><code>Manifest</code> · 调用协议 · 事件语义 · Tool / Skill / Knowledge 契约 —— 接口稳定即可换实现</p>
-            </div>
-          </div>
-
-          <div class="layer l-core">
-            <span class="layer-tag">Gateway</span>
-            <div class="layer-body">
-              <p class="layer-title">Agent Gateway</p>
-              <p class="layer-desc">身份 · 权限 · 限流 · 灰度 · Trace 边界（自托管与托管同一入口）</p>
-            </div>
-          </div>
-
-          <div class="layer l-core">
-            <span class="layer-tag">Runtime</span>
-            <div class="layer-body">
-              <p class="layer-title">Agent Runtime 底座 · Wanpix Runtime/Core</p>
-              <p class="layer-desc">沙箱隔离 · <b>记忆（文旅行业定制增强）</b> · <b>上下文管理</b> · Trace / Replay · Checkpoint · 配额计量</p>
-            </div>
-          </div>
-
-          <div class="layer l-fw">
-            <span class="layer-tag">框架层</span>
-            <div class="layer-body">
-              <p class="layer-title">可替换的 Agent Loop 实现</p>
-              <p class="layer-desc">Mastra · pi-agent-core · dsh · 自研 Loop —— 候选须过同一组一致性测试</p>
-            </div>
-          </div>
+      <div class="layer l-core">
+        <span class="layer-tag">接入层</span>
+        <div class="layer-body">
+          <p class="layer-title">Agent Gateway</p>
+          <p class="layer-desc">身份 · 权限 · 限流 · 灰度 · Trace 边界；自托管与平台托管同一入口</p>
         </div>
+        <span class="owner o-core">Runtime / Core</span>
+      </div>
 
-        <ul class="gains">
-          <li>Agent 团队<b>基于框架完整开发</b>（Git / IDE / Vibe Coding / CI），不再等平台包装</li>
-          <li>Wanpix 从「逐个包装框架能力」转向<b>做真正有壁垒的底座</b></li>
-        </ul>
+      <div class="layer l-core">
+        <span class="layer-tag">底座层</span>
+        <div class="layer-body">
+          <p class="layer-title">Agent Runtime 底座</p>
+          <p class="layer-desc">沙箱隔离 · <b>记忆（文旅行业定制增强）</b> · <b>上下文管理</b> · Trace / Replay · Checkpoint · 配额计量</p>
+        </div>
+        <span class="owner o-core">Runtime / Core</span>
+      </div>
+
+      <div class="layer l-sep">
+        <span class="layer-tag">生态资产</span>
+        <div class="layer-body">
+          <p class="layer-title">Skill &amp; Connector Hub 与连接器生态</p>
+          <p class="layer-desc">技能 · 专家 · 连接器 · 知识 · 渠道，统一上架、版本与质量分级</p>
+        </div>
+        <span class="owner o-eco">Ecosystem</span>
+      </div>
+
+      <div class="layer l-sep">
+        <span class="layer-tag">框架层</span>
+        <div class="layer-body">
+          <p class="layer-title">可替换的 Agent Loop 实现</p>
+          <p class="layer-desc">Mastra · pi-agent-core · dsh · 自研 Loop，候选须通过同一组一致性测试</p>
+        </div>
+        <span class="owner o-core">Runtime / Core</span>
       </div>
 
     </section>
@@ -459,14 +354,14 @@
           <span class="route-num">01</span>
           <div>
             <p class="route-title">存量 · 原地增强</p>
-            <p class="route-desc">保留现有 Wanpix + Mastra，补 Trace / Replay / CI·CD / 灰度回滚，不启动迁移</p>
+            <p class="route-desc">保留现有 Wanpix + Mastra，补齐 Trace / Replay / CI·CD / 灰度回滚</p>
           </div>
         </div>
         <div class="route rt-2">
           <span class="route-num">02</span>
           <div>
             <p class="route-title">增量 · 团队自托管</p>
-            <p class="route-desc">新增 Agent 用原生 Mastra 自主开发并自托管，经统一 Gateway 接入门户</p>
+            <p class="route-desc">新增 Agent 原生 Mastra 自主开发并自托管，经统一 Gateway 接入门户</p>
           </div>
         </div>
         <div class="route rt-3">
