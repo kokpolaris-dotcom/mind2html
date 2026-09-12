@@ -232,7 +232,8 @@
       const slide = document.createElement('div');
       slide.className = 'slide' + (i === 0 ? ' active' : '');
       const iframe = document.createElement('iframe');
-      iframe.src = p.url;
+      // 带版本戳，避免 GitHub Pages 的 10 分钟强缓存导致改版后仍显示旧幻灯片
+      iframe.src = p.url + '?v=' + Date.now();
       iframe.title = p.title;
       slide.appendChild(iframe);
       container.appendChild(slide);
