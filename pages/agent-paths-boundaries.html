@@ -189,8 +189,9 @@
       border-collapse: collapse;
       table-layout: fixed;
     }
+    .matrix col.c-phase { width: 8%; }
     .matrix col.c-domain { width: 14%; }
-    .matrix col.c-team { width: 28.66%; }
+    .matrix col.c-team { width: 26%; }
 
     .matrix thead th {
       padding: clamp(0.26rem, 0.6vh, 0.42rem) clamp(0.42rem, 0.66vw, 0.62rem);
@@ -206,10 +207,38 @@
     .matrix thead th.h-agent { color: var(--color-accent);    box-shadow: inset 0 2px 0 var(--color-accent); }
     .matrix thead th.h-core  { color: var(--color-primary);   box-shadow: inset 0 2px 0 var(--color-primary); }
     .matrix thead th.h-eco   { color: var(--color-emerald);   box-shadow: inset 0 2px 0 var(--color-emerald); }
+    .matrix thead th.h-phase { color: var(--color-magenta);   box-shadow: inset 0 2px 0 var(--color-magenta); }
 
     .matrix tbody tr { border-bottom: 1px solid var(--color-border); }
     .matrix tbody tr:last-child { border-bottom: none; }
     .matrix tbody tr:hover { background: rgba(99,102,241,0.03); }
+
+    /* ── 时序轴：研发阶段 ── */
+    .matrix tbody th.phase-cell {
+      --pc: var(--color-magenta);
+      vertical-align: middle; text-align: center;
+      padding: clamp(0.2rem, 0.5vh, 0.38rem) clamp(0.22rem, 0.38vw, 0.38rem);
+      background: color-mix(in srgb, var(--pc) 5%, transparent);
+      box-shadow: inset 3px 0 0 var(--pc);
+      border-right: 1px solid var(--color-border);
+    }
+    .phase-num {
+      display: block;
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: clamp(0.58rem, 0.52rem + 0.18vw, 0.7rem);
+      letter-spacing: 0.04em; color: var(--pc);
+    }
+    .phase-name {
+      display: block; margin-top: 0.12rem;
+      font-size: clamp(0.56rem, 0.5rem + 0.18vw, 0.68rem);
+      font-weight: 700; color: var(--color-text); letter-spacing: -0.01em;
+    }
+    .matrix tbody th .logic {
+      display: block; margin-top: 0.12rem;
+      font-weight: 400; line-height: 1.28;
+      font-size: clamp(0.48rem, 0.44rem + 0.11vw, 0.56rem);
+      color: var(--color-text-muted);
+    }
 
     .matrix tbody th {
       padding: clamp(0.17rem, 0.4vh, 0.3rem) clamp(0.42rem, 0.66vw, 0.62rem);
@@ -219,39 +248,12 @@
       border-right: 1px solid var(--color-border);
       background: rgba(15,23,42,0.015);
     }
-    .matrix tbody th .en {
-      margin-left: 0.24rem;
-      font-family: var(--font-mono); font-weight: 400;
-      font-size: clamp(0.45rem, 0.42rem + 0.1vw, 0.52rem);
-      letter-spacing: 0.04em; text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-
     .matrix tbody td {
       padding: clamp(0.17rem, 0.4vh, 0.3rem) clamp(0.42rem, 0.66vw, 0.62rem);
       vertical-align: middle;
       font-size: clamp(0.55rem, 0.49rem + 0.2vw, 0.66rem);
       line-height: 1.34; color: var(--color-text-muted);
     }
-    .matrix tbody tr.is-new td,
-    .matrix tbody tr.is-new th { background: rgba(99,102,241,0.045); }
-    .matrix tbody tr.is-new th { box-shadow: inset 2px 0 0 var(--color-primary); }
-
-    .matrix-legend {
-      flex-shrink: 0;
-      display: flex; align-items: center; gap: 0.45rem;
-      padding: clamp(0.22rem, 0.5vh, 0.38rem) clamp(0.42rem, 0.66vw, 0.62rem);
-      border-top: 1px solid var(--color-border);
-      background: rgba(99,102,241,0.03);
-      font-size: clamp(0.52rem, 0.47rem + 0.16vw, 0.62rem);
-      color: var(--color-text-muted);
-    }
-    .matrix-legend .swatch {
-      width: 0.62rem; height: 0.62rem; border-radius: 3px; flex-shrink: 0;
-      background: rgba(99,102,241,0.10);
-      box-shadow: inset 2px 0 0 var(--color-primary);
-    }
-    .matrix-legend b { color: var(--color-primary); font-weight: 600; }
     .matrix tbody td.own {
       color: var(--color-text);
       font-weight: 500;
@@ -377,110 +379,135 @@
 
     </section>
 
-    <!-- ════ 边界矩阵 ════ -->
+    <!-- ════ 边界矩阵：按研发时序排列 ════ -->
     <section class="matrix-wrap">
       <table class="matrix">
         <colgroup>
+          <col class="c-phase">
           <col class="c-domain">
           <col class="c-team"><col class="c-team"><col class="c-team">
         </colgroup>
         <thead>
           <tr>
-            <th>领域</th>
+            <th class="h-phase">阶段</th>
+            <th>领域 / 归属逻辑</th>
             <th class="h-agent">Agent 业务团队</th>
             <th class="h-core">Wanpix Runtime / Core</th>
             <th class="h-eco">Wanpix Ecosystem</th>
           </tr>
         </thead>
         <tbody>
+
+          <!-- ① 定底座 -->
           <tr>
-            <th>业务 Agent<span class="en">Business Agent</span></th>
-            <td class="td-agent">Prompt、业务编排、效果和业务 SLO</td>
+            <th class="phase-cell" rowspan="2">
+              <span class="phase-num">01</span>
+              <span class="phase-name">定底座</span>
+            </th>
+            <th>框架与自研 Runtime<span class="logic">内核禁止多头建设</span></th>
+            <td class="td-agent">提需求、试点和验收</td>
+            <td class="td-core own"><span class="badge-owner">唯一建设 Owner</span>统一选型、自研、升级和托管</td>
+            <td class="td-eco">配合适配，不维护 Runtime 内核</td>
+          </tr>
+          <tr>
+            <th>新框架<span class="logic">选型收口到 Runtime/Core</span></th>
+            <td class="td-agent"><span class="cell-no">不自行形成长期私有 Runtime</span></td>
+            <td class="td-core">统一选型、自研、升级和托管</td>
+            <td class="td-eco">提供跨 Runtime Adapter</td>
+          </tr>
+
+          <!-- ② 写业务 -->
+          <tr>
+            <th class="phase-cell" rowspan="2">
+              <span class="phase-num">02</span>
+              <span class="phase-name">写业务</span>
+            </th>
+            <th>业务 Agent<span class="logic">效果由业务团队担责</span></th>
+            <td class="td-agent own">Prompt、业务编排、效果和业务 SLO</td>
             <td class="td-core">提供 Loop Engine、SDK 和运行能力</td>
             <td class="td-eco">提供可复用连接器和 Skill</td>
           </tr>
           <tr>
-            <th>框架与自研 Runtime<span class="en">Framework Owner</span></th>
-            <td class="td-agent">提需求、试点和验收</td>
-            <td class="td-core own">
-              <span class="badge-owner">唯一建设 Owner</span>统一选型、自研、升级和托管
-            </td>
-            <td class="td-eco">配合适配，不维护 Runtime 内核</td>
+            <th>Tool / Skill<span class="logic">用能力，不造内核</span></th>
+            <td class="td-agent">选择、组合并反馈业务效果</td>
+            <td class="td-core">定义运行接口与调用链路；<span class="badge-owner">MCP 运行时</span>网关、鉴权、限流和策略执行</td>
+            <td class="td-eco own"><span class="badge-owner">Registry Owner</span>Registry、连接器、MCP 目录、版本和文档</td>
+          </tr>
+
+          <!-- ③ 装能力 -->
+          <tr>
+            <th class="phase-cell" rowspan="2">
+              <span class="phase-num">03</span>
+              <span class="phase-name">装能力</span>
+            </th>
+            <th>知识与检索<span class="logic">内容归业务，契约归平台</span></th>
+            <td class="td-agent">维护业务知识内容与评测集</td>
+            <td class="td-core">定义检索接口契约与运行时策略</td>
+            <td class="td-eco">提供知识源连接器、索引生命周期与切片策略</td>
           </tr>
           <tr>
-            <th>可观测与调试<span class="en">Observability</span></th>
+            <th>记忆<span class="logic">规则归业务，读写归平台</span></th>
+            <td class="td-agent">决定“记什么、何时读、何时忘”的业务规则与效果验收</td>
+            <td class="td-core own"><span class="badge-owner">唯一 Owner</span>记忆读写 API、存储与隔离、TTL 与遗忘机制、跨实例一致性</td>
+            <td class="td-eco">提供记忆检索所需的向量 / 搜索连接器与嵌入服务适配</td>
+          </tr>
+
+          <!-- ④ 跑会话 -->
+          <tr>
+            <th class="phase-cell" rowspan="2">
+              <span class="phase-num">04</span>
+              <span class="phase-name">跑会话</span>
+            </th>
+            <th>会话与上下文<span class="logic">语义归业务，中控归平台</span></th>
+            <td class="td-agent">定义会话语义、多轮策略和上下文内容组装</td>
+            <td class="td-core own"><span class="badge-owner">唯一 Owner</span>sessionId 生命周期、上下文窗口预算与压缩/摘要、会话恢复与并发控制、会话与 Run/租户映射</td>
+            <td class="td-eco">提供可检索的知识 / 文档连接器与切片能力</td>
+          </tr>
+          <tr>
+            <th>沙箱 · 密钥 · 配额 · 隔离<span class="logic">业务配策略，平台给底座</span></th>
+            <td class="td-agent"><span class="cell-no">配置业务策略，不自行实现沙箱</span></td>
+            <td class="td-core own"><span class="badge-owner">共享底座</span>Sandbox、Secret、Quota 服务与强制基线策略</td>
+            <td class="td-eco">沙箱内可用的连接器与依赖白名单</td>
+          </tr>
+
+          <!-- ⑤ 上生产 -->
+          <tr>
+            <th class="phase-cell" rowspan="2">
+              <span class="phase-num">05</span>
+              <span class="phase-name">上生产</span>
+            </th>
+            <th>可观测与调试<span class="logic">业务定指标，平台给链路</span></th>
             <td class="td-agent">定义业务指标、定位业务问题</td>
             <td class="td-core">Trace、Replay、Run 状态、SSE 和 Checkpoint</td>
             <td class="td-eco">Tool / Connector 调用指标和错误归因</td>
           </tr>
           <tr>
-            <th>Tool / Skill<span class="en">Tool &amp; Skill</span></th>
-            <td class="td-agent">选择、组合并反馈业务效果</td>
-            <td class="td-core">定义运行接口与调用链路；<span class="badge-owner">MCP 运行时</span>网关、鉴权、限流和策略执行</td>
-            <td class="td-eco own">
-              <span class="badge-owner">Registry Owner</span>Registry、连接器、MCP 目录、版本和文档
-            </td>
-          </tr>
-          <tr>
-            <th>发布和运行<span class="en">Release &amp; Run</span></th>
+            <th>发布和运行<span class="logic">业务验收，平台托管</span></th>
             <td class="td-agent">业务验收、Eval、Agent 一级响应</td>
             <td class="td-core">Gateway、构建、托管、灰度、回滚和平台 SLO</td>
             <td class="td-eco">连接器及渠道版本、第三方依赖 SLO</td>
           </tr>
+
+          <!-- ⑥ 守治理 -->
           <tr>
-            <th>沙箱 · 密钥 · 配额 · 隔离<span class="en">Isolation</span></th>
-            <td class="td-agent"><span class="cell-no">配置业务策略，不自行实现沙箱</span></td>
-            <td class="td-core own">
-              <span class="badge-owner">共享底座</span>Sandbox、Secret、Quota 服务与强制基线策略
-            </td>
-            <td class="td-eco">沙箱内可用的连接器与依赖白名单</td>
-          </tr>
-          <tr class="is-new">
-            <th>会话与上下文<span class="en">Session</span></th>
-            <td class="td-agent">定义会话语义、多轮策略和上下文内容组装</td>
-            <td class="td-core own">
-              <span class="badge-owner">唯一 Owner</span>sessionId 生命周期、上下文窗口预算与压缩/摘要、会话恢复与并发控制、会话与 Run/租户映射
-            </td>
-            <td class="td-eco">提供可检索的知识 / 文档连接器与切片能力</td>
-          </tr>
-          <tr class="is-new">
-            <th>记忆<span class="en">Memory</span></th>
-            <td class="td-agent">决定“记什么、何时读、何时忘”的业务规则与效果验收</td>
-            <td class="td-core own">
-              <span class="badge-owner">唯一 Owner</span>记忆读写 API、存储与隔离、TTL 与遗忘机制、跨实例一致性
-            </td>
-            <td class="td-eco">提供记忆检索所需的向量 / 搜索连接器与嵌入服务适配</td>
-          </tr>
-          <tr class="is-new">
-            <th>知识与检索<span class="en">Retrieval</span></th>
-            <td class="td-agent">维护业务知识内容与评测集</td>
-            <td class="td-core">定义检索接口契约与运行时策略</td>
-            <td class="td-eco">提供知识源连接器、索引生命周期与切片策略</td>
-          </tr>
-          <tr class="is-new">
-            <th>数据留存与合规<span class="en">Retention</span></th>
+            <th class="phase-cell" rowspan="2">
+              <span class="phase-num">06</span>
+              <span class="phase-name">守治理</span>
+            </th>
+            <th>数据留存与合规<span class="logic">业务提诉求，平台强制基线</span></th>
             <td class="td-agent">声明业务数据分级与留存诉求</td>
             <td class="td-core">强制留存策略、PII 脱敏、审计落库与租户隔离基线</td>
             <td class="td-eco">保证连接器侧数据不越权落盘</td>
           </tr>
-          <tr class="is-new">
-            <th>成本与配额归因<span class="en">Cost</span></th>
+          <tr>
+            <th>成本与配额归因<span class="logic">业务担目标，平台给口径</span></th>
             <td class="td-agent">对单个 Agent 的成本目标负责</td>
             <td class="td-core">提供 token / 资源计量、配额执行与归因口径</td>
             <td class="td-eco">提供连接器调用成本口径与第三方配额</td>
           </tr>
-          <tr>
-            <th>新框架<span class="en">New Framework</span></th>
-            <td class="td-agent"><span class="cell-no">不自行形成长期私有 Runtime</span></td>
-            <td class="td-core">统一选型、自研、升级和托管</td>
-            <td class="td-eco">提供跨 Runtime Adapter</td>
-          </tr>
+
         </tbody>
       </table>
-      <div class="matrix-legend">
-        <span class="swatch"></span>
-        <span><b>本轮新增 5 个领域</b>：会话与上下文 · 记忆 · 知识与检索 · 数据留存与合规 · 成本与配额归因（对应文档 §6 新增行）</span>
-      </div>
     </section>
 
     <!-- ════ 待确认 ════ -->
