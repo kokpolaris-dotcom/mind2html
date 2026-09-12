@@ -328,8 +328,8 @@
       .decision { font-size: clamp(0.55rem, 0.5rem + 0.2vw, 0.66rem); line-height: 1.36; }
     }
 
-    /* ── 更矮屏（1152×720 等）再压一档 ── */
-    @media (max-height: 760px) {
+    /* ── 更矮屏（1152×720、1024×768 等）再压一档 ── */
+    @media (max-height: 790px) {
       .matrix thead th { padding: clamp(0.16rem, 0.38vh, 0.26rem) clamp(0.34rem, 0.54vw, 0.5rem); }
       .matrix thead th .th-goal { font-size: clamp(0.45rem, 0.42rem + 0.1vw, 0.52rem); line-height: 1.24; }
       .matrix tbody th,
@@ -456,13 +456,13 @@
               <span class="phase-name">知识记忆</span>
             </th>
             <th>知识与检索<span class="logic">内容归业务，接入归生态，契约归平台</span></th>
-            <td class="td-agent">维护业务知识内容与评测集，声明数据分级</td>
+            <td class="td-agent">维护知识内容与检索评测集；<b>定义切片语义边界</b>（按业务语义切分，不按固定长度）；<b>对召回率与命中准确率负责</b>；标注 badcase 反哺切分与召回策略；保证知识时效</td>
             <td class="td-core">定义统一<b>检索契约</b>（Knowledge / Retrieval API）与运行时策略；检索结果进 <code>context.assembled</code>，上下文可解释可对比</td>
             <td class="td-eco own"><span class="badge-owner">知识源接入</span>对接各类知识库（文档库 / Wiki / 对象存储 / 数据库 / 第三方 SaaS），统一为 <b>Runtime 可直接消费的知识接口</b>；管索引生命周期、切片向量化与增量同步</td>
           </tr>
           <tr>
             <th>记忆<span class="logic">规则归业务，读写归平台</span></th>
-            <td class="td-agent">定义“记什么、何时读、何时忘”的业务规则与效果验收</td>
+            <td class="td-agent">定义写入规则与置信度门槛（记什么 / 何时读 / 何时忘）；<b>验收记忆对任务完成率的真实增益</b>；声明禁止自动入库的敏感字段；对记忆误用导致的错误负责</td>
             <td class="td-core own"><span class="badge-owner">Memory API</span>三层记忆（Run 内 / 跨会话 / 长期）、写入准入与置信度、TTL 与遗忘、租户命名空间；Checkpoint 只存快照版本 + 引用 + 幂等键</td>
             <td class="td-eco">向量 / 搜索连接器与嵌入服务适配</td>
           </tr>
@@ -474,13 +474,13 @@
               <span class="phase-name">运行环境</span>
             </th>
             <th>会话与上下文<span class="logic">语义归业务，中控归平台</span></th>
-            <td class="td-agent">定义会话语义、多轮策略与内容来源；<span class="cell-no">禁止直接拼接不可观测的历史消息</span></td>
+            <td class="td-agent">定义会话语义、多轮策略与内容来源；<b>明确上下文预算分配与截断优先级</b>（哪些内容不可丢）；验收摘要保真度；<span class="cell-no">禁止直接拼接不可观测的历史消息</span></td>
             <td class="td-core own"><span class="badge-owner">Session / Context API</span>sessionId 生命周期、会话↔Run 1:N 与并发租约、token 预算 / 截断 / 摘要、断线重连合并；每次模型调用记 <code>context.assembled</code></td>
             <td class="td-eco">知识 / 文档连接器与切片能力</td>
           </tr>
           <tr>
             <th>沙箱 · 密钥 · 配额 · 隔离<span class="logic">业务配策略，平台给底座</span></th>
-            <td class="td-agent"><span class="cell-no">配置业务策略，不自行实现隔离</span></td>
+            <td class="td-agent">声明所需密钥与权限（<b>最小化申请</b>）；<b>定义高风险操作的审批口径与拒绝路径</b>；配置业务侧资源配额与并发上限；<span class="cell-no">不自行实现沙箱与隔离</span></td>
             <td class="td-core own"><span class="badge-owner">共享底座</span>Sandbox / Secret / Quota；出站 allowlist 与 SSRF 防护、租户级文件隔离、CPU / 内存 / 时长上限；密钥只走 Secret Manager</td>
             <td class="td-eco">沙箱内可用的连接器与依赖白名单</td>
           </tr>
@@ -492,13 +492,13 @@
               <span class="phase-name">发布运维</span>
             </th>
             <th>可观测与调试<span class="logic">业务定指标，平台给链路</span></th>
-            <td class="td-agent">定义业务指标；提供失败样本定位业务问题</td>
+            <td class="td-agent">定义业务指标（任务成功率 / 拒答正确率 / 工具选择准确率）与告警阈值；<b>基于 Trace 定位业务问题</b>而非凭感觉；沉淀 badcase 库并驱动修复闭环</td>
             <td class="td-core own"><span class="badge-owner">Trace / Replay</span>统一事件模型：<code>run.start / model.call / tool.call / memory.read / context.assembled / approval.wait / error</code>；大字段走对象存储只存引用</td>
             <td class="td-eco">Tool / Connector 调用指标与错误归因</td>
           </tr>
           <tr>
             <th>发布和运行<span class="logic">业务验收，平台托管</span></th>
-            <td class="td-agent">业务验收、Eval、Agent 一级响应</td>
+            <td class="td-agent">业务验收与 Eval 门禁；<b>定义灰度租户范围、业务降级方案与回滚触发条件</b>；承担 Agent 一级响应（on-call）与故障复盘；每个 Release 记录业务变更说明</td>
             <td class="td-core own"><span class="badge-owner">Gateway</span>路由键 <code>agentName + environment + version/channel</code>；local → preview → staging → canary → production；灰度含流量比例、租户范围、成功率阈值与自动回滚</td>
             <td class="td-eco"><span class="badge-owner">渠道适配</span>渠道分发与版本、连接器及第三方依赖 SLO</td>
           </tr>
@@ -510,13 +510,13 @@
               <span class="phase-name">合规治理</span>
             </th>
             <th>数据留存与合规<span class="logic">业务提诉求，平台强制基线</span></th>
-            <td class="td-agent">声明业务数据分级与留存诉求</td>
+            <td class="td-agent">声明业务数据分级、留存期与可采集字段；<b>定义用户删除与更正诉求的业务口径</b>；保证知识内容与对外话术的合规性和时效</td>
             <td class="td-core own"><span class="badge-owner">强制基线</span>按环境与数据分类定保留周期；字段级脱敏与租户隔离；Replay Fixture 默认脱敏；<b>Trace 不复制记忆库</b></td>
             <td class="td-eco">保证连接器侧数据不越权落盘</td>
           </tr>
           <tr>
             <th>成本与配额归因<span class="logic">业务担目标，平台给口径</span></th>
-            <td class="td-agent">对单个 Agent 的成本目标负责；Eval 带 token 与成本估算</td>
+            <td class="td-agent">对单个 Agent 的成本目标负责；<b>定义单次对话 token 与成本上限</b>；在 Eval 中纳入成本与耗时基线；定位成本异常并优化 Prompt / 上下文与工具调用</td>
             <td class="td-core own"><span class="badge-owner">计量与配额</span>计量 token / Tool 次数 / 资源；配额与限流在 Gateway 执行，归因到 Agent / 租户 / 渠道</td>
             <td class="td-eco">连接器调用成本口径与第三方配额</td>
           </tr>
