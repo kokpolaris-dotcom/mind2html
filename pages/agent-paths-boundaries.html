@@ -437,10 +437,10 @@
               <span class="phase-num">02</span>
               <span class="phase-name">应用开发</span>
             </th>
-            <th>业务 Agent<span class="logic">效果由业务团队担责</span></th>
-            <td class="td-agent own"><span class="badge-owner">业务 Owner</span>Prompt / Skill 编排、业务逻辑、业务 SLO；提交 Manifest 声明 <code>runtime / capabilities / permissions / limits</code></td>
-            <td class="td-core">Loop Engine 与 SDK 稳定面；Manifest <b>三层校验</b>：Schema → Registry → Policy</td>
-            <td class="td-eco"><span class="badge-owner">专家模板</span>提供预置专家与可复用 Skill 供派生，不介入 Agent 编排</td>
+            <th>业务 Agent<span class="logic">编排归业务，第三方准入归生态</span></th>
+            <td class="td-agent own"><span class="badge-owner">业务 Owner</span>Prompt / Skill 编排、<b>多 Agent 编排</b>、业务逻辑与业务 SLO；提交 Manifest 声明 <code>runtime / capabilities / permissions / limits</code></td>
+            <td class="td-core">统一 Agent 调用协议与 SDK 稳定面；<b>第三方 Agent 以外部 Endpoint 注册，纳入同一 Gateway 的身份、权限、限流与 Trace 边界</b>；Manifest 三层校验：Schema → Registry → Policy</td>
+            <td class="td-eco own"><span class="badge-owner">专家模板</span>预置专家与可复用 Skill 供派生；<b>第三方 Agent 的引入、准入评估与上架</b>，与技能 / 连接器同一 Hub</td>
           </tr>
           <tr>
             <th>Tool / Skill<span class="logic">业务自建，生态双向引入与发布</span></th>
@@ -528,7 +528,7 @@
         <span class="eco-label">Ecosystem 生态资产版图</span>
         <span class="eco-items">
           <span class="eco-item"><b>技能</b>Skills</span>
-          <span class="eco-item"><b>专家</b>Experts</span>
+          <span class="eco-item"><b>专家</b>Experts · 第三方 Agent</span>
           <span class="eco-item"><b>连接器</b>Connectors</span>
           <span class="eco-item"><b>知识</b>Knowledge</span>
           <span class="eco-item"><b>渠道</b>Channels</span>
