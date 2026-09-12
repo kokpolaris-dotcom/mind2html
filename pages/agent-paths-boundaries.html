@@ -328,6 +328,28 @@
       .decision { font-size: clamp(0.55rem, 0.5rem + 0.2vw, 0.66rem); line-height: 1.36; }
     }
 
+    /* ── 更矮屏（1152×720 等）再压一档 ── */
+    @media (max-height: 760px) {
+      .matrix thead th { padding: clamp(0.16rem, 0.38vh, 0.26rem) clamp(0.34rem, 0.54vw, 0.5rem); }
+      .matrix thead th .th-goal { font-size: clamp(0.45rem, 0.42rem + 0.1vw, 0.52rem); line-height: 1.24; }
+      .matrix tbody th,
+      .matrix tbody td { padding: clamp(0.05rem, 0.16vh, 0.12rem) clamp(0.34rem, 0.54vw, 0.5rem); }
+      .matrix tbody td { font-size: clamp(0.47rem, 0.43rem + 0.14vw, 0.56rem); line-height: 1.22; }
+      .matrix tbody th { font-size: clamp(0.5rem, 0.46rem + 0.15vw, 0.59rem); line-height: 1.18; }
+      .matrix tbody th .logic { font-size: clamp(0.41rem, 0.38rem + 0.08vw, 0.47rem); line-height: 1.16; }
+      .badge-owner, .dir-in, .dir-out { font-size: clamp(0.4rem, 0.37rem + 0.07vw, 0.46rem); }
+      .phase-num, .phase-name { font-size: clamp(0.46rem, 0.42rem + 0.13vw, 0.55rem); }
+      .phase-name { margin-top: 0.06rem; }
+      .eco-band { padding: clamp(0.18rem, 0.44vh, 0.3rem) clamp(0.34rem, 0.54vw, 0.5rem); gap: 0.4rem; }
+      .deck-head .sub { font-size: clamp(0.6rem, 0.54rem + 0.2vw, 0.72rem); }
+    }
+
+    /* ── 极小视口（≤660px 高）不再压缩字号，改为表内滚动，避免内容被裁掉 ── */
+    @media (max-height: 660px) {
+      .matrix-wrap { overflow-y: auto; }
+      .matrix tbody th.phase-cell { position: sticky; left: 0; z-index: 2; }
+    }
+
     @media (max-width: 1000px) {
       html, body { overflow: auto; height: auto; }
       .stage { height: auto; }
@@ -381,7 +403,7 @@
             </th>
             <th class="h-core">
               <span class="th-name">Wanpix Runtime / Core</span>
-              <span class="th-goal">稳定、透明、可扩展的 Agent Runtime</span>
+              <span class="th-goal">定义统一接口与规范，让 Agent 与 Runtime 解耦</span>
             </th>
             <th class="h-eco">
               <span class="th-name">Wanpix Ecosystem</span>
@@ -397,10 +419,10 @@
               <span class="phase-num">01</span>
               <span class="phase-name">定底座</span>
             </th>
-            <th>框架与自研 Runtime<span class="logic">内核禁止多头建设</span></th>
-            <td class="td-agent">提需求、试点和验收；<b>只声明 Manifest，不改 Loop 内核</b></td>
-            <td class="td-core own"><span class="badge-owner">唯一建设 Owner</span>Agent Contract、Tool/Skill Adapter、事件语义、Trace 注入；<b>Loop 层与生产 Runtime 层分开选型</b></td>
-            <td class="td-eco">按标准 Tool/Skill Contract 接入新 Runtime，<b>连接器不绑死框架</b></td>
+            <th>框架与自研 Runtime<span class="logic">接口规范收口，实现可替换</span></th>
+            <td class="td-agent">提需求、试点和验收；<b>只依赖稳定接口，不绑定具体 Runtime 实现</b></td>
+            <td class="td-core own"><span class="badge-owner">唯一建设 Owner</span>定义公司统一 <b>Agent Contract 与接口规范</b>（Manifest / 调用协议 / 事件语义 / Tool·Skill·Knowledge 契约），<b>Agent 与 Runtime 解耦，接口稳定即可换实现</b></td>
+            <td class="td-eco">按标准契约接入新 Runtime，<b>连接器不绑死框架</b></td>
           </tr>
           <tr>
             <th>新框架<span class="logic">选型收口到 Runtime/Core</span></th>
@@ -433,10 +455,10 @@
               <span class="phase-num">03</span>
               <span class="phase-name">装能力</span>
             </th>
-            <th>知识与检索<span class="logic">内容归业务，契约归平台</span></th>
+            <th>知识与检索<span class="logic">内容归业务，接入归生态，契约归平台</span></th>
             <td class="td-agent">维护业务知识内容与评测集，声明数据分级</td>
-            <td class="td-core">定义检索契约与运行时策略；检索结果进 <code>context.assembled</code>，上下文可解释可对比</td>
-            <td class="td-eco">知识源连接器、索引生命周期与切片策略</td>
+            <td class="td-core">定义统一<b>检索契约</b>（Knowledge / Retrieval API）与运行时策略；检索结果进 <code>context.assembled</code>，上下文可解释可对比</td>
+            <td class="td-eco own"><span class="badge-owner">知识源接入</span>对接各类知识库（文档库 / Wiki / 对象存储 / 数据库 / 第三方 SaaS），统一为 <b>Runtime 可直接消费的知识接口</b>；管索引生命周期、切片向量化与增量同步</td>
           </tr>
           <tr>
             <th>记忆<span class="logic">规则归业务，读写归平台</span></th>
