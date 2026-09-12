@@ -275,6 +275,18 @@
       white-space: nowrap;
     }
     .badge-owner::before { content: '◆'; font-size: 0.72em; }
+
+    /* ── 双向标记：引入 / 发布 ── */
+    .dir-in, .dir-out {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: clamp(0.46rem, 0.42rem + 0.1vw, 0.54rem);
+      letter-spacing: 0.06em; white-space: nowrap;
+      padding: 0.06rem 0.3rem; border-radius: 4px;
+      margin-right: 0.2rem; vertical-align: 0.04rem;
+    }
+    .dir-in  { background: rgba(5,150,105,0.16);  color: var(--color-emerald); }
+    .dir-out { background: rgba(217,119,6,0.16); color: var(--color-highlight); }
     .cell-no { color: var(--color-text-muted); font-style: normal; }
     .cell-no::before { content: '— '; color: var(--color-border-strong); }
 
@@ -310,6 +322,23 @@
     .decision b { color: var(--color-text); font-weight: 600; }
 
     ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+
+    /* ── 矮屏（1366×768 等投影环境）压缩矩阵，保证整屏不裁切 ── */
+    @media (max-height: 799px) {
+      .matrix thead th {
+        padding: clamp(0.18rem, 0.44vh, 0.32rem) clamp(0.4rem, 0.62vw, 0.58rem);
+        font-size: clamp(0.5rem, 0.46rem + 0.14vw, 0.6rem);
+      }
+      .matrix tbody th,
+      .matrix tbody td {
+        padding: clamp(0.09rem, 0.24vh, 0.18rem) clamp(0.4rem, 0.62vw, 0.58rem);
+      }
+      .matrix tbody td { font-size: clamp(0.5rem, 0.45rem + 0.16vw, 0.6rem); line-height: 1.28; }
+      .matrix tbody th { font-size: clamp(0.54rem, 0.48rem + 0.18vw, 0.64rem); line-height: 1.24; }
+      .matrix tbody th .logic { font-size: clamp(0.44rem, 0.41rem + 0.09vw, 0.51rem); line-height: 1.22; }
+      .badge-owner, .dir-in, .dir-out { font-size: clamp(0.42rem, 0.39rem + 0.08vw, 0.5rem); }
+      .phase-num, .phase-name { font-size: clamp(0.52rem, 0.47rem + 0.16vw, 0.62rem); }
+    }
 
     @media (max-width: 1000px) {
       html, body { overflow: auto; height: auto; }
@@ -372,7 +401,7 @@
         <div class="team-top">
           <span class="team-name"><span class="idx">C</span>Wanpix Ecosystem</span>
         </div>
-        <p class="team-goal">核心目标：<b>建设 Skill Hub 与连接器生态</b></p>
+        <p class="team-goal">核心目标：<b>建设双向 Skill Hub 与连接器生态</b></p>
         <p class="team-principle">负责“能安全、稳定地连接多少外部能力”</p>
         <p class="team-cut">不维护 Runtime 内核 · 只做配合适配 · 暂缓低复用连接器与 Native 渠道适配</p>
       </article>
@@ -428,10 +457,10 @@
             <td class="td-eco">提供可复用连接器和 Skill</td>
           </tr>
           <tr>
-            <th>Tool / Skill<span class="logic">业务自建能力，生态统一分发</span></th>
+            <th>Tool / Skill<span class="logic">业务自建，生态双向引入与发布</span></th>
             <td class="td-agent own"><span class="badge-owner">主要开发方</span>自建业务 Tool 与 Skill：实现业务逻辑、判断规则、示例与 Eval；再选择、组合并反馈效果</td>
             <td class="td-core">定义 Tool / Skill 契约与调用链路；<span class="badge-owner">MCP 运行时</span>网关、鉴权、限流和策略执行</td>
-            <td class="td-eco own"><span class="badge-owner">Skill Hub Owner</span>建设 Skill Hub：统一 Registry、目录、版本与文档；<b>接入并适配第三方 GitHub / 开源 Skill</b></td>
+            <td class="td-eco own"><span class="badge-owner">Skill Hub Owner</span>统一 Registry、目录、版本与文档；<span class="dir-in">引入</span>第三方 / 开源 Skill（GitHub 等）接入与适配；<span class="dir-out">发布</span>内部优秀 Skill 输出到第三方平台</td>
           </tr>
 
           <!-- ③ 装能力 -->
