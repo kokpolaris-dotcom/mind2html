@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanpix.ai · 三条路线整体架构</title>
+  <style id="theme-vars">
+:root {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.15);
+
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-muted: rgba(99, 102, 241, 0.10);
+  --color-primary-glow: rgba(99, 102, 241, 0.20);
+
+  --color-accent: #0891b2;
+  --color-accent-muted: rgba(8, 145, 178, 0.10);
+
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --color-highlight: #d97706;
+  --color-highlight-muted: rgba(217, 119, 6, 0.10);
+
+  --color-magenta: #db2777;
+  --color-magenta-muted: rgba(219, 39, 119, 0.10);
+
+  --color-emerald: #059669;
+  --color-emerald-muted: rgba(5, 150, 105, 0.10);
+
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--color-background);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── Atmospheric ── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(15,23,42,0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,23,42,0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .glow { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%; }
+    .glow-a { top: -20%; left: -8%;  width: 42rem; height: 42rem; background: radial-gradient(circle, rgba(99,102,241,0.13) 0%, transparent 65%); }
+    .glow-b { bottom: -24%; right: -10%; width: 40rem; height: 40rem; background: radial-gradient(circle, rgba(8,145,178,0.11) 0%, transparent 65%); }
+    .glow-c { top: 26%; right: 22%; width: 28rem; height: 28rem; background: radial-gradient(circle, rgba(219,39,119,0.07) 0%, transparent 65%); }
+
+    /* ── Stage ── */
+    .stage {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex; flex-direction: column;
+      gap: clamp(0.55rem, 1.3vh, 1rem);
+      padding: clamp(0.9rem, 2.4vh, 1.85rem) clamp(1.1rem, 2.8vw, 2.75rem);
+    }
+
+    /* ── Header ── */
+    .deck-head {
+      flex-shrink: 0;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: clamp(0.58rem, 0.52rem + 0.2vw, 0.7rem);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    h1 {
+      margin-top: 0.3rem;
+      font-size: clamp(1.3rem, 0.95rem + 1.5vw, 2.1rem);
+      font-weight: 800; line-height: 1.08; letter-spacing: -0.025em;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .sub {
+      margin-top: 0.35rem;
+      font-size: clamp(0.7rem, 0.6rem + 0.3vw, 0.875rem);
+      line-height: 1.5; color: var(--color-text-secondary);
+    }
+    .verdict {
+      flex-shrink: 0; max-width: 30rem;
+      padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.7rem, 1vw, 1.1rem);
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-primary-muted) 0%, rgba(8,145,178,0.06) 100%);
+      border: 1px solid rgba(99,102,241,0.22);
+    }
+    .verdict-label {
+      font-family: var(--font-mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--color-primary-hover);
+    }
+    .verdict p {
+      margin-top: 0.28rem;
+      font-size: clamp(0.68rem, 0.58rem + 0.3vw, 0.82rem);
+      line-height: 1.5; color: var(--color-text);
+    }
+    .verdict b { color: var(--color-primary-hover); font-weight: 700; }
+
+    /* ── Routes grid ── */
+    .routes {
+      flex: 1; min-height: 0;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.55rem, 0.9vw, 0.95rem);
+    }
+
+    .route {
+      --rc: var(--color-primary);
+      position: relative; min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column;
+      padding: clamp(0.6rem, 1.2vh, 0.95rem) clamp(0.65rem, 1vw, 1.05rem);
+      border: 1px solid var(--color-border);
+      border-top: 3px solid var(--rc);
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--rc) 6%, transparent) 0%, transparent 42%),
+        var(--color-surface);
+      box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+      transition: border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease;
+    }
+    .route:hover {
+      border-color: color-mix(in srgb, var(--rc) 35%, var(--color-border));
+      box-shadow: 0 10px 30px rgba(15,23,42,0.09);
+      transform: translateY(-2px);
+    }
+    .r-1 { --rc: var(--color-emerald); }
+    .r-2 { --rc: var(--color-primary); }
+    .r-3 { --rc: var(--color-magenta); }
+
+    .route-head { flex-shrink: 0; display: flex; align-items: center; gap: 0.55rem; }
+    .route-num {
+      flex-shrink: 0;
+      width: clamp(1.5rem, 2.5vh, 1.9rem); height: clamp(1.5rem, 2.5vh, 1.9rem);
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 9px;
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: clamp(0.68rem, 0.6rem + 0.26vw, 0.85rem);
+      background: color-mix(in srgb, var(--rc) 12%, transparent);
+      color: var(--rc);
+    }
+    .route-title {
+      font-size: clamp(0.8rem, 0.68rem + 0.42vw, 1.02rem);
+      font-weight: 700; line-height: 1.25; letter-spacing: -0.01em;
+    }
+    .route-mode {
+      margin-top: 0.16rem;
+      font-family: var(--font-mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--rc);
+    }
+
+    .chips {
+      flex-shrink: 0;
+      display: flex; flex-wrap: wrap; gap: 0.28rem;
+      margin-top: clamp(0.4rem, 0.9vh, 0.65rem);
+    }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: clamp(0.53rem, 0.48rem + 0.14vw, 0.63rem);
+      padding: 0.15rem 0.42rem; border-radius: 6px;
+      background: rgba(15,23,42,0.035);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+    }
+    .chip b { color: var(--color-text); font-weight: 600; }
+
+    /* ── Arch stack ── */
+    .stack {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: clamp(0.26rem, 0.65vh, 0.44rem);
+      margin-top: clamp(0.45rem, 0.95vh, 0.75rem);
+    }
+    .step {
+      display: flex; align-items: flex-start; gap: 0.45rem;
+      padding: clamp(0.3rem, 0.68vh, 0.48rem) clamp(0.42rem, 0.65vw, 0.6rem);
+      border-radius: 9px;
+      background: color-mix(in srgb, var(--rc) 5%, transparent);
+      border: 1px solid color-mix(in srgb, var(--rc) 15%, transparent);
+      transition: background 200ms ease, border-color 200ms ease;
+    }
+    .step:hover {
+      background: color-mix(in srgb, var(--rc) 10%, transparent);
+      border-color: color-mix(in srgb, var(--rc) 32%, transparent);
+    }
+    .step-k {
+      flex-shrink: 0;
+      font-family: var(--font-mono); font-weight: 600;
+      font-size: clamp(0.52rem, 0.47rem + 0.14vw, 0.62rem);
+      letter-spacing: 0.04em;
+      color: var(--rc);
+      padding-top: 0.08rem;
+      min-width: 2.05rem;
+    }
+    .step-t {
+      font-size: clamp(0.62rem, 0.54rem + 0.26vw, 0.76rem);
+      line-height: 1.45; color: var(--color-text-secondary);
+    }
+    .step-t b { color: var(--color-text); font-weight: 600; }
+
+    .route-foot {
+      flex-shrink: 0;
+      margin-top: clamp(0.4rem, 0.9vh, 0.65rem);
+      padding-top: clamp(0.35rem, 0.8vh, 0.55rem);
+      border-top: 1px dashed var(--color-border-strong);
+      font-size: clamp(0.58rem, 0.51rem + 0.2vw, 0.7rem);
+      line-height: 1.45;
+      color: var(--color-text-muted);
+    }
+    .route-foot b { color: var(--rc); font-weight: 600; }
+
+    .warn {
+      background: var(--color-highlight-muted);
+      border: 1px solid rgba(217,119,6,0.25);
+      color: var(--color-highlight);
+    }
+    .warn b { color: var(--color-highlight); }
+
+    /* ── Bottom bands ── */
+    .bands {
+      flex-shrink: 0;
+      display: grid; grid-template-columns: 1.35fr 1fr;
+      gap: clamp(0.55rem, 0.9vw, 0.95rem);
+    }
+    .band {
+      display: flex; flex-direction: column; justify-content: center;
+      gap: clamp(0.3rem, 0.7vh, 0.5rem);
+      padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.7rem, 1vw, 1.05rem);
+      border-radius: 14px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+    }
+    .band-shared {
+      background: linear-gradient(135deg, rgba(99,102,241,0.07) 0%, rgba(8,145,178,0.04) 60%, rgba(219,39,119,0.03) 100%);
+      border: 1.5px solid rgba(99,102,241,0.2);
+    }
+    .band-head { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .band-title {
+      font-size: clamp(0.68rem, 0.58rem + 0.32vw, 0.85rem);
+      font-weight: 700; letter-spacing: -0.005em;
+    }
+    .band-note {
+      font-size: clamp(0.56rem, 0.5rem + 0.18vw, 0.67rem);
+      color: var(--color-text-muted); line-height: 1.4;
+    }
+    .band-note b { color: var(--color-text-secondary); font-weight: 600; }
+    .dot-pulse {
+      flex-shrink: 0; width: 0.45rem; height: 0.45rem; border-radius: 50%;
+      background: var(--color-primary);
+      box-shadow: 0 0 0 4px var(--color-primary-muted);
+    }
+    .dot-warn {
+      flex-shrink: 0; width: 0.45rem; height: 0.45rem; border-radius: 50%;
+      background: var(--color-highlight);
+      box-shadow: 0 0 0 4px var(--color-highlight-muted);
+    }
+    .caps { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .cap {
+      font-family: var(--font-mono);
+      font-size: clamp(0.54rem, 0.49rem + 0.15vw, 0.64rem);
+      padding: 0.17rem 0.48rem; border-radius: 9999px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-strong);
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+    }
+    .risks { display: flex; flex-wrap: wrap; gap: 0.28rem; }
+    .risk {
+      font-size: clamp(0.54rem, 0.49rem + 0.15vw, 0.64rem);
+      padding: 0.17rem 0.45rem; border-radius: 6px;
+      background: var(--color-highlight-muted);
+      border: 1px solid rgba(217,119,6,0.2);
+      color: var(--color-highlight);
+      font-weight: 500; white-space: nowrap;
+    }
+
+    ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+
+    @media (max-width: 900px) {
+      html, body { overflow: auto; height: auto; }
+      .stage { height: auto; }
+      .routes { grid-template-columns: 1fr; }
+      .bands { grid-template-columns: 1fr; }
+      .route, .band { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="glow glow-c"></div>
+
+  <div class="stage">
+
+    <!-- ════ 页头 ════ -->
+    <header class="deck-head">
+      <div>
+        <p class="eyebrow">CEO DECISION · AGENT 研发提效 · 8 周试点与路线决策</p>
+        <h1>三条路线的<span class="grad">整体架构</span></h1>
+        <p class="sub">不是现在就做三选一 —— 存量保护、增量提速、长期选择权三条线并行推进。</p>
+      </div>
+      <div class="verdict">
+        <p class="verdict-label">建议结论</p>
+        <p><b>存量走路线一</b> · <b>增量试路线二</b> · <b>路线三按证据进入</b><br>
+           8 周用两个真实 Agent 的数据决定后续投入，而不是先做大规模平台重构。</p>
+      </div>
+    </header>
+
+    <!-- ════ 三条路线 ════ -->
+    <section class="routes">
+
+      <!-- ── 路线一 ── -->
+      <article class="route r-1">
+        <div class="route-head">
+          <span class="route-num">01</span>
+          <div>
+            <h2 class="route-title">改造并开放现有 Wanpix</h2>
+            <p class="route-mode">存量 · 原地增强</p>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip">存量风险 <b>最低</b></span>
+          <span class="chip">资产复用 <b>最高</b></span>
+          <span class="chip">自由度 <b>中</b></span>
+        </div>
+
+        <div class="stack">
+          <div class="step"><span class="step-k">保留</span><span class="step-t">现有 <b>Wanpix + Mastra Runtime</b>，不发起迁移</span></div>
+          <div class="step"><span class="step-k">开放</span><span class="step-t">完整 <b>Trace</b>：模型 · Tool · 状态 · 错误链路</span></div>
+          <div class="step"><span class="step-k">补齐</span><span class="step-t"><b>Replay</b> 与本地 / Preview 调试</span></div>
+          <div class="step"><span class="step-k">接入</span><span class="step-t">Agent · Skill · Tool 进入 <b>Git / PR / CI·CD</b></span></div>
+          <div class="step"><span class="step-k">开放</span><span class="step-t"><b>版本 · 发布 · 灰度 · 回滚</b> 接口</span></div>
+        </div>
+
+        <p class="route-foot">最适合<b>已经上线</b>、强依赖 Wanpix 的 Agent：在不迁移的前提下提升迭代与排障效率。</p>
+      </article>
+
+      <!-- ── 路线二 ── -->
+      <article class="route r-2">
+        <div class="route-head">
+          <span class="route-num">02</span>
+          <div>
+            <h2 class="route-title">原生 Mastra 开发 · 团队自托管</h2>
+            <p class="route-mode">增量 · 快速验证</p>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip">首版速度 <b>高</b></span>
+          <span class="chip">自由度 <b>高</b></span>
+          <span class="chip">上线依赖 <b>共享能力</b></span>
+        </div>
+
+        <div class="stack">
+          <div class="step"><span class="step-k">开发</span><span class="step-t"><b>Git · IDE · Vibe Coding · 传统 CI·CD</b></span></div>
+          <div class="step"><span class="step-k">托管</span><span class="step-t">团队自托管运行服务，掌握代码与调试过程</span></div>
+          <div class="step"><span class="step-k">接入</span><span class="step-t">经统一 <b>Agent Gateway</b> 接入公司门户</span></div>
+          <div class="step"><span class="step-k">复用</span><span class="step-t">公司 LLM Gateway · Tool/Skill · 权限 · 观测</span></div>
+          <div class="step"><span class="step-k">前置</span><span class="step-t">Gateway · Trace · Sandbox · Checkpoint 就绪</span></div>
+        </div>
+
+        <p class="route-foot warn">生产上线速度取决于共享能力交付；<b>共享能力就绪前</b>仅适用于低风险、无生产写副作用、不处理敏感数据的 Agent。</p>
+      </article>
+
+      <!-- ── 路线三 ── -->
+      <article class="route r-3">
+        <div class="route-head">
+          <span class="route-num">03</span>
+          <div>
+            <h2 class="route-title">新型 Harness / Loop 建设下一代 Runtime</h2>
+            <p class="route-mode">长期 · 按证据进入</p>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip">自由度 <b>最高</b></span>
+          <span class="chip">投入 <b>最高</b></span>
+          <span class="chip">风险 <b>高</b></span>
+        </div>
+
+        <div class="stack">
+          <div class="step"><span class="step-k">候选</span><span class="step-t"><b>pi-agent-core</b>：轻量 Loop · Tool · 事件流 · 中断控制</span></div>
+          <div class="step"><span class="step-k">候选</span><span class="step-t"><b>dsh</b>：插件化 Loop · Session · Tool · Sandbox · Approval · Telemetry</span></div>
+          <div class="step"><span class="step-k">补齐</span><span class="step-t">Durable Execution · 分布式调度 · 生产 SLO · 兼容升级</span></div>
+          <div class="step"><span class="step-k">约束</span><span class="step-t">Agent 团队走统一 SDK 与协议，<b>不得各自 fork</b></span></div>
+          <div class="step"><span class="step-k">Owner</span><span class="step-t">仅 <b>Wanpix Runtime/Core</b> 统一选型与建设</span></div>
+        </div>
+
+        <p class="route-foot">仅对<b>已被真实业务证明</b>的 Mastra 共性瓶颈立项，不作为长线押注。</p>
+      </article>
+
+    </section>
+
+    <!-- ════ 底座与所有权 ════ -->
+    <section class="bands">
+
+      <div class="band band-shared">
+        <div class="band-head">
+          <span class="dot-pulse"></span>
+          <span class="band-title">公共能力一次建设 · 三路复用</span>
+          <span class="band-note">业务 Agent 可以自主开发，但公司不能让每个团队各自把 Runtime 基础设施解决一遍。</span>
+        </div>
+        <div class="caps">
+          <span class="cap">LLM Gateway</span>
+          <span class="cap">Agent Gateway</span>
+          <span class="cap">Tool / Skill Contract</span>
+          <span class="cap">权限</span>
+          <span class="cap">Trace</span>
+          <span class="cap">Eval</span>
+          <span class="cap">门户接入</span>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="band-head">
+          <span class="dot-warn"></span>
+          <span class="band-title">路线二 / 三 重新获得所有权的问题</span>
+        </div>
+        <div class="risks">
+          <span class="risk">沙箱与资源隔离</span>
+          <span class="risk">中断·暂停·恢复</span>
+          <span class="risk">SSE 与事件稳定性</span>
+          <span class="risk">Checkpoint 与状态迁移</span>
+          <span class="risk">Tool 重试与幂等</span>
+          <span class="risk">Trace 与 Replay</span>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</body>
+</html>

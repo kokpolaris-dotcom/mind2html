@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent 三路线决策 · Wanpix.ai</title>
+  <style id="theme-vars">
+:root {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.15);
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-muted: rgba(99, 102, 241, 0.10);
+  --color-primary-glow: rgba(99, 102, 241, 0.20);
+  --color-accent: #0891b2;
+  --color-accent-muted: rgba(8, 145, 178, 0.10);
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-text-on-primary: #ffffff;
+  --color-highlight: #d97706;
+  --color-magenta: #db2777;
+  --color-emerald: #059669;
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--color-background);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .glow-primary {
+      position: fixed; top: -20%; left: -10%; width: 40rem; height: 40rem;
+      background: radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 60%);
+      z-index: 0; pointer-events: none;
+    }
+    .glow-accent {
+      position: fixed; bottom: -20%; right: -10%; width: 36rem; height: 36rem;
+      background: radial-gradient(circle, rgba(8,145,178,0.03) 0%, transparent 60%);
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ── pitch-deck 风格 slide 容器 ── */
+    .slide-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100vh;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    .slide.prev {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    .slide iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── 固定 UI 元素 ── */
+    .slide-number {
+      position: fixed;
+      bottom: 2rem;
+      right: 3rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      z-index: 100;
+    }
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      z-index: 100;
+      transition: width 0.3s ease;
+    }
+
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.2s ease;
+      font-size: 1.25rem;
+    }
+    .nav-btn:hover {
+      background: rgba(15, 23, 42, 0.06);
+      color: var(--color-text);
+      border-color: var(--color-border-strong);
+    }
+    .nav-btn.prev { left: 2rem; }
+    .nav-btn.next { right: 2rem; }
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .slide-dots {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-border-strong);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      padding: 0;
+    }
+    .dot.active {
+      background: var(--color-primary);
+      box-shadow: 0 0 8px var(--color-primary-glow);
+      width: 24px;
+      border-radius: 4px;
+    }
+    .dot:hover {
+      background: var(--color-text-secondary);
+    }
+
+    /* ── 页标题（左上角） ── */
+    .slide-label {
+      position: fixed;
+      top: 1.35rem;
+      left: 3rem;
+      z-index: 100;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    .slide-label b { color: var(--color-text-secondary); font-weight: 600; }
+
+    @media (max-width: 1000px) {
+      .slide-label { left: 1rem; }
+      .nav-btn { display: none; }
+    }
+
+    ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow-primary"></div>
+  <div class="glow-accent"></div>
+
+  <div class="progress-bar" id="progressBar" style="width: 50%"></div>
+  <div class="slide-label" id="slideLabel"></div>
+
+  <div class="slide-container" id="slideContainer"></div>
+
+  <div class="slide-number" id="slideNumber">1 / 2</div>
+  <div class="slide-dots" id="slideDots"></div>
+
+  <button class="nav-btn prev" id="prevBtn" aria-label="上一页">‹</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="下一页">›</button>
+
+  <script>
+    const pages = [
+      { url: 'agent-paths-architecture.html', title: '三条路线整体架构', label: '01 · 三条路线整体架构' },
+      { url: 'agent-paths-boundaries.html',   title: '三团队职责分工边界', label: '02 · 三团队职责分工边界' }
+    ];
+
+    const container = document.getElementById('slideContainer');
+    const dotsContainer = document.getElementById('slideDots');
+    const progressBar = document.getElementById('progressBar');
+    const slideNumber = document.getElementById('slideNumber');
+    const slideLabel = document.getElementById('slideLabel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // 预构建所有 slide（iframe 全部预加载）+ dots
+    pages.forEach((p, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'slide' + (i === 0 ? ' active' : '');
+      const iframe = document.createElement('iframe');
+      iframe.src = p.url;
+      iframe.title = p.title;
+      slide.appendChild(iframe);
+      container.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 页');
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    });
+
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+
+    function updateSlide() {
+      slides.forEach((slide, idx) => {
+        slide.classList.remove('active', 'prev');
+        if (idx < currentSlide) {
+          slide.classList.add('prev');
+          slide.style.transform = 'translateX(-100%)';
+          slide.style.opacity = '0';
+        } else if (idx === currentSlide) {
+          slide.classList.add('active');
+          slide.style.transform = 'translateX(0)';
+          slide.style.opacity = '1';
+        } else {
+          slide.style.transform = 'translateX(100%)';
+          slide.style.opacity = '0';
+        }
+      });
+
+      const progress = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = progress + '%';
+      slideNumber.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+      slideLabel.innerHTML = '<b>' + pages[currentSlide].label + '</b> · AGENT 研发提效路线决策';
+
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+    function goToSlide(idx) {
+      currentSlide = idx;
+      updateSlide();
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // 触摸滑动
+    let touchStartX = 0;
+    let touchEndX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+      }
+    });
+
+    updateSlide();
+  </script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanpix.ai · 三团队职责分工边界</title>
+  <style id="theme-vars">
+:root {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: rgba(15, 23, 42, 0.08);
+  --color-border-strong: rgba(15, 23, 42, 0.15);
+
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-muted: rgba(99, 102, 241, 0.10);
+  --color-primary-glow: rgba(99, 102, 241, 0.20);
+
+  --color-accent: #0891b2;
+  --color-accent-muted: rgba(8, 145, 178, 0.10);
+
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --color-highlight: #d97706;
+  --color-highlight-muted: rgba(217, 119, 6, 0.10);
+
+  --color-magenta: #db2777;
+  --color-magenta-muted: rgba(219, 39, 119, 0.10);
+
+  --color-emerald: #059669;
+  --color-emerald-muted: rgba(5, 150, 105, 0.10);
+
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--color-background);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── Atmospheric ── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(15,23,42,0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,23,42,0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .glow { position: fixed; z-index: 0; pointer-events: none; border-radius: 50%; }
+    .glow-a { top: -20%; right: -8%; width: 42rem; height: 42rem; background: radial-gradient(circle, rgba(99,102,241,0.13) 0%, transparent 65%); }
+    .glow-b { bottom: -24%; left: -10%; width: 40rem; height: 40rem; background: radial-gradient(circle, rgba(8,145,178,0.11) 0%, transparent 65%); }
+    .glow-c { top: 30%; left: 34%; width: 28rem; height: 28rem; background: radial-gradient(circle, rgba(5,150,105,0.07) 0%, transparent 65%); }
+
+    /* ── Stage ── */
+    .stage {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex; flex-direction: column;
+      gap: clamp(0.5rem, 1.2vh, 0.95rem);
+      padding: clamp(0.85rem, 2.3vh, 1.75rem) clamp(1.1rem, 2.8vw, 2.75rem);
+    }
+
+    /* ── Header ── */
+    .deck-head { flex-shrink: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: clamp(0.58rem, 0.52rem + 0.2vw, 0.7rem);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    h1 {
+      margin-top: 0.3rem;
+      font-size: clamp(1.3rem, 0.95rem + 1.5vw, 2.1rem);
+      font-weight: 800; line-height: 1.08; letter-spacing: -0.025em;
+    }
+    h1 .grad {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .sub {
+      margin-top: 0.35rem;
+      font-size: clamp(0.7rem, 0.6rem + 0.3vw, 0.875rem);
+      line-height: 1.5; color: var(--color-text-secondary);
+    }
+    .verdict {
+      flex-shrink: 0; max-width: 26rem;
+      padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.7rem, 1vw, 1.1rem);
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--color-primary-muted) 0%, rgba(8,145,178,0.06) 100%);
+      border: 1px solid rgba(99,102,241,0.22);
+    }
+    .verdict-label {
+      font-family: var(--font-mono);
+      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--color-primary-hover);
+    }
+    .verdict p {
+      margin-top: 0.28rem;
+      font-size: clamp(0.66rem, 0.57rem + 0.28vw, 0.8rem);
+      line-height: 1.5;
+    }
+    .verdict b { color: var(--color-primary-hover); font-weight: 700; }
+
+    /* ── Team cards ── */
+    .teams {
+      flex-shrink: 0;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.55rem, 0.9vw, 0.95rem);
+    }
+    .team {
+      --tc: var(--color-primary);
+      position: relative; overflow: hidden;
+      padding: clamp(0.55rem, 1.15vh, 0.9rem) clamp(0.65rem, 1vw, 1.05rem);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--tc);
+      border-radius: 14px;
+      background:
+        linear-gradient(120deg, color-mix(in srgb, var(--tc) 6%, transparent) 0%, transparent 55%),
+        var(--color-surface);
+      box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+    }
+    .t-agent { --tc: var(--color-accent); }
+    .t-core  { --tc: var(--color-primary); }
+    .t-eco   { --tc: var(--color-emerald); }
+
+    .team-top { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
+    .team-name {
+      display: flex; align-items: center; gap: 0.42rem;
+      font-size: clamp(0.76rem, 0.65rem + 0.4vw, 0.98rem);
+      font-weight: 700; letter-spacing: -0.01em;
+    }
+    .team-name .idx {
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
+      width: 1.35rem; height: 1.35rem; border-radius: 7px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--tc) 12%, transparent); color: var(--tc);
+      flex-shrink: 0;
+    }
+    .team-effort {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: clamp(0.52rem, 0.47rem + 0.14vw, 0.62rem);
+      padding: 0.15rem 0.42rem; border-radius: 9999px;
+      background: color-mix(in srgb, var(--tc) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--tc) 25%, transparent);
+      color: var(--tc); white-space: nowrap;
+    }
+    .team-goal {
+      margin-top: 0.32rem;
+      font-size: clamp(0.62rem, 0.54rem + 0.26vw, 0.76rem);
+      line-height: 1.45; color: var(--color-text-secondary);
+    }
+    .team-goal b { color: var(--color-text); font-weight: 600; }
+    .team-principle {
+      margin-top: 0.32rem;
+      padding-top: 0.32rem;
+      border-top: 1px dashed var(--color-border-strong);
+      font-size: clamp(0.6rem, 0.53rem + 0.24vw, 0.73rem);
+      line-height: 1.45;
+      color: var(--tc); font-weight: 600;
+    }
+    .team-cut {
+      margin-top: 0.24rem;
+      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
+      line-height: 1.4; color: var(--color-text-muted);
+    }
+
+    /* ── Boundary matrix ── */
+    .matrix-wrap {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column;
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      background: var(--color-surface);
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+    }
+    .matrix {
+      flex: 1; min-height: 0;
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .matrix col.c-domain { width: 15%; }
+    .matrix col.c-team { width: 28.33%; }
+
+    .matrix thead th {
+      padding: clamp(0.32rem, 0.72vh, 0.5rem) clamp(0.45rem, 0.72vw, 0.7rem);
+      font-family: var(--font-mono);
+      font-size: clamp(0.56rem, 0.5rem + 0.18vw, 0.68rem);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-align: left; font-weight: 600;
+      color: var(--color-text-secondary);
+      background: rgba(15,23,42,0.025);
+      border-bottom: 1px solid var(--color-border-strong);
+      white-space: nowrap;
+    }
+    .matrix thead th.h-agent { color: var(--color-accent);    box-shadow: inset 0 2px 0 var(--color-accent); }
+    .matrix thead th.h-core  { color: var(--color-primary);   box-shadow: inset 0 2px 0 var(--color-primary); }
+    .matrix thead th.h-eco   { color: var(--color-emerald);   box-shadow: inset 0 2px 0 var(--color-emerald); }
+
+    .matrix tbody tr { border-bottom: 1px solid var(--color-border); }
+    .matrix tbody tr:last-child { border-bottom: none; }
+    .matrix tbody tr:hover { background: rgba(99,102,241,0.03); }
+
+    .matrix tbody th {
+      padding: clamp(0.3rem, 0.7vh, 0.48rem) clamp(0.45rem, 0.72vw, 0.7rem);
+      text-align: left; vertical-align: middle; font-weight: 600;
+      font-size: clamp(0.6rem, 0.53rem + 0.24vw, 0.73rem);
+      line-height: 1.35; color: var(--color-text);
+      border-right: 1px solid var(--color-border);
+      background: rgba(15,23,42,0.015);
+    }
+    .matrix tbody th .en {
+      display: block; margin-top: 0.1rem;
+      font-family: var(--font-mono); font-weight: 400;
+      font-size: clamp(0.48rem, 0.44rem + 0.12vw, 0.56rem);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .matrix tbody td {
+      padding: clamp(0.3rem, 0.7vh, 0.48rem) clamp(0.45rem, 0.72vw, 0.7rem);
+      vertical-align: middle;
+      font-size: clamp(0.58rem, 0.51rem + 0.22vw, 0.71rem);
+      line-height: 1.42; color: var(--color-text-muted);
+    }
+    .matrix tbody td.own {
+      color: var(--color-text);
+      font-weight: 500;
+      background: color-mix(in srgb, var(--oc) 5%, transparent);
+    }
+    .td-agent { --oc: var(--color-accent); }
+    .td-core  { --oc: var(--color-primary); }
+    .td-eco   { --oc: var(--color-emerald); }
+
+    .badge-owner {
+      display: inline-flex; align-items: center; gap: 0.22rem;
+      margin-right: 0.3rem; vertical-align: 0.05rem;
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: clamp(0.48rem, 0.44rem + 0.12vw, 0.56rem);
+      letter-spacing: 0.06em;
+      padding: 0.08rem 0.34rem; border-radius: 5px;
+      background: color-mix(in srgb, var(--oc) 14%, transparent);
+      color: var(--oc);
+      white-space: nowrap;
+    }
+    .badge-owner::before { content: '◆'; font-size: 0.72em; }
+    .cell-no { color: var(--color-text-muted); font-style: normal; }
+    .cell-no::before { content: '— '; color: var(--color-border-strong); }
+
+    /* ── Decision strip ── */
+    .decisions {
+      flex-shrink: 0;
+      display: grid; grid-template-columns: auto 1fr 1fr;
+      align-items: center;
+      gap: clamp(0.6rem, 1.1vw, 1.15rem);
+      padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.7rem, 1vw, 1.05rem);
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--color-highlight-muted) 0%, rgba(217,119,6,0.03) 100%);
+      border: 1px solid rgba(217,119,6,0.22);
+    }
+    .decisions-label {
+      display: flex; align-items: center; gap: 0.42rem;
+      font-family: var(--font-mono); font-weight: 600;
+      font-size: clamp(0.55rem, 0.5rem + 0.18vw, 0.67rem);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-highlight); white-space: nowrap;
+    }
+    .decisions-label::before {
+      content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%;
+      background: var(--color-highlight); box-shadow: 0 0 0 4px rgba(217,119,6,0.15);
+      flex-shrink: 0;
+    }
+    .decision {
+      font-size: clamp(0.6rem, 0.53rem + 0.24vw, 0.73rem);
+      line-height: 1.45; color: var(--color-text-secondary);
+      padding-left: 0.7rem;
+      border-left: 2px solid rgba(217,119,6,0.28);
+    }
+    .decision b { color: var(--color-text); font-weight: 600; }
+
+    ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+
+    @media (max-width: 1000px) {
+      html, body { overflow: auto; height: auto; }
+      .stage { height: auto; }
+      .teams { grid-template-columns: 1fr; }
+      .matrix-wrap { overflow-x: auto; }
+      .matrix { min-width: 760px; }
+      .decisions { grid-template-columns: 1fr; }
+      .decision { border-left: none; padding-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="glow glow-c"></div>
+
+  <div class="stage">
+
+    <!-- ════ 页头 ════ -->
+    <header class="deck-head">
+      <div>
+        <p class="eyebrow">TEAM BOUNDARY · OWNER 边界与裁决</p>
+        <h1>三团队职责<span class="grad">分工边界</span></h1>
+        <p class="sub">同一条链路上三个 Owner：业务正确性、运行可靠性、外部连接能力。谁建、谁用、谁负责，必须在试点前定死。</p>
+      </div>
+      <div class="verdict">
+        <p class="verdict-label">边界原则</p>
+        <p>
+          Agent 团队负责<b>“业务做得对不对”</b><br>
+          Runtime/Core 负责<b>“能否稳定、透明、可调试地运行”</b><br>
+          Ecosystem 负责<b>“能安全、稳定地连接多少外部能力”</b>
+        </p>
+      </div>
+    </header>
+
+    <!-- ════ 三团队 ════ -->
+    <section class="teams">
+
+      <article class="team t-agent">
+        <div class="team-top">
+          <span class="team-name"><span class="idx">A</span>Agent 业务团队</span>
+          <span class="team-effort">8～12 人周</span>
+        </div>
+        <p class="team-goal">核心目标：<b>快速交付业务 Agent</b></p>
+        <p class="team-principle">负责“业务做得对不对”</p>
+        <p class="team-cut">不自行实现沙箱 · 不形成长期私有 Runtime · 不维护 Runtime 内核</p>
+      </article>
+
+      <article class="team t-core">
+        <div class="team-top">
+          <span class="team-name"><span class="idx">B</span>Wanpix Runtime/Core</span>
+          <span class="team-effort">12～16 人周</span>
+        </div>
+        <p class="team-goal">核心目标：<b>建设稳定、透明、可扩展的 Agent Runtime</b></p>
+        <p class="team-principle">负责“能否稳定、透明、可调试地运行”</p>
+        <p class="team-cut">暂缓非试点 Runtime 重构与多语言托管 · 不承担连接器目录与渠道生态</p>
+      </article>
+
+      <article class="team t-eco">
+        <div class="team-top">
+          <span class="team-name"><span class="idx">C</span>Wanpix Ecosystem</span>
+          <span class="team-effort">4～6 人周</span>
+        </div>
+        <p class="team-goal">核心目标：<b>建设连接器和 Tool / Skill 生态</b></p>
+        <p class="team-principle">负责“能安全、稳定地连接多少外部能力”</p>
+        <p class="team-cut">不维护 Runtime 内核 · 只做配合适配 · 暂缓低复用连接器与 Native 渠道适配</p>
+      </article>
+
+    </section>
+
+    <!-- ════ 边界矩阵 ════ -->
+    <section class="matrix-wrap">
+      <table class="matrix">
+        <colgroup>
+          <col class="c-domain">
+          <col class="c-team"><col class="c-team"><col class="c-team">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>领域</th>
+            <th class="h-agent">Agent 业务团队</th>
+            <th class="h-core">Wanpix Runtime / Core</th>
+            <th class="h-eco">Wanpix Ecosystem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>业务 Agent<span class="en">Business Agent</span></th>
+            <td class="td-agent">Prompt、业务编排、效果和业务 SLO</td>
+            <td class="td-core">提供 Loop Engine、SDK 和运行能力</td>
+            <td class="td-eco">提供可复用连接器和 Skill</td>
+          </tr>
+          <tr>
+            <th>框架与自研 Runtime<span class="en">Framework Owner</span></th>
+            <td class="td-agent">提需求、试点和验收</td>
+            <td class="td-core own">
+              <span class="badge-owner">唯一建设 Owner</span>统一选型、自研、升级和托管
+            </td>
+            <td class="td-eco">配合适配，不维护 Runtime 内核</td>
+          </tr>
+          <tr>
+            <th>可观测与调试<span class="en">Observability</span></th>
+            <td class="td-agent">定义业务指标、定位业务问题</td>
+            <td class="td-core">Trace、Replay、Run 状态、SSE 和 Checkpoint</td>
+            <td class="td-eco">Tool / Connector 调用指标和错误归因</td>
+          </tr>
+          <tr>
+            <th>Tool / Skill<span class="en">Tool &amp; Skill</span></th>
+            <td class="td-agent">选择、组合并反馈业务效果</td>
+            <td class="td-core">定义运行接口与调用链路；<span class="badge-owner">MCP 运行时</span>网关、鉴权、限流和策略执行</td>
+            <td class="td-eco own">
+              <span class="badge-owner">Registry Owner</span>Registry、连接器、MCP 目录、版本和文档
+            </td>
+          </tr>
+          <tr>
+            <th>发布和运行<span class="en">Release &amp; Run</span></th>
+            <td class="td-agent">业务验收、Eval、Agent 一级响应</td>
+            <td class="td-core">Gateway、构建、托管、灰度、回滚和平台 SLO</td>
+            <td class="td-eco">连接器及渠道版本、第三方依赖 SLO</td>
+          </tr>
+          <tr>
+            <th>沙箱 · 密钥 · 配额 · 隔离<span class="en">Isolation</span></th>
+            <td class="td-agent"><span class="cell-no">配置业务策略，不自行实现沙箱</span></td>
+            <td class="td-core own">
+              <span class="badge-owner">共享底座</span>Sandbox、Secret、Quota 服务与强制基线策略
+            </td>
+            <td class="td-eco">沙箱内可用的连接器与依赖白名单</td>
+          </tr>
+          <tr>
+            <th>新框架<span class="en">New Framework</span></th>
+            <td class="td-agent"><span class="cell-no">不自行形成长期私有 Runtime</span></td>
+            <td class="td-core">统一选型、自研、升级和托管</td>
+            <td class="td-eco">提供跨 Runtime Adapter</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ════ 待确认 ════ -->
+    <section class="decisions">
+      <span class="decisions-label">待 CEO 确认</span>
+      <p class="decision">是否明确<b>下一代框架或自研 Runtime 只能由 Wanpix Runtime/Core 建设</b>？</p>
+      <p class="decision">是否明确<b>连接器、Tool/Skill、MCP 目录与渠道生态由 Ecosystem 统一建设</b>，而 MCP 运行时网关与策略由 Runtime/Core 负责？</p>
+    </section>
+
+  </div>
+</body>
+</html>
