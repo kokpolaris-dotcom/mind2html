@@ -98,7 +98,7 @@
       line-height: 1.5; color: var(--color-text-secondary);
     }
     .verdict {
-      flex-shrink: 0; max-width: 26rem;
+      flex-shrink: 0; max-width: 27rem;
       padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.7rem, 1vw, 1.1rem);
       border-radius: 12px;
       background: linear-gradient(135deg, var(--color-primary-muted) 0%, rgba(8,145,178,0.06) 100%);
@@ -117,62 +117,6 @@
     }
     .verdict b { color: var(--color-primary-hover); font-weight: 700; }
 
-    /* ── Team cards ── */
-    .teams {
-      flex-shrink: 0;
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(0.55rem, 0.9vw, 0.95rem);
-    }
-    .team {
-      --tc: var(--color-primary);
-      position: relative; overflow: hidden;
-      padding: clamp(0.55rem, 1.15vh, 0.9rem) clamp(0.65rem, 1vw, 1.05rem);
-      border: 1px solid var(--color-border);
-      border-left: 3px solid var(--tc);
-      border-radius: 14px;
-      background:
-        linear-gradient(120deg, color-mix(in srgb, var(--tc) 6%, transparent) 0%, transparent 55%),
-        var(--color-surface);
-      box-shadow: 0 1px 2px rgba(15,23,42,0.04);
-    }
-    .t-agent { --tc: var(--color-accent); }
-    .t-core  { --tc: var(--color-primary); }
-    .t-eco   { --tc: var(--color-emerald); }
-
-    .team-top { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
-    .team-name {
-      display: flex; align-items: center; gap: 0.42rem;
-      font-size: clamp(0.76rem, 0.65rem + 0.4vw, 0.98rem);
-      font-weight: 700; letter-spacing: -0.01em;
-    }
-    .team-name .idx {
-      font-family: var(--font-mono); font-weight: 700;
-      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
-      width: 1.35rem; height: 1.35rem; border-radius: 7px;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: color-mix(in srgb, var(--tc) 12%, transparent); color: var(--tc);
-      flex-shrink: 0;
-    }
-    .team-goal {
-      margin-top: 0.32rem;
-      font-size: clamp(0.62rem, 0.54rem + 0.26vw, 0.76rem);
-      line-height: 1.45; color: var(--color-text-secondary);
-    }
-    .team-goal b { color: var(--color-text); font-weight: 600; }
-    .team-principle {
-      margin-top: 0.32rem;
-      padding-top: 0.32rem;
-      border-top: 1px dashed var(--color-border-strong);
-      font-size: clamp(0.6rem, 0.53rem + 0.24vw, 0.73rem);
-      line-height: 1.45;
-      color: var(--tc); font-weight: 600;
-    }
-    .team-cut {
-      margin-top: 0.24rem;
-      font-size: clamp(0.55rem, 0.5rem + 0.16vw, 0.65rem);
-      line-height: 1.4; color: var(--color-text-muted);
-    }
-
     /* ── Boundary matrix ── */
     .matrix-wrap {
       flex: 1; min-height: 0;
@@ -189,16 +133,16 @@
       border-collapse: collapse;
       table-layout: fixed;
     }
-    .matrix col.c-phase { width: 8%; }
+    .matrix col.c-phase { width: 7.5%; }
     .matrix col.c-domain { width: 14%; }
-    .matrix col.c-team { width: 26%; }
+    .matrix col.c-team { width: 26.16%; }
 
     .matrix thead th {
-      padding: clamp(0.26rem, 0.6vh, 0.42rem) clamp(0.42rem, 0.66vw, 0.62rem);
+      padding: clamp(0.32rem, 0.7vh, 0.5rem) clamp(0.42rem, 0.66vw, 0.62rem);
       font-family: var(--font-mono);
       font-size: clamp(0.56rem, 0.5rem + 0.18vw, 0.68rem);
       letter-spacing: 0.1em; text-transform: uppercase;
-      text-align: left; font-weight: 600;
+      text-align: left; font-weight: 600; vertical-align: bottom;
       color: var(--color-text-secondary);
       background: rgba(15,23,42,0.025);
       border-bottom: 1px solid var(--color-border-strong);
@@ -209,6 +153,17 @@
     .matrix thead th.h-eco   { color: var(--color-emerald);   box-shadow: inset 0 2px 0 var(--color-emerald); }
     .matrix thead th.h-phase { color: var(--color-magenta);   box-shadow: inset 0 2px 0 var(--color-magenta); }
 
+    /* 表头内嵌团队目标，省去独立卡片行 */
+    .matrix thead th .th-name { display: block; }
+    .matrix thead th .th-goal {
+      display: block; margin-top: 0.22rem;
+      font-family: var(--font-sans); font-weight: 400;
+      font-size: clamp(0.52rem, 0.47rem + 0.16vw, 0.63rem);
+      letter-spacing: 0; text-transform: none; line-height: 1.3;
+      color: var(--color-text-muted);
+      white-space: normal;
+    }
+
     .matrix tbody tr { border-bottom: 1px solid var(--color-border); }
     .matrix tbody tr:last-child { border-bottom: none; }
     .matrix tbody tr:hover { background: rgba(99,102,241,0.03); }
@@ -217,7 +172,7 @@
     .matrix tbody th.phase-cell {
       --pc: var(--color-magenta);
       vertical-align: middle; text-align: center;
-      padding: clamp(0.2rem, 0.5vh, 0.38rem) clamp(0.22rem, 0.38vw, 0.38rem);
+      padding: clamp(0.2rem, 0.5vh, 0.38rem) clamp(0.18rem, 0.32vw, 0.32rem);
       background: color-mix(in srgb, var(--pc) 5%, transparent);
       box-shadow: inset 3px 0 0 var(--pc);
       border-right: 1px solid var(--color-border);
@@ -230,33 +185,41 @@
     }
     .phase-name {
       display: block; margin-top: 0.12rem;
-      font-size: clamp(0.56rem, 0.5rem + 0.18vw, 0.68rem);
+      font-size: clamp(0.54rem, 0.48rem + 0.18vw, 0.66rem);
       font-weight: 700; color: var(--color-text); letter-spacing: -0.01em;
     }
     .matrix tbody th .logic {
       display: block; margin-top: 0.12rem;
-      font-weight: 400; line-height: 1.28;
-      font-size: clamp(0.48rem, 0.44rem + 0.11vw, 0.56rem);
+      font-weight: 400; line-height: 1.26;
+      font-size: clamp(0.47rem, 0.43rem + 0.11vw, 0.55rem);
       color: var(--color-text-muted);
     }
 
     .matrix tbody th {
-      padding: clamp(0.17rem, 0.4vh, 0.3rem) clamp(0.42rem, 0.66vw, 0.62rem);
+      padding: clamp(0.16rem, 0.38vh, 0.28rem) clamp(0.42rem, 0.66vw, 0.62rem);
       text-align: left; vertical-align: middle; font-weight: 600;
-      font-size: clamp(0.58rem, 0.51rem + 0.22vw, 0.7rem);
-      line-height: 1.3; color: var(--color-text);
+      font-size: clamp(0.57rem, 0.51rem + 0.21vw, 0.69rem);
+      line-height: 1.28; color: var(--color-text);
       border-right: 1px solid var(--color-border);
       background: rgba(15,23,42,0.015);
     }
+
     .matrix tbody td {
-      padding: clamp(0.17rem, 0.4vh, 0.3rem) clamp(0.42rem, 0.66vw, 0.62rem);
+      padding: clamp(0.16rem, 0.38vh, 0.28rem) clamp(0.42rem, 0.66vw, 0.62rem);
       vertical-align: middle;
       font-size: clamp(0.55rem, 0.49rem + 0.2vw, 0.66rem);
-      line-height: 1.34; color: var(--color-text-muted);
+      line-height: 1.32; color: var(--color-text-secondary);
+    }
+    .matrix tbody td b { color: var(--color-text); font-weight: 600; }
+    .matrix tbody td code {
+      font-family: var(--font-mono);
+      font-size: 0.92em;
+      color: var(--color-text);
+      background: rgba(15,23,42,0.05);
+      padding: 0 0.18em; border-radius: 3px;
     }
     .matrix tbody td.own {
       color: var(--color-text);
-      font-weight: 500;
       background: color-mix(in srgb, var(--oc) 5%, transparent);
     }
     .td-agent { --oc: var(--color-accent); }
@@ -264,12 +227,12 @@
     .td-eco   { --oc: var(--color-emerald); }
 
     .badge-owner {
-      display: inline-flex; align-items: center; gap: 0.22rem;
-      margin-right: 0.3rem; vertical-align: 0.05rem;
+      display: inline-flex; align-items: center; gap: 0.2rem;
+      margin-right: 0.24rem; vertical-align: 0.04rem;
       font-family: var(--font-mono); font-weight: 700;
-      font-size: clamp(0.48rem, 0.44rem + 0.12vw, 0.56rem);
-      letter-spacing: 0.06em;
-      padding: 0.08rem 0.34rem; border-radius: 5px;
+      font-size: clamp(0.46rem, 0.42rem + 0.11vw, 0.55rem);
+      letter-spacing: 0.05em;
+      padding: 0.05rem 0.3rem; border-radius: 5px;
       background: color-mix(in srgb, var(--oc) 14%, transparent);
       color: var(--oc);
       white-space: nowrap;
@@ -282,12 +245,13 @@
       font-family: var(--font-mono); font-weight: 700;
       font-size: clamp(0.46rem, 0.42rem + 0.1vw, 0.54rem);
       letter-spacing: 0.06em; white-space: nowrap;
-      padding: 0.06rem 0.3rem; border-radius: 4px;
-      margin-right: 0.2rem; vertical-align: 0.04rem;
+      padding: 0.05rem 0.28rem; border-radius: 4px;
+      margin-right: 0.18rem; vertical-align: 0.04rem;
     }
     .dir-in  { background: rgba(5,150,105,0.16);  color: var(--color-emerald); }
     .dir-out { background: rgba(217,119,6,0.16); color: var(--color-highlight); }
-    .cell-no { color: var(--color-text-muted); font-style: normal; }
+
+    .cell-no { color: var(--color-text-muted); }
     .cell-no::before { content: '— '; color: var(--color-border-strong); }
 
     /* ── Decision strip ── */
@@ -325,27 +289,24 @@
 
     /* ── 矮屏（1366×768 等投影环境）压缩矩阵，保证整屏不裁切 ── */
     @media (max-height: 799px) {
-      .matrix thead th {
-        padding: clamp(0.18rem, 0.44vh, 0.32rem) clamp(0.4rem, 0.62vw, 0.58rem);
-        font-size: clamp(0.5rem, 0.46rem + 0.14vw, 0.6rem);
-      }
+      .matrix thead th { padding: clamp(0.2rem, 0.46vh, 0.34rem) clamp(0.4rem, 0.62vw, 0.58rem); }
+      .matrix thead th .th-goal { font-size: clamp(0.48rem, 0.44rem + 0.13vw, 0.56rem); }
       .matrix tbody th,
-      .matrix tbody td {
-        padding: clamp(0.09rem, 0.24vh, 0.18rem) clamp(0.4rem, 0.62vw, 0.58rem);
-      }
-      .matrix tbody td { font-size: clamp(0.5rem, 0.45rem + 0.16vw, 0.6rem); line-height: 1.28; }
-      .matrix tbody th { font-size: clamp(0.54rem, 0.48rem + 0.18vw, 0.64rem); line-height: 1.24; }
-      .matrix tbody th .logic { font-size: clamp(0.44rem, 0.41rem + 0.09vw, 0.51rem); line-height: 1.22; }
+      .matrix tbody td { padding: clamp(0.08rem, 0.22vh, 0.16rem) clamp(0.4rem, 0.62vw, 0.58rem); }
+      .matrix tbody td { font-size: clamp(0.5rem, 0.45rem + 0.16vw, 0.6rem); line-height: 1.26; }
+      .matrix tbody th { font-size: clamp(0.53rem, 0.48rem + 0.17vw, 0.63rem); line-height: 1.22; }
+      .matrix tbody th .logic { font-size: clamp(0.43rem, 0.4rem + 0.09vw, 0.5rem); line-height: 1.2; }
       .badge-owner, .dir-in, .dir-out { font-size: clamp(0.42rem, 0.39rem + 0.08vw, 0.5rem); }
-      .phase-num, .phase-name { font-size: clamp(0.52rem, 0.47rem + 0.16vw, 0.62rem); }
+      .phase-num, .phase-name { font-size: clamp(0.5rem, 0.45rem + 0.15vw, 0.6rem); }
+      .decisions { padding: clamp(0.36rem, 0.8vh, 0.56rem) clamp(0.6rem, 0.9vw, 0.9rem); }
+      .decision { font-size: clamp(0.55rem, 0.5rem + 0.2vw, 0.66rem); line-height: 1.36; }
     }
 
     @media (max-width: 1000px) {
       html, body { overflow: auto; height: auto; }
       .stage { height: auto; }
-      .teams { grid-template-columns: 1fr; }
       .matrix-wrap { overflow-x: auto; }
-      .matrix { min-width: 760px; }
+      .matrix { min-width: 900px; }
       .decisions { grid-template-columns: 1fr; }
       .decision { border-left: none; padding-left: 0; }
     }
@@ -362,9 +323,9 @@
     <!-- ════ 页头 ════ -->
     <header class="deck-head">
       <div>
-        <p class="eyebrow">TEAM BOUNDARY · OWNER 边界与裁决</p>
+        <p class="eyebrow">TEAM BOUNDARY · OWNER 边界与落地动作</p>
         <h1>三团队职责<span class="grad">分工边界</span></h1>
-        <p class="sub">同一条链路上三个 Owner：业务正确性、运行可靠性、外部连接能力。谁建、谁用、谁负责，必须在试点前定死。</p>
+        <p class="sub">按 Agent 研发时序排列：每个阶段谁产出什么、谁提供什么底座、谁维护什么生态。</p>
       </div>
       <div class="verdict">
         <p class="verdict-label">边界原则</p>
@@ -375,38 +336,6 @@
         </p>
       </div>
     </header>
-
-    <!-- ════ 三团队 ════ -->
-    <section class="teams">
-
-      <article class="team t-agent">
-        <div class="team-top">
-          <span class="team-name"><span class="idx">A</span>Agent 业务团队</span>
-        </div>
-        <p class="team-goal">核心目标：<b>快速交付业务 Agent</b>，含<b>自建 Tool / Skill</b></p>
-        <p class="team-principle">负责“业务做得对不对”</p>
-        <p class="team-cut">不自行实现沙箱 · 不形成长期私有 Runtime · 不维护 Runtime 内核</p>
-      </article>
-
-      <article class="team t-core">
-        <div class="team-top">
-          <span class="team-name"><span class="idx">B</span>Wanpix Runtime/Core</span>
-        </div>
-        <p class="team-goal">核心目标：<b>建设稳定、透明、可扩展的 Agent Runtime</b></p>
-        <p class="team-principle">负责“能否稳定、透明、可调试地运行”</p>
-        <p class="team-cut">暂缓非试点 Runtime 重构与多语言托管 · 不承担连接器目录与渠道生态</p>
-      </article>
-
-      <article class="team t-eco">
-        <div class="team-top">
-          <span class="team-name"><span class="idx">C</span>Wanpix Ecosystem</span>
-        </div>
-        <p class="team-goal">核心目标：<b>建设双向 Skill Hub 与连接器生态</b></p>
-        <p class="team-principle">负责“能安全、稳定地连接多少外部能力”</p>
-        <p class="team-cut">不维护 Runtime 内核 · 只做配合适配 · 暂缓低复用连接器与 Native 渠道适配</p>
-      </article>
-
-    </section>
 
     <!-- ════ 边界矩阵：按研发时序排列 ════ -->
     <section class="matrix-wrap">
@@ -420,9 +349,18 @@
           <tr>
             <th class="h-phase">阶段</th>
             <th>领域 / 归属逻辑</th>
-            <th class="h-agent">Agent 业务团队</th>
-            <th class="h-core">Wanpix Runtime / Core</th>
-            <th class="h-eco">Wanpix Ecosystem</th>
+            <th class="h-agent">
+              <span class="th-name">Agent 业务团队</span>
+              <span class="th-goal">快速交付业务 Agent，含自建 Tool / Skill</span>
+            </th>
+            <th class="h-core">
+              <span class="th-name">Wanpix Runtime / Core</span>
+              <span class="th-goal">稳定、透明、可扩展的 Agent Runtime</span>
+            </th>
+            <th class="h-eco">
+              <span class="th-name">Wanpix Ecosystem</span>
+              <span class="th-goal">双向 Skill Hub 与连接器生态</span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -434,15 +372,15 @@
               <span class="phase-name">定底座</span>
             </th>
             <th>框架与自研 Runtime<span class="logic">内核禁止多头建设</span></th>
-            <td class="td-agent">提需求、试点和验收</td>
-            <td class="td-core own"><span class="badge-owner">唯一建设 Owner</span>统一选型、自研、升级和托管</td>
-            <td class="td-eco">配合适配，不维护 Runtime 内核</td>
+            <td class="td-agent">提需求、试点和验收；<b>只声明 Manifest，不改 Loop 内核</b></td>
+            <td class="td-core own"><span class="badge-owner">唯一建设 Owner</span>Agent Contract、Tool/Skill Adapter、事件语义、Trace 注入；<b>Loop 层与生产 Runtime 层分开选型</b></td>
+            <td class="td-eco">按标准 Tool/Skill Contract 接入新 Runtime，<b>连接器不绑死框架</b></td>
           </tr>
           <tr>
             <th>新框架<span class="logic">选型收口到 Runtime/Core</span></th>
-            <td class="td-agent"><span class="cell-no">不自行形成长期私有 Runtime</span></td>
-            <td class="td-core">统一选型、自研、升级和托管</td>
-            <td class="td-eco">提供跨 Runtime Adapter</td>
+            <td class="td-agent"><span class="cell-no">不 fork 框架，不形成私有 Runtime</span></td>
+            <td class="td-core"><span class="badge-owner">选型 Owner</span>候选须过同一组 <b>Loop Conformance / Tool Contract / 事件顺序 / 取消恢复 / Trace</b> 测试</td>
+            <td class="td-eco">提供跨 Runtime Adapter 与<b>渠道能力兼容矩阵</b>，不兼容项构建期失败</td>
           </tr>
 
           <!-- ② 写业务 -->
@@ -452,15 +390,15 @@
               <span class="phase-name">写业务</span>
             </th>
             <th>业务 Agent<span class="logic">效果由业务团队担责</span></th>
-            <td class="td-agent own">Prompt、业务编排、效果和业务 SLO</td>
-            <td class="td-core">提供 Loop Engine、SDK 和运行能力</td>
-            <td class="td-eco">提供可复用连接器和 Skill</td>
+            <td class="td-agent own"><span class="badge-owner">业务 Owner</span>Prompt / Skill 编排、业务逻辑、业务 SLO；提交 Manifest 声明 <code>runtime / capabilities / permissions / limits</code></td>
+            <td class="td-core">Loop Engine 与 SDK 稳定面；Manifest <b>三层校验</b>：Schema → Registry → Policy</td>
+            <td class="td-eco">提供可复用连接器与 Skill，不介入 Agent 编排</td>
           </tr>
           <tr>
             <th>Tool / Skill<span class="logic">业务自建，生态双向引入与发布</span></th>
-            <td class="td-agent own"><span class="badge-owner">主要开发方</span>自建业务 Tool 与 Skill：实现业务逻辑、判断规则、示例与 Eval；再选择、组合并反馈效果</td>
+            <td class="td-agent own"><span class="badge-owner">主要开发方</span>自建业务 Tool 与 Skill：业务逻辑、判断规则、示例与 Eval；再选择、组合并反馈效果</td>
             <td class="td-core">定义 Tool / Skill 契约与调用链路；<span class="badge-owner">MCP 运行时</span>网关、鉴权、限流和策略执行</td>
-            <td class="td-eco own"><span class="badge-owner">Skill Hub Owner</span>统一 Registry、目录、版本与文档；<span class="dir-in">引入</span>第三方 / 开源 Skill（GitHub 等）接入与适配；<span class="dir-out">发布</span>内部优秀 Skill 输出到第三方平台</td>
+            <td class="td-eco own"><span class="badge-owner">Skill Hub Owner</span>统一 Registry、目录、版本与文档；<span class="dir-in">引入</span>第三方 / 开源 Skill（GitHub 等）接入适配；<span class="dir-out">发布</span>内部优秀 Skill 输出到第三方平台</td>
           </tr>
 
           <!-- ③ 装能力 -->
@@ -470,15 +408,15 @@
               <span class="phase-name">装能力</span>
             </th>
             <th>知识与检索<span class="logic">内容归业务，契约归平台</span></th>
-            <td class="td-agent">维护业务知识内容与评测集</td>
-            <td class="td-core">定义检索接口契约与运行时策略</td>
-            <td class="td-eco">提供知识源连接器、索引生命周期与切片策略</td>
+            <td class="td-agent">维护业务知识内容与评测集，声明数据分级</td>
+            <td class="td-core">定义检索契约与运行时策略；检索结果进 <code>context.assembled</code>，上下文可解释可对比</td>
+            <td class="td-eco">知识源连接器、索引生命周期与切片策略</td>
           </tr>
           <tr>
             <th>记忆<span class="logic">规则归业务，读写归平台</span></th>
-            <td class="td-agent">决定“记什么、何时读、何时忘”的业务规则与效果验收</td>
-            <td class="td-core own"><span class="badge-owner">唯一 Owner</span>记忆读写 API、存储与隔离、TTL 与遗忘机制、跨实例一致性</td>
-            <td class="td-eco">提供记忆检索所需的向量 / 搜索连接器与嵌入服务适配</td>
+            <td class="td-agent">定义“记什么、何时读、何时忘”的业务规则与效果验收</td>
+            <td class="td-core own"><span class="badge-owner">Memory API</span>三层记忆（Run 内 / 跨会话 / 长期）、写入准入与置信度、TTL 与遗忘、租户命名空间；Checkpoint 只存快照版本 + 引用 + 幂等键</td>
+            <td class="td-eco">向量 / 搜索连接器与嵌入服务适配</td>
           </tr>
 
           <!-- ④ 跑会话 -->
@@ -488,14 +426,14 @@
               <span class="phase-name">跑会话</span>
             </th>
             <th>会话与上下文<span class="logic">语义归业务，中控归平台</span></th>
-            <td class="td-agent">定义会话语义、多轮策略和上下文内容组装</td>
-            <td class="td-core own"><span class="badge-owner">唯一 Owner</span>sessionId 生命周期、上下文窗口预算与压缩/摘要、会话恢复与并发控制、会话与 Run/租户映射</td>
-            <td class="td-eco">提供可检索的知识 / 文档连接器与切片能力</td>
+            <td class="td-agent">定义会话语义、多轮策略与内容来源；<span class="cell-no">禁止直接拼接不可观测的历史消息</span></td>
+            <td class="td-core own"><span class="badge-owner">Session / Context API</span>sessionId 生命周期、会话↔Run 1:N 与并发租约、token 预算 / 截断 / 摘要、断线重连合并；每次模型调用记 <code>context.assembled</code></td>
+            <td class="td-eco">知识 / 文档连接器与切片能力</td>
           </tr>
           <tr>
             <th>沙箱 · 密钥 · 配额 · 隔离<span class="logic">业务配策略，平台给底座</span></th>
-            <td class="td-agent"><span class="cell-no">配置业务策略，不自行实现沙箱</span></td>
-            <td class="td-core own"><span class="badge-owner">共享底座</span>Sandbox、Secret、Quota 服务与强制基线策略</td>
+            <td class="td-agent"><span class="cell-no">配置业务策略，不自行实现隔离</span></td>
+            <td class="td-core own"><span class="badge-owner">共享底座</span>Sandbox / Secret / Quota；出站 allowlist 与 SSRF 防护、租户级文件隔离、CPU / 内存 / 时长上限；密钥只走 Secret Manager</td>
             <td class="td-eco">沙箱内可用的连接器与依赖白名单</td>
           </tr>
 
@@ -506,15 +444,15 @@
               <span class="phase-name">上生产</span>
             </th>
             <th>可观测与调试<span class="logic">业务定指标，平台给链路</span></th>
-            <td class="td-agent">定义业务指标、定位业务问题</td>
-            <td class="td-core">Trace、Replay、Run 状态、SSE 和 Checkpoint</td>
-            <td class="td-eco">Tool / Connector 调用指标和错误归因</td>
+            <td class="td-agent">定义业务指标；提供失败样本定位业务问题</td>
+            <td class="td-core own"><span class="badge-owner">Trace / Replay</span>统一事件模型：<code>run.start / model.call / tool.call / memory.read / context.assembled / approval.wait / error</code>；大字段走对象存储只存引用</td>
+            <td class="td-eco">Tool / Connector 调用指标与错误归因</td>
           </tr>
           <tr>
             <th>发布和运行<span class="logic">业务验收，平台托管</span></th>
             <td class="td-agent">业务验收、Eval、Agent 一级响应</td>
-            <td class="td-core">Gateway、构建、托管、灰度、回滚和平台 SLO</td>
-            <td class="td-eco">连接器及渠道版本、第三方依赖 SLO</td>
+            <td class="td-core own"><span class="badge-owner">Gateway</span>路由键 <code>agentName + environment + version/channel</code>；local → preview → staging → canary → production；灰度含流量比例、租户范围、成功率阈值与自动回滚</td>
+            <td class="td-eco">连接器与渠道版本、第三方依赖 SLO</td>
           </tr>
 
           <!-- ⑥ 守治理 -->
@@ -525,14 +463,14 @@
             </th>
             <th>数据留存与合规<span class="logic">业务提诉求，平台强制基线</span></th>
             <td class="td-agent">声明业务数据分级与留存诉求</td>
-            <td class="td-core">强制留存策略、PII 脱敏、审计落库与租户隔离基线</td>
+            <td class="td-core own"><span class="badge-owner">强制基线</span>按环境与数据分类定保留周期；字段级脱敏与租户隔离；Replay Fixture 默认脱敏；<b>Trace 不复制记忆库</b></td>
             <td class="td-eco">保证连接器侧数据不越权落盘</td>
           </tr>
           <tr>
             <th>成本与配额归因<span class="logic">业务担目标，平台给口径</span></th>
-            <td class="td-agent">对单个 Agent 的成本目标负责</td>
-            <td class="td-core">提供 token / 资源计量、配额执行与归因口径</td>
-            <td class="td-eco">提供连接器调用成本口径与第三方配额</td>
+            <td class="td-agent">对单个 Agent 的成本目标负责；Eval 带 token 与成本估算</td>
+            <td class="td-core own"><span class="badge-owner">计量与配额</span>计量 token / Tool 次数 / 资源；配额与限流在 Gateway 执行，归因到 Agent / 租户 / 渠道</td>
+            <td class="td-eco">连接器调用成本口径与第三方配额</td>
           </tr>
 
         </tbody>
