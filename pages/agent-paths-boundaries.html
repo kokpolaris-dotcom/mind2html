@@ -280,37 +280,6 @@
     .eco-note { color: var(--color-text-muted); }
     .eco-note em { font-style: normal; color: var(--color-text-secondary); }
 
-    /* ── Decision strip ── */
-    .decisions {
-      flex-shrink: 0;
-      display: grid; grid-template-columns: auto 1fr 1fr;
-      align-items: center;
-      gap: clamp(0.6rem, 1.1vw, 1.15rem);
-      padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.7rem, 1vw, 1.05rem);
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--color-highlight-muted) 0%, rgba(217,119,6,0.03) 100%);
-      border: 1px solid rgba(217,119,6,0.22);
-    }
-    .decisions-label {
-      display: flex; align-items: center; gap: 0.42rem;
-      font-family: var(--font-mono); font-weight: 600;
-      font-size: clamp(0.55rem, 0.5rem + 0.18vw, 0.67rem);
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--color-highlight); white-space: nowrap;
-    }
-    .decisions-label::before {
-      content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%;
-      background: var(--color-highlight); box-shadow: 0 0 0 4px rgba(217,119,6,0.15);
-      flex-shrink: 0;
-    }
-    .decision {
-      font-size: clamp(0.6rem, 0.53rem + 0.24vw, 0.73rem);
-      line-height: 1.45; color: var(--color-text-secondary);
-      padding-left: 0.7rem;
-      border-left: 2px solid rgba(217,119,6,0.28);
-    }
-    .decision b { color: var(--color-text); font-weight: 600; }
-
     ::selection { background: rgba(99,102,241,0.35); color: #fff; }
 
     /* ── 矮屏（1366×768、1280×800 等投影环境）压缩矩阵，保证整屏不裁切 ── */
@@ -324,8 +293,6 @@
       .matrix tbody th .logic { font-size: clamp(0.43rem, 0.4rem + 0.09vw, 0.5rem); line-height: 1.2; }
       .badge-owner, .dir-in, .dir-out { font-size: clamp(0.42rem, 0.39rem + 0.08vw, 0.5rem); }
       .phase-num, .phase-name { font-size: clamp(0.5rem, 0.45rem + 0.15vw, 0.6rem); }
-      .decisions { padding: clamp(0.36rem, 0.8vh, 0.56rem) clamp(0.6rem, 0.9vw, 0.9rem); }
-      .decision { font-size: clamp(0.55rem, 0.5rem + 0.2vw, 0.66rem); line-height: 1.36; }
     }
 
     /* ── 更矮屏（1152×720、1024×768 等）再压一档 ── */
@@ -355,8 +322,6 @@
       .stage { height: auto; }
       .matrix-wrap { overflow-x: auto; }
       .matrix { min-width: 900px; }
-      .decisions { grid-template-columns: 1fr; }
-      .decision { border-left: none; padding-left: 0; }
     }
   </style>
 </head>
@@ -535,13 +500,6 @@
         </span>
         <span class="eco-note"><em>技能与连接器同库收录</em>（Skill &amp; Connector Hub），统一上架、版本、质量分级与弃用；模型目录归 Runtime/Core，评测集由业务维护</span>
       </div>
-    </section>
-
-    <!-- ════ 待确认 ════ -->
-    <section class="decisions">
-      <span class="decisions-label">待 CEO 确认</span>
-      <p class="decision">是否明确<b>下一代框架或自研 Runtime 只能由 Wanpix Runtime/Core 建设</b>？</p>
-      <p class="decision">是否明确<b>连接器、Tool/Skill、MCP 目录与渠道生态由 Ecosystem 统一建设</b>，而 MCP 运行时网关与策略由 Runtime/Core 负责？</p>
     </section>
 
   </div>
