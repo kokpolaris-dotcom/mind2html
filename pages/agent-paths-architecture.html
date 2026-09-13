@@ -165,8 +165,9 @@
     .pts-value li {
       flex: 1;
       align-items: center;
-      line-height: 1.5;
-      padding: clamp(0.4rem, 0.78vh, 0.62rem) clamp(0.45rem, 0.7vw, 0.65rem);
+      font-size: clamp(0.6rem, 0.53rem + 0.22vw, 0.74rem);
+      line-height: 1.45;
+      padding: clamp(0.24rem, 0.5vh, 0.38rem) clamp(0.45rem, 0.7vw, 0.65rem);
       border-left: 2px solid rgba(5,150,105,0.28);
       border-radius: 0 8px 8px 0;
       background: linear-gradient(90deg, rgba(5,150,105,0.055) 0%, transparent 70%);
@@ -189,6 +190,14 @@
     .pts-value li::before { content: '◆'; color: var(--color-emerald); font-size: 0.7em; }
     .pts b { color: var(--color-text); font-weight: 600; }
     .pts em { font-style: normal; color: var(--color-emerald); font-weight: 600; }
+
+    .value-lead {
+      margin-top: clamp(0.26rem, 0.6vh, 0.42rem);
+      font-size: clamp(0.6rem, 0.53rem + 0.22vw, 0.74rem);
+      line-height: 1.42; color: var(--color-text-secondary);
+      padding-left: clamp(0.45rem, 0.7vw, 0.65rem);
+      border-left: 2px solid rgba(5,150,105,0.28);
+    }
 
     /* ── 解决方案：团队块 ── */
     .sol { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: space-evenly; gap: clamp(0.3rem, 0.65vh, 0.54rem); margin-top: clamp(0.3rem, 0.7vh, 0.5rem); }
@@ -388,13 +397,16 @@
         <div class="panel p-value">
           <div class="panel-head">
             <span class="tag tag-good">核心价值</span>
-            <span class="panel-title">垂类 Agent 框架的壁垒在哪</span>
+            <span class="panel-title">垂类 Agent 框架的六个壁垒</span>
           </div>
+          <p class="value-lead">与 Coding Agent 同理：决定效果的不是编排界面，而是领域深水区 —— 通用平台不会替你做，且直接决定业务结果</p>
           <ul class="pts pts-value">
-            <li>决定垂类 Agent 效果的，不是编排界面，而是<em>面向该领域的上下文、记忆与知识</em> —— 与 Coding Agent 同理</li>
-            <li>Coding Agent 好用不靠模型本身，靠对代码库的<b>上下文管理</b>（索引 / 检索 / 预算）与<b>跨会话记忆</b></li>
-            <li>判断壁垒的三条标准：<b>通用平台不会替你做 · 需要持续领域投入 · 直接决定业务结果</b></li>
-            <li>按此标准，壁垒正是右半的六个方向：<b>记忆 · 上下文 · 知识库 · 实时态时效 · 评测体系 · 基础能力</b></li>
+            <li><b>记忆</b>跨会话与长期记忆让 Agent 越用越懂业务，而非每次从零开始</li>
+            <li><b>上下文</b>组装、预算与摘要决定垂类效果的上限，编排界面替代不了</li>
+            <li><b>知识库</b>行业知识怎么切片、怎么召回，直接决定回答是否可信可用</li>
+            <li><b>实时态时效</b>价格库存秒级变化，时效裁决决定报价正确性 —— 是业务风险，不是体验问题</li>
+            <li><b>评测体系</b>没有垂类评测集就无法度量与回归，策略调整等于盲调</li>
+            <li><b>基础能力</b>沙箱与交易治理决定能否安全地真实下单、改签与退款</li>
           </ul>
         </div>
 
