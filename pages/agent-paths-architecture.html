@@ -378,7 +378,7 @@
         <div class="panel p-now">
           <div class="panel-head">
             <span class="tag tag-bad">当前困境</span>
-            <span class="panel-title">精力错配，职责耦合</span>
+            <span class="panel-title">投入与价值待对齐</span>
           </div>
           <div class="flow">
             <div class="fnode fn-agent">Agent 研发团队</div>
@@ -388,9 +388,9 @@
             <div class="fnode fn-plain">Mastra / Runtime 能力</div>
           </div>
           <ul class="pts pts-now">
-            <li>底座大量精力花在<b>把 Mastra 能力开放给 Admin</b>，只为让 Agent 团队能在 Admin 上开发 —— 并非高价值工作</li>
+            <li>底座大量精力花在<b>把 Mastra 能力开放给 Admin</b>，只为让 Agent 团队能在 Admin 上开发 —— 对业务价值的直接贡献有限</li>
             <li>把 Wanpix Admin 做成「开发者能<b>快速开发并交付业务</b>」的平台，难度与投入远超预期；若仍走低代码路线，可参考 <b>Coze / Dify</b> 的复杂度与建设周期</li>
-            <li><b>低代码平台与开发平台本是两个方向</b>，硬要融合导致周期过长、非常别扭</li>
+            <li><b>低代码平台与开发平台本是两个方向</b>，两者目标不同，合并推进容易拉长周期</li>
           </ul>
         </div>
 
@@ -399,13 +399,13 @@
             <span class="tag tag-good">核心价值</span>
             <span class="panel-title">垂类 Agent 框架的六个壁垒</span>
           </div>
-          <p class="value-lead">与 Coding Agent 同理：决定效果的不是编排界面，而是领域深水区 —— 通用平台不会替你做，且直接决定业务结果</p>
+          <p class="value-lead">与 Coding Agent 同理：真正决定效果的是领域深水区 —— 通用平台不会替你做，且直接决定业务结果</p>
           <ul class="pts pts-value">
             <li><b>记忆</b>跨会话与长期记忆让 Agent 越用越懂业务，而非每次从零开始</li>
-            <li><b>上下文</b>组装、预算与摘要决定垂类效果的上限，编排界面替代不了</li>
+            <li><b>上下文</b>组装、预算与摘要决定垂类效果的上限</li>
             <li><b>知识库</b>行业知识怎么切片、怎么召回，直接决定回答是否可信可用</li>
-            <li><b>实时态时效</b>价格库存秒级变化，时效裁决决定报价正确性 —— 是业务风险，不是体验问题</li>
-            <li><b>评测体系</b>没有垂类评测集就无法度量与回归，策略调整等于盲调</li>
+            <li><b>实时态时效</b>价格库存秒级变化，时效裁决决定报价正确性，属业务风险而非体验问题</li>
+            <li><b>评测体系</b>没有垂类评测集就无法度量与回归，策略调整缺少依据</li>
             <li><b>基础能力</b>沙箱与交易治理决定能否安全地真实下单、改签与退款</li>
           </ul>
         </div>
@@ -425,7 +425,7 @@
             <span class="block-tag">Agent 业务团队</span>
             <div>
               <p class="block-title">基于完整的 Mastra 框架开发</p>
-              <p class="block-desc"><b>原生能力直用</b>：Loop / Workflow / Tool / Memory / Evaluate 全部可直接用，不等平台逐个封装<br><b>本地闭环</b>：本地 Runner 跑通 Agent、看 Trace、断点调试后再上平台<br><b>工程链路</b>：自有 Git 仓库 + IDE / Vibe Coding + CI（lint / 契约测试 / Eval）<br><b>依赖自主</b>：Mastra 版本与生态自行升级，经 Agent Contract 接入平台</p>
+              <p class="block-desc"><b>原生能力直用</b>：Loop / Workflow / Tool / Memory / Evaluate 可直接使用<br><b>本地闭环</b>：本地 Runner 跑通 Agent、看 Trace、断点调试后再上平台<br><b>工程链路</b>：自有 Git 仓库 + IDE / Vibe Coding + CI（lint / 契约测试 / Eval）<br><b>依赖自主</b>：Mastra 版本与生态自行升级，经 Agent Contract 接入平台</p>
             </div>
           </div>
 
@@ -433,7 +433,7 @@
             <span class="block-tag">底座团队</span>
             <div>
               <p class="block-title">专注 Mastra 框架升级与垂类核心能力</p>
-              <p class="block-desc">fork 分支二次开发与版本升级维护；不再把框架能力逐个封装成 Admin 组件</p>
+              <p class="block-desc">fork 分支二次开发与版本升级维护；框架能力按需接入，不做全量封装</p>
             </div>
           </div>
 
@@ -446,7 +446,7 @@
 
             <div class="dir">
               <p class="dir-head"><span class="dir-num">方向二</span><span class="dir-title">上下文管理</span></p>
-              <p class="dir-body"><span class="dir-role">平台统一执行</span>组装 / 窗口预算 / 截断 / 摘要全链路由平台执行，禁止各 Agent 自行拼接；每次模型调用记录 <code>context.assembled</code></p>
+              <p class="dir-body"><span class="dir-role">平台统一执行</span>组装 / 窗口预算 / 截断 / 摘要由平台统一执行；每次模型调用记录 <code>context.assembled</code></p>
             </div>
 
             <div class="dir">
